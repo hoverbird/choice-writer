@@ -8,11 +8,16 @@
     <div class="dialog-fields">
       <input type="text" name="dialog" class="dialog" value="">
     </div>
-
+    <button class="new-line">New Line</button>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
   <script>
     $(function() {
+      $('button.new-line').on('click', function() {
+        var $newField = $('<input type="text" name="dialog" class="dialog">');
+        $('.dialog-fields').append($newField);
+      })
+
       $('.dialog-fields').on("blur", '.dialog', function(event) {
         console.log('blur!')
         event.preventDefault();
@@ -33,10 +38,6 @@
             heard: $el.val()
           }
         });
-
-        var $newField = $('<input type="text" name="dialog" class="dialog">');
-        $el.after($newField);
-        // $newField.trigger('select');
       });
     });
   </script>
