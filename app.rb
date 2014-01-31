@@ -1,11 +1,12 @@
 # require "bundler"
 require 'google_drive'
 require 'erubis'
-require 'hashie'
 require 'sinatra'
+require 'json'
+require 'hashie'
 set :erb, :escape_html => true
-
-                                                              name, sec = "patrick@camposanto.com", "c4mp3s1n0"
+# set :public_folder, 'static'
+                                                     name, sec = "patrick@camposanto.com", "c4mp3s1n0"
 # You can also use OAuth. See document of
 # GoogleDrive.login_with_oauth for details.
 session = GoogleDrive.login(name, sec)
@@ -17,13 +18,6 @@ class Line < Hashie::Dash
   property :character
   property :tags
   property :previous_line_id
-
-  def self.row_from_form(data)
-    new_line = new
-    line_id = data["id"]
-    character = data["character"]
-    tags = data["tags"]
-  end
 end
 
 def get_lines
@@ -40,14 +34,9 @@ def get_lines
   lines << Line.new
 end
 
-def add_row(data)
-  line_id = data["id"]
-  line_data = {
-    "Line ID" => line_id,
-    "Character" => data["character"],
-    "Text" => data['text'],
-    "Tags" => data['tags']
-  }
+def update_or_add_row(data)
+  line_id = data["Line ID"]
+  line_data = data
 
   row_to_update = nil
   WS.list.each do |row|
@@ -82,7 +71,17 @@ get '/rows' do
 end
 # Dumps all cells.
 
+get '/characters.json' do
+  content_type :json
+  WS.list.collect {|row| row["Character"]}.to_json
+end
+
+get '/tags.json' do
+  content_type :json
+  WS.list.collect {|row| row["Tags"]}.to_json
+end
+
 post '/update' do
-  add_row params
+  update_or_add_row params
 end
 
