@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+  <h1>Hello Writer</h1>
+    <div class="dialog-fields">
+      <input type="text" name="dialog" class="dialog" value="">
+    </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  <script>
+    $(function() {
+      $('.dialog-fields').on("blur", '.dialog', function(event) {
+        console.log('blur!')
+        event.preventDefault();
+        var $el = $(event.target);
+
+        if ($el.data('dialogID')) {
+          var dialogID = $el.data('dialogID');
+        } else {
+          var dialogID = +new Date;
+          $el.data('dialogID', dialogID);
+        }
+
+        $.ajax({
+          url: '/update',
+          method: "POST",
+          data: {
+            id: dialogID,
+            heard: $el.val()
+          }
+        });
+
+        var $newField = $('<input type="text" name="dialog" class="dialog">');
+        $el.after($newField);
+        // $newField.trigger('select');
+      });
+    });
+  </script>
+</body>
+</html>

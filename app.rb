@@ -6,15 +6,19 @@ require 'sinatra'
 # You can also use OAuth. See document of
 # GoogleDrive.login_with_oauth for details.
 session = GoogleDrive.login(name, sec)
-
-# Gets list of remote files.
-# for file in session.files
-#   p file.title
-# end
-
+index = File.read 'index.html'
 ws = session.spreadsheet_by_key("0AoAp79Ob8GbIdDVtN1VQQ0dnQi1FQWh1ZlhKUXJURXc").worksheets[0]
 
+def add_row(data)
+  ws.reload
+  puts ws.rows
+end
+
 get '/' do
+  index
+end
+
+get '/rows' do
   ws.reload
   s = ""
   for row in 1..ws.num_rows
@@ -26,7 +30,9 @@ get '/' do
 end
 # Dumps all cells.
 
-get '/update' do
+post '/update' do
+  puts params["id"]
+  puts params["heard"]
   ws[1, 3] = params["heard"]
   ws.save
 end
