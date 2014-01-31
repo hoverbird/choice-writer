@@ -4,10 +4,15 @@
   <title>Test</title>
 </head>
 <body>
-  <h1>Hello Writer</h1>
+  <h1>Hellow Writer</h1>
     <div class="dialog-fields">
-      <input type="text" name="dialog" class="dialog" value="">
+      <% for line in lines %>
+        <input type="text" class="dialog" data-line-id="<%= line.id %>" value="<%= line.text %>">
+      <% end %>
+        <input type="text" class="dialog">
     </div>
+
+
     <button class="new-line">New Line</button>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
@@ -23,19 +28,19 @@
         event.preventDefault();
         var $el = $(event.target);
 
-        if ($el.data('dialogID')) {
-          var dialogID = $el.data('dialogID');
+        if ($el.data('line-id')) {
+          var lineId = $el.data('line-id');
         } else {
-          var dialogID = +new Date;
-          $el.data('dialogID', dialogID);
+          var lineId = +new Date;
+          $el.data('line-id', lineId);
         }
 
         $.ajax({
           url: '/update',
           method: "POST",
           data: {
-            id: dialogID,
-            heard: $el.val()
+            id: lineId,
+            text: $el.val()
           }
         });
       });
