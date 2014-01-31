@@ -2,31 +2,51 @@
 <html>
 <head>
   <title>Test</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+  <div class="container">
   <h1>Hellow Writer</h1>
-    <div class="dialog-fields">
-      <% for line in lines %>
-        <input type="text" class="dialog" data-line-id="<%= line.id %>" value="<%= line.text %>">
-      <% end %>
-        <input type="text" class="dialog">
+    <div class="row span8 offset4">
+      <div class="dialog-fields">
+        <% for line in lines %>
+          <div class="dialog-line panel panel-default" data-line-id="<%= line.id %>">
+            <div class="panel-body">
+              <input type="text" class="dialog-line-text" value="<%= line.text %>">
+            </div>
+            <div class="panel-footer">
+              <label>Character</label><input type="text" class="dialog-line-character" value="<%= line.character %>">&nbsp;
+              <label>Tags</label><input type="text" class="dialog-line-tags" value="<%= line.tags %>">
+
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
-
     <button class="new-line">New Line</button>
+
+  </div>
+
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
   <script>
     $(function() {
       $('button.new-line').on('click', function() {
-        var $newField = $('<input type="text" name="dialog" class="dialog">');
+        var $newField = $('.dialog-line').clone();
+        $newField.data('line-id', null);
         $('.dialog-fields').append($newField);
       })
 
-      $('.dialog-fields').on("blur", '.dialog', function(event) {
-        console.log('blur!')
+      $('.dialog-fields').on("blur", '.dialog-line input', function(event) {
         event.preventDefault();
-        var $el = $(event.target);
+        var $el = $(event.target).parents('.dialog-line');
+        var text = $el.find('.dialog-line-text').val();
+        var tags = $el.find('.dialog-line-tags').val();
+        var character = $el.find('.dialog-line-character').val();
+
 
         if ($el.data('line-id')) {
           var lineId = $el.data('line-id');
@@ -40,7 +60,9 @@
           method: "POST",
           data: {
             id: lineId,
-            text: $el.val()
+            text: text,
+            tags: tags,
+            character: character
           }
         });
       });

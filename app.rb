@@ -1,6 +1,7 @@
 # require "bundler"
 require 'google_drive'
 require 'erubis'
+require 'hashie'
 require 'sinatra'
 set :erb, :escape_html => true
 
@@ -10,38 +11,58 @@ set :erb, :escape_html => true
 session = GoogleDrive.login(name, sec)
 WS = session.spreadsheet_by_key("0AoAp79Ob8GbIdDVtN1VQQ0dnQi1FQWh1ZlhKUXJURXc").worksheets[0]
 
-class Line
-  attr_accessor :id, :text, :character
+class Line < Hashie::Dash
+  property :id#, :required => true
+  property :text
+  property :character
+  property :tags
+  property :previous_line_id
+
+  def self.row_from_form(data)
+    new_line = new
+    line_id = data["id"]
+    character = data["character"]
+    tags = data["tags"]
+  end
 end
 
 def get_lines
   WS.reload
-  WS.rows[1..-1].collect do |row|
-    line = Line.new
-    line.id = row[0]
-    line.character = row[1]
-    line.text = row[2]
-    line
+  puts WS.list[1].to_hash
+  lines = WS.rows[1..-1].collect do |row|
+    Line.new(
+      :id => row[0],
+      :character => row[1],
+      :text => row[2],
+      :tags => row[5]
+    )
   end
+  lines << Line.new
 end
 
 def add_row(data)
   line_id = data["id"]
-  row_to_update = -1;
+  line_data = {
+    "Line ID" => line_id,
+    "Character" => data["character"],
+    "Text" => data['text'],
+    "Tags" => data['tags']
+  }
 
-  for row in 2..WS.num_rows
-    row_id = WS[row, 1]
-    puts row, row_id
+  row_to_update = nil
+  WS.list.each do |row|
+    row_id = row["Line ID"]
     if row_id == line_id
-      puts "We have a winner", row_id
       row_to_update = row
       break
     end
   end
 
-  row_to_update = WS.num_rows +  1 if row_to_update < 0 #this is a new row
-  WS[row_to_update, 1] = line_id
-  WS[row_to_update, 3] = data["text"]
+  if row_to_update
+    row_to_update.update(line_data)
+  else # new row
+    WS.list.push(line_data)
+  end
   WS.save
 end
 
