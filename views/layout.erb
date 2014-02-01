@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/typeahead.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <%== yield %>
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  <script src="/js/lib/typeahead.min.js"></script>
+
+  <script>
+    $(function() {
+      $('.dialog-line-character').typeahead({
+        name: 'characters',
+        remote: '/characters.json'
+      });
+
+      $('.dialog-line-tags').typeahead({
+        name: 'tags',
+        remote: '/tags.json'
+      });
+
+      $('button.new-line').on('click', function() {
+        var $newField = $('.dialog-line').clone();
+        $newField.data('line-id', null);
+        $('.dialog-fields').append($newField);
+      })
+
+      $('.dialog-fields').on("blur", '.dialog-line input', function(event) {
+        event.preventDefault();
+        var $el = $(event.target).parents('.dialog-line');
+        var text = $el.find('.dialog-line-text').val();
+        var tags = $el.find('.dialog-line-tags').val();
+        var character = $el.find('.dialog-line-character').val();
+        var previousLineId = $el.prev().data('line-id')
+
+        if ($el.data('line-id')) {
+          var lineId = $el.data('line-id');
+        } else {
+          var lineId = +new Date;
+          $el.data('line-id', lineId);
+        }
+
+        $.ajax({
+          url: '/update',
+          method: "POST",
+          data: {
+            "Line ID": lineId,
+            "Text": text,
+            "Tags": tags,
+            "Character": character,
+            "Previous Line ID": previousLineId
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

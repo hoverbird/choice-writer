@@ -1,85 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Test</title>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/typeahead.css" rel="stylesheet">
-</head>
-<body>
-  <div class="container">
-  <h1>Hellow Writer</h1>
-    <div class="row span8 offset4">
-      <div class="dialog-fields">
-        <% for line in lines %>
-          <div class="dialog-line panel panel-default" data-line-id="<%= line.id %>">
-            <div class="panel-body">
-              <input type="text" class="dialog-line-text" value="<%= line.text %>">
-            </div>
-            <div class="panel-footer">
-              <label>Character</label><input type="text" class="dialog-line-character typeahead" value="<%= line.character %>">&nbsp;
-              <label>Tags</label><input type="text" class="dialog-line-tags typeahead" value="<%= line.tags %>">
-
-            </div>
-          </div>
-        <% end %>
+<h1><%= scene %></h1>
+<a href="/scenes"><-- Back</a>
+<div class="row span8 offset4">
+  <div class="dialog-fields">
+    <% for line in lines %>
+      <div class="dialog-line panel panel-default" data-line-id="<%= line.id %>">
+        <div class="panel-body">
+          <input type="text" class="dialog-line-text form-control" value="<%= line.text %>">
+        </div>
+        <div class="panel-footer">
+          <label>Character</label><input type="text" class="dialog-line-character form-control typeahead" value="<%= line.character %>">&nbsp;
+          <label>Tags</label><input type="text" class="dialog-line-tags form-control typeahead" value="<%= line.tags %>">
+          <input type="hidden" class="dialog-line-tags " value="<%= line.scene %>">
+        </div>
       </div>
-    </div>
-
-    <button class="new-line">New Line</button>
-
+    <% end %>
   </div>
+</div>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-  <script src="/js/lib/typeahead.min.js"></script>
-
-  <script>
-    $(function() {
-      $('.dialog-line-character').typeahead({
-        name: 'characters',
-        remote: '/characters.json'
-      });
-
-      $('.dialog-line-tags').typeahead({
-        name: 'tags',
-        remote: '/tags.json'
-      });
-
-      $('button.new-line').on('click', function() {
-        var $newField = $('.dialog-line').clone();
-        $newField.data('line-id', null);
-        $('.dialog-fields').append($newField);
-      })
-
-      $('.dialog-fields').on("blur", '.dialog-line input', function(event) {
-        event.preventDefault();
-        var $el = $(event.target).parents('.dialog-line');
-        var text = $el.find('.dialog-line-text').val();
-        var tags = $el.find('.dialog-line-tags').val();
-        var character = $el.find('.dialog-line-character').val();
-        var previousLineId = $el.prev().data('line-id')
-
-        if ($el.data('line-id')) {
-          var lineId = $el.data('line-id');
-        } else {
-          var lineId = +new Date;
-          $el.data('line-id', lineId);
-        }
-
-        $.ajax({
-          url: '/update',
-          method: "POST",
-          data: {
-            "Line ID": lineId,
-            "Text": text,
-            "Tags": tags,
-            "Character": character,
-            "Previous Line ID": previousLineId
-          }
-        });
-      });
-    });
-  </script>
-</body>
-</html>
+<button class="new-line">New Line</button>

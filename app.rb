@@ -5,8 +5,7 @@ require 'sinatra'
 require 'json'
 require 'hashie'
 set :erb, :escape_html => true
-# set :public_folder, 'static'
-                                                     name, sec = "patrick@camposanto.com", "c4mp3s1n0"
+                                                               name, sec = "patrick@camposanto.com", "c4mp3s1n0"
 # You can also use OAuth. See document of
 # GoogleDrive.login_with_oauth for details.
 session = GoogleDrive.login(name, sec)
@@ -14,29 +13,70 @@ WS = session.spreadsheet_by_key("0AoAp79Ob8GbIdDVtN1VQQ0dnQi1FQWh1ZlhKUXJURXc").
 
 class Line < Hashie::Dash
   property :id#, :required => true
+  property :scene
   property :text
   property :character
   property :tags
   property :previous_line_id
+  property :conditions
+  property :after_effects
 end
 
-def get_lines
+get '/lines' do
+  scene = params[:by_scene]
+  erb :index, locals: { lines: get_lines(scene), scene: scene }
+end
+
+get '/scenes' do
+  erb :scenes, locals: { scenes: get_scenes }
+end
+
+get '/scenes.json' do
+  content_type :json
+  get_scenes.to_json
+end
+
+get '/characters.json' do
+  content_type :json
+  WS.list.collect {|row| row["Character"]}.to_json
+end
+
+get '/tags.json' do
+  content_type :json
+  WS.list.collect {|row| row["Tags"]}.to_json
+end
+
+post '/update' do
+  update_or_add_row params
+end
+
+def get_lines(scene = nil)
   WS.reload
-  puts WS.list[1].to_hash
-  lines = WS.rows[1..-1].collect do |row|
-    Line.new(
+  lines = []
+  WS.rows[1..-1].each do |row|
+    line = Line.new(
       :id => row[0],
       :character => row[1],
       :text => row[2],
-      :tags => row[5]
+      :conditions => row[3],
+      :after_effects => row[4],
+      :scene => row[5],
+      :previous_line_id => row[6],
+      :previous_line_id => row[7],
+      :tags => row[8]
     )
+    lines << line if !scene or scene == line.scene
   end
   lines << Line.new
 end
 
-def update_or_add_row(data)
-  line_id = data["Line ID"]
-  line_data = data
+def get_scenes
+  WS.reload
+  WS.list.collect {|row| row["Scene"]}.uniq
+end
+
+def update_or_add_row(line_data)
+  line_id = line_data["Line ID"]
 
   row_to_update = nil
   WS.list.each do |row|
@@ -55,33 +95,4 @@ def update_or_add_row(data)
   WS.save
 end
 
-get '/' do
-  erb :index, locals: {lines: get_lines}
-end
-
-get '/rows' do
-  WS.reload
-  s = ""
-  for row in 1..WS.num_rows
-    for col in 1..WS.num_cols
-      s << WS[row, col] + "\n"
-    end
-  end
-  s
-end
-# Dumps all cells.
-
-get '/characters.json' do
-  content_type :json
-  WS.list.collect {|row| row["Character"]}.to_json
-end
-
-get '/tags.json' do
-  content_type :json
-  WS.list.collect {|row| row["Tags"]}.to_json
-end
-
-post '/update' do
-  update_or_add_row params
-end
 
