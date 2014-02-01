@@ -1,26 +1,16 @@
-# require "bundler"
 require 'google_drive'
 require 'erubis'
 require 'sinatra'
 require 'json'
-require 'hashie'
+require 'models/line'
+require 'models/dialog_tree'
+
 set :erb, :escape_html => true
                                                                name, sec = "patrick@camposanto.com", "c4mp3s1n0"
 # You can also use OAuth. See document of
 # GoogleDrive.login_with_oauth for details.
 session = GoogleDrive.login(name, sec)
 WS = session.spreadsheet_by_key("0AoAp79Ob8GbIdDVtN1VQQ0dnQi1FQWh1ZlhKUXJURXc").worksheets[0]
-
-class Line < Hashie::Dash
-  property :id#, :required => true
-  property :scene
-  property :text
-  property :character
-  property :tags
-  property :previous_line_id
-  property :conditions
-  property :after_effects
-end
 
 get '/lines' do
   scene = params[:by_scene]
@@ -50,24 +40,26 @@ post '/update' do
   update_or_add_row params
 end
 
+def generate_id
+  SecureRandom.uuid
+end
+
+def get_lines_as_tree(scene)
+  WS.reload
+  rows = WS.list.select {|s| s == scene}
+  lines = rows.collect {|r| Line.create_from_row(r)}
+  DialogTree.build_tree(tree, lines)
+end
+
+
 def get_lines(scene = nil)
   WS.reload
   lines = []
   WS.rows[1..-1].each do |row|
-    line = Line.new(
-      :id => row[0],
-      :character => row[1],
-      :text => row[2],
-      :conditions => row[3],
-      :after_effects => row[4],
-      :scene => row[5],
-      :previous_line_id => row[6],
-      :previous_line_id => row[7],
-      :tags => row[8]
-    )
+    line = Line.create_from_row(row)
     lines << line if !scene or scene == line.scene
   end
-  lines << Line.new
+  lines << Line.new(:id => generate_id, :scene => scene, :character => lines[-2].character)
 end
 
 def get_scenes

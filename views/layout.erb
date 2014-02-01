@@ -39,14 +39,16 @@
         var text = $el.find('.dialog-line-text').val();
         var tags = $el.find('.dialog-line-tags').val();
         var character = $el.find('.dialog-line-character').val();
-        var previousLineId = $el.prev().data('line-id')
+        var previousLineId = $el.prev().data('line-id');
 
-        if ($el.data('line-id')) {
-          var lineId = $el.data('line-id');
-        } else {
-          var lineId = +new Date;
-          $el.data('line-id', lineId);
-        }
+        var scene = $el.data('scene');
+        var lineId = $el.data('line-id');
+        // if ($el.data('line-id')) {
+        //   var lineId = $el.data('line-id');
+        // } else {
+        //   var lineId = +new Date;
+        //   $el.data('line-id', lineId);
+        // }
 
         $.ajax({
           url: '/update',
@@ -56,7 +58,8 @@
             "Text": text,
             "Tags": tags,
             "Character": character,
-            "Previous Line ID": previousLineId
+            "Previous Line ID": previousLineId,
+            "Scene": scene
           }
         });
       });
