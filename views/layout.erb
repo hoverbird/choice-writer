@@ -48,10 +48,12 @@
       })
 
       $('.dialog-fields').on("click", '.dialog-line-display-text', function(event) {
-        var $el = $(event.target);
-        var textInput = $el.prev();
-        $el.hide();
-        textInput.removeClass('invisible').focus();
+        var $el = $(event.target).parents('.dialog-line');
+        var $textInput = $el.find('.dialog-line-text');
+        var $textDisplay = $el.find('.dialog-line-display-text');
+
+        $textDisplay.hide();
+        $textInput.removeClass('invisible').show().focus();
       });
 
       $('.dialog-fields').on("blur", '.dialog-line input', function(event) {
@@ -62,10 +64,6 @@
         $input.addClass('invisible');
 
         var $el = $input.parents('.dialog-line');
-
-        // Hide text area, show display area;
-        // $el.next().show();
-        // $el.find('.dialog-line-text').addClass('invisble');
 
         var text = $el.find('.dialog-line-text').val();
         var tags = $el.find('.dialog-line-tags').val();

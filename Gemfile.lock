@@ -29,6 +29,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
+    redcarpet (3.0.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -56,6 +57,7 @@ DEPENDENCIES
   erubis
   google_drive
   hashie
+  redcarpet
   rspec
   rubytree
   shotgun

@@ -1,10 +1,13 @@
 <div class="dialog-line panel panel-default" data-line-id="<%= line.id %>" data-previous-line-id="<%= line.previous_line_id %>" data-scene="<%= line.scene %>">
   <div class="panel-body">
     <input type="text" class="dialog-line-text form-control invisible" value="<%= line.text %>">
-    <div class="dialog-line-display-text"><%= line.text %></div>
+    <div class="dialog-line-display-text"><%== line.markdown_text %></div>
   </div>
   <div class="panel-footer">
-    <label>Character</label><input type="text" class="dialog-line-character form-control typeahead" value="<%= line.character %>">&nbsp;
+    <label>Character</label>
+    <input type="text" class="dialog-line-character form-control invisible typeahead" value="<%= line.character %>">
+    <div class="dialog-line-display-character"><%= line.character %></div>
+&nbsp;
     <button class="insert-line">insert line</button>
   </div>
 </div>

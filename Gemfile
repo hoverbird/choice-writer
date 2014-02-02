@@ -6,6 +6,7 @@ gem "google_drive"
 gem "erubis"
 gem "hashie"
 gem "rubytree"
+gem "redcarpet"
 
 # dev
 gem "shotgun"
