@@ -1,19 +1,10 @@
 <h1><%= scene %></h1>
 <a href="/scenes"><-- Back</a>
 <div class="row span8 offset4">
-  <div class="dialog-fields">
-    <% for line in lines %>
-      <div class="dialog-line panel panel-default" data-line-id="<%= line.id %>" data-scene="<%= line.scene %>">
-        <div class="panel-body">
-          <input type="text" class="dialog-line-text form-control" value="<%= line.text %>">
-        </div>
-        <div class="panel-footer">
-          <label>Character</label><input type="text" class="dialog-line-character form-control typeahead" value="<%= line.character %>">&nbsp;
-         <!--  <label>Tags</label><input type="text" class="dialog-line-tags form-control typeahead" value="<%= line.tags %>"> -->
-        </div>
-      </div>
+  <div class="dialog-lines dialog-fields">
+    <% for node in tree %>
+      <%== erb :line, locals: {line: node.content} %>
     <% end %>
   </div>
 </div>
 
-<button class="new-line">New Line</button>

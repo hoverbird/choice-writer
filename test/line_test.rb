@@ -10,7 +10,7 @@ describe "Dialog Tree" do
       Line.new(id: "4", previous_line_id: 3, scene: "Bar"),
       Line.new(id: "5", previous_line_id: 4, scene: "Bar"),
       Line.new(id: "6", previous_line_id: 4, scene: "Bar"),
-      Line.new(id: "7", previous_line_id: 5, scene: "Bar")
+      Line.new(previous_line_id: 5, scene: "Bar")
     ]
   end
 
@@ -18,5 +18,6 @@ describe "Dialog Tree" do
     tree = DialogTree.build_tree(test_lines)
     tree.print_tree
     tree.size.should == test_lines.size
+
   end
 end

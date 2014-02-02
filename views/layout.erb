@@ -27,10 +27,24 @@
         remote: '/tags.json'
       });
 
-      $('button.new-line').on('click', function() {
-        var $newField = $('.dialog-line').clone();
-        $newField.data('line-id', null);
-        $('.dialog-fields').append($newField);
+      $('.dialog-lines').on('click', '.insert-line', function(event) {
+        var $el = $(event.target).parents('.dialog-line');
+        var $nextEl = $el.next('.dialog-line');
+
+        $.ajax({
+          url: '/new_line',
+          method: 'POST',
+          data: {
+            previous_line_id: $el.data('line-id'),
+            scene: $el.data('scene')
+          },
+          success: function(html) {
+            $newLine = $(html);
+            $el.after($newLine);
+            $nextEl.data('previous-line-id', $newLine.data('line-id'));
+            $nextEl.find('input.dialog-line-text').trigger('blur') // total hack, should use real event system
+          }
+        });
       })
 
       $('.dialog-fields').on("blur", '.dialog-line input', function(event) {
@@ -39,27 +53,21 @@
         var text = $el.find('.dialog-line-text').val();
         var tags = $el.find('.dialog-line-tags').val();
         var character = $el.find('.dialog-line-character').val();
-        var previousLineId = $el.prev().data('line-id');
+        var previousLineId = $el.data('previous-line-id');
 
         var scene = $el.data('scene');
         var lineId = $el.data('line-id');
-        // if ($el.data('line-id')) {
-        //   var lineId = $el.data('line-id');
-        // } else {
-        //   var lineId = +new Date;
-        //   $el.data('line-id', lineId);
-        // }
 
         $.ajax({
           url: '/update',
           method: "POST",
           data: {
-            "Line ID": lineId,
-            "Text": text,
-            "Tags": tags,
-            "Character": character,
-            "Previous Line ID": previousLineId,
-            "Scene": scene
+            "id": lineId,
+            "text": text,
+            "tags": tags,
+            "character": character,
+            "previous_line_id": previousLineId,
+            "scene": scene
           }
         });
       });

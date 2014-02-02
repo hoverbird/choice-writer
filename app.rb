@@ -2,8 +2,8 @@ require 'google_drive'
 require 'erubis'
 require 'sinatra'
 require 'json'
-require 'models/line'
-require 'models/dialog_tree'
+require './models/line'
+require './models/dialog_tree'
 
 set :erb, :escape_html => true
                                                                name, sec = "patrick@camposanto.com", "c4mp3s1n0"
@@ -14,7 +14,7 @@ WS = session.spreadsheet_by_key("0AoAp79Ob8GbIdDVtN1VQQ0dnQi1FQWh1ZlhKUXJURXc").
 
 get '/lines' do
   scene = params[:by_scene]
-  erb :index, locals: { lines: get_lines(scene), scene: scene }
+  erb :index, locals: { tree: get_lines_as_tree(scene), scene: scene }
 end
 
 get '/scenes' do
@@ -28,29 +28,31 @@ end
 
 get '/characters.json' do
   content_type :json
-  WS.list.collect {|row| row["Character"]}.to_json
+  WS.list.collect {|row| row["character"]}.to_json
 end
 
 get '/tags.json' do
   content_type :json
-  WS.list.collect {|row| row["Tags"]}.to_json
+  WS.list.collect {|row| row["tags"]}.to_json
 end
 
 post '/update' do
   update_or_add_row params
 end
 
-def generate_id
-  SecureRandom.uuid
+post '/new_line' do
+  new_line = Line.new(params)
+  insert_row(new_line)
+  erb :line, locals: {line: new_line}, layout: false
 end
 
+private
 def get_lines_as_tree(scene)
   WS.reload
-  rows = WS.list.select {|s| s == scene}
+  rows = WS.list.select {|row| row["scene"] == scene}
   lines = rows.collect {|r| Line.create_from_row(r)}
-  DialogTree.build_tree(tree, lines)
+  DialogTree.build_tree(lines)
 end
-
 
 def get_lines(scene = nil)
   WS.reload
@@ -59,20 +61,23 @@ def get_lines(scene = nil)
     line = Line.create_from_row(row)
     lines << line if !scene or scene == line.scene
   end
-  lines << Line.new(:id => generate_id, :scene => scene, :character => lines[-2].character)
+  lines << Line.new(:scene => scene, :character => lines[-2].character)
 end
 
 def get_scenes
   WS.reload
-  WS.list.collect {|row| row["Scene"]}.uniq
+  WS.list.collect {|row| row["scene"]}.uniq
+end
+
+def insert_row(params)
 end
 
 def update_or_add_row(line_data)
-  line_id = line_data["Line ID"]
+  line_id = line_data["id"]
 
   row_to_update = nil
   WS.list.each do |row|
-    row_id = row["Line ID"]
+    row_id = row["id"]
     if row_id == line_id
       row_to_update = row
       break
