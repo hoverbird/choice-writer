@@ -60,6 +60,8 @@
         event.preventDefault();
         var $input = $(event.target);
         var $display = $input.next();
+
+        // Should animate this
         $display.text($input.val()).show();
         $input.addClass('invisible');
 
@@ -73,9 +75,14 @@
         var scene = $el.data('scene');
         var lineId = $el.data('line-id');
 
+        var onSuccess = function(html) {
+          $el.replaceWith(html);
+        };
+
         $.ajax({
           url: '/update',
           method: "POST",
+          success: onSuccess,
           data: {
             "id": lineId,
             "text": text,

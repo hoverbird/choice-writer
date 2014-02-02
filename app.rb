@@ -37,7 +37,8 @@ get '/tags.json' do
 end
 
 post '/update' do
-  update_or_add_row params
+  line = update_or_add_row(params)
+  erb :line, locals: {line: line}, layout: false
 end
 
 post '/new_line' do
@@ -73,23 +74,23 @@ def insert_row(params)
 end
 
 def update_or_add_row(line_data)
-  line_id = line_data["id"]
-
+  line = Line.new(line_data)
   row_to_update = nil
   WS.list.each do |row|
     row_id = row["id"]
-    if row_id == line_id
+    if row_id == line.id
       row_to_update = row
       break
     end
   end
 
   if row_to_update
-    row_to_update.update(line_data)
+    row_to_update.update(line.to_hash)
   else # new row
-    WS.list.push(line_data)
+    WS.list.push(line.to_hash)
   end
   WS.save
+  line
 end
 
 
