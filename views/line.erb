@@ -1,0 +1,9 @@
+<div class="dialog-line panel panel-default" data-line-id="<%= line.id %>" data-previous-line-id="<%= line.previous_line_id %>" data-scene="<%= line.scene %>">
+  <div class="panel-body">
+    <input type="text" class="dialog-line-text form-control" value="<%= line.text %>">
+  </div>
+  <div class="panel-footer">
+    <label>Character</label><input type="text" class="dialog-line-character form-control typeahead" value="<%= line.character %>">&nbsp;
+    <button class="insert-line">insert line</button>
+  </div>
+</div>
