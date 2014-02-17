@@ -7,6 +7,7 @@ gem "erubis"
 gem "hashie"
 gem "rubytree"
 gem "redcarpet"
+gem "activerecord"
 
 # dev
 gem "shotgun"

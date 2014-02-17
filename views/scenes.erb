@@ -1,5 +1,14 @@
-<ul>
-<% for scene in scenes %>
-  <li><a href="/lines?by_scene=<%= scene %>"><%= scene %></a></li>
-<% end %>
-</ul>
+<div class="row">
+<h2>Scenes</h2>
+</div>
+<div class="row">
+
+  <div class="scenes-list well">
+    <ul>
+    <% for scene in scenes %>
+      <li><a href="/lines?by_scene=<%= scene %>"><%= scene %></a></li>
+    <% end %>
+    </ul>
+    <small>sourced from <a href="https://docs.google.com/a/camposanto.com/spreadsheet/ccc?key=0AoAp79Ob8GbIdDVtN1VQQ0dnQi1FQWh1ZlhKUXJURXc&usp=drive_web#gid=0">this google doc</a></small>
+  </div>
+</div>

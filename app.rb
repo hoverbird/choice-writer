@@ -2,6 +2,8 @@ require 'google_drive'
 require 'erubis'
 require 'sinatra'
 require 'json'
+require 'active_support/all'
+
 require './models/line'
 require './models/dialog_tree'
 
@@ -11,6 +13,10 @@ set :erb, :escape_html => true
 # GoogleDrive.login_with_oauth for details.
 session = GoogleDrive.login(name, sec)
 WS = session.spreadsheet_by_key("0AoAp79Ob8GbIdDVtN1VQQ0dnQi1FQWh1ZlhKUXJURXc").worksheets[0]
+
+get '/' do
+  redirect to('/scenes')
+end
 
 get '/lines' do
   scene = params[:by_scene]
@@ -37,14 +43,14 @@ get '/tags.json' do
 end
 
 post '/update' do
+  puts params
   line = update_or_add_row(params)
-  erb :line, locals: {line: line}, layout: false
+  erb :line, locals: {line: line, index: 0}, layout: false
 end
 
 post '/new_line' do
   new_line = Line.new(params)
-  insert_row(new_line)
-  erb :line, locals: {line: new_line}, layout: false
+  erb :line, locals: {line: new_line, index: 0}, layout: false
 end
 
 private
@@ -68,9 +74,6 @@ end
 def get_scenes
   WS.reload
   WS.list.collect {|row| row["scene"]}.uniq
-end
-
-def insert_row(params)
 end
 
 def update_or_add_row(line_data)

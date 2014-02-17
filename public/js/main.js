@@ -1,78 +1,65 @@
 $(function() {
-  $('.dialog-line-character').typeahead({
-    name: 'characters',
-    remote: '/characters.json'
-  });
+  // $('.dialog-line-character').typeahead({
+  //   name: 'characters',
+  //   remote: '/characters.json'
+  // });
 
-  $('.dialog-line-tags').typeahead({
-    name: 'tags',
-    remote: '/tags.json'
-  });
+  // $('.dialog-line-tags').typeahead({
+  //   name: 'tags',
+  //   remote: '/tags.json'
+  // });
 
-  $('.dialog-lines').on('click', '.insert-line', function(event) {
-    var $el = $(event.target).parents('.dialog-line');
-    var $nextEl = $el.next('.dialog-line');
+  $('.dialog-lines').on('click', '.section-divider', function(event) {
+    var $divider = $(event.target)
+    var $el = $divider.prev();
+    var $nextEl = $divider.next();
 
     $.ajax({
       url: '/new_line',
       method: 'POST',
       data: {
+        character: $el.find('.dialog-line-character').val(),
         previous_line_id: $el.data('line-id'),
         scene: $el.data('scene')
       },
       success: function(html) {
         $newLine = $(html);
+        $divider.remove();
         $el.after($newLine);
+        $newLine.find('.dialog-line-display-character').click();
         $nextEl.data('previous-line-id', $newLine.data('line-id'));
         $nextEl.find('input.dialog-line-text').trigger('blur') // total hack, should use real event system
       }
     });
   })
 
-  $('.dialog-fields').on("click", '.dialog-line-display-text', function(event) {
-    var $el = $(event.target).parents('.dialog-line');
-    var $textInput = $el.find('.dialog-line-text');
-    var $textDisplay = $el.find('.dialog-line-display-text');
-
-    $textDisplay.hide();
-    $textInput.removeClass('invisible').show().focus();
+  $('.replace-text').on("click", function(event) {
+    event.preventDefault();
+    var $el = $(event.target).parents('.replace-text');
+    $el.addClass('editable');
+    $el.find('.display').focus();
   });
 
-  $('.dialog-fields').on("blur", '.dialog-line input', function(event) {
+  $('.replace-text').on("blur", "input", function(event) {
     event.preventDefault();
-    var $input = $(event.target);
-    var $display = $input.next();
 
-    // Should animate this
-    $display.text($input.val()).show();
-    $input.addClass('invisible');
+    var $el = $(event.target.parentElement);
+    var $swapForm = $el.find('.replace-text');
+    var $textInput = $el.find('input');
 
-    var $el = $input.parents('.dialog-line');
+    $swapForm.removeClass('editable');
+    $el.find('.display').text($textInput.val());
 
-    var text = $el.find('.dialog-line-text').val();
-    var tags = $el.find('.dialog-line-tags').val();
-    var character = $el.find('.dialog-line-character').val();
-    var previousLineId = $el.data('previous-line-id');
-
-    var scene = $el.data('scene');
-    var lineId = $el.data('line-id');
-
+    var $dialogLine = $textInput.parents('.dialog-line');
     var onSuccess = function(html) {
-      $el.replaceWith(html);
+      $dialogLine.replaceWith(html);
     };
 
     $.ajax({
       url: '/update',
       method: "POST",
       success: onSuccess,
-      data: {
-        "id": lineId,
-        "text": text,
-        "tags": tags,
-        "character": character,
-        "previous_line_id": previousLineId,
-        "scene": scene
-      }
+      data: $dialogLine.find("input").serialize()
     });
   });
 });

@@ -1,9 +1,13 @@
-<h1><%= scene %></h1>
-<a href="/scenes"><-- Back</a>
-<div class="row span8 offset4">
-  <div class="dialog-lines dialog-fields">
-    <% for node in tree %>
-      <%== erb :line, locals: {line: node.content} %>
+<div class="row">
+  <div class="span2">
+    <h1><%= scene %></h1>
+    <a href="/scenes"><-- back</a>
+  </div>
+</div>
+<div class="row">
+  <div class="dialog-lines dialog-fields span6 offset2">
+    <% tree.each_with_index do |node, index| %>
+      <%== erb :line, locals: {line: node.content, index: index} %>
     <% end %>
   </div>
 </div>
