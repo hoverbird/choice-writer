@@ -1,0 +1,50 @@
+body {
+  padding-top: 40px;
+}
+
+.card {
+  margin: 0 0 15px 0;
+}
+
+.scenes-list ul {
+  text-align: left;
+  width: 300px;
+  list-syle: none;
+}
+
+.replace-text input {
+  color: #666;
+  font-size: 18px;
+  display: none;
+  border: 0;
+  -webkit-appearance: none;
+  margin-left: 13px;
+}
+
+.replace-text.editable input {
+  display: block;
+}
+
+.replace-text.editable .display {
+  display: none;
+}
+
+
+.section-diver {
+  padding: 20px;
+}
+.section-divider:hover {
+  cursor: pointer;
+  /*margin: 20px auto 10px auto;*/
+}
+
+.section-divider hr{
+  display: block;
+  /*visibility: hidden;*/
+  /*padding: 20px;*/
+  width: 14%;
+  margin: 40px auto 8px auto;
+  padding-bottom: 12px;
+  border: 0;
+  border-top: 1px solid #dadada;
+}
