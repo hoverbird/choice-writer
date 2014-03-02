@@ -10,42 +10,40 @@ $(function() {
   // });
 
   $('.dialog-lines').on('click', '.section-divider', function(event) {
-    var $divider = $(event.target)
+    var $divider = $(this);
     var $el = $divider.prev();
     var $nextEl = $divider.next();
 
     $.ajax({
       url: '/new_line',
       method: 'POST',
-      data: {
-        character: $el.find('.dialog-line-character').val(),
-        previous_line_id: $el.data('line-id'),
-        scene: $el.data('scene')
-      },
+      data: $el.find("input").serialize(),
       success: function(html) {
         $newLine = $(html);
         $divider.remove();
         $el.after($newLine);
         $newLine.find('.dialog-line-display-character').click();
         $nextEl.data('previous-line-id', $newLine.data('line-id'));
-        $nextEl.find('input.dialog-line-text').trigger('blur') // total hack, should use real event system
+        debugger
+        $newLine.find('.card-body .replace-text .display').click()
       }
     });
   })
 
   $('.replace-text').on("click", function(event) {
-    event.preventDefault();
-    var $el = $(event.target).parents('.replace-text');
+    console.log("clicked", this)
+    var $el = $(this);
     $el.addClass('editable');
-    $el.find('.display').focus();
+    $el.find('input').focus();
   });
 
   $('.replace-text').on("blur", "input", function(event) {
+    console.log("blurred", this)
     event.preventDefault();
 
     var $el = $(event.target.parentElement);
     var $swapForm = $el.find('.replace-text');
-    var $textInput = $el.find('input');
+    var $textInput = $(this);
 
     $swapForm.removeClass('editable');
     $el.find('.display').text($textInput.val());
