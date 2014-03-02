@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'google_drive'
 require 'erubis'
 require 'sinatra'
@@ -8,7 +9,7 @@ require './models/line'
 require './models/dialog_tree'
 
 set :erb, :escape_html => true
-                                                               name, sec = "patrick@camposanto.com", "c4mp3s1n0"
+                                                                               name, sec = "patrick@camposanto.com", "c4mp3s1n0"
 # You can also use OAuth. See document of
 # GoogleDrive.login_with_oauth for details.
 session = GoogleDrive.login(name, sec)
@@ -95,5 +96,3 @@ def update_or_add_row(line_data)
   WS.save
   line
 end
-
-
