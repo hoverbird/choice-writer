@@ -1,3 +1,5 @@
+node_modules
 .bundle
 .ruby-version
-
+js/generated
+js/libs

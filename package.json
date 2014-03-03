@@ -1,0 +1,14 @@
+{
+  "name": "choice-writer-runner",
+  "description": "Compile CoffeeScript files to JavaScript.",
+  "version": "0.10.1",
+  "dependencies": {
+    "grunt-contrib-coffee": ">= 0.0.0",
+    "grunt": ">= 0.0.0",
+    "grunt-cli": ">= 0.0.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-contrib-watch": "^0.5.3"
+  }
+}
