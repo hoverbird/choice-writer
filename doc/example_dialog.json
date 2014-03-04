@@ -1,0 +1,1257 @@
+{
+  "EventResponseSpecification": [
+    {
+      "EventName": "DennySpeech",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Hi Denny!",
+            "AudioClipPath": "HiDenny",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.75",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "HiDenny1",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "DennySpeech",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "HiDenny1",
+          "Status": "true"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Denny, you there?",
+            "AudioClipPath": "HiDenny",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.75",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "HiDenny2",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "DennySpeech",
+      "Requirements": {
+        "BlackboardFact": [
+          {
+            "Name": "HiDenny1",
+            "Status": "true"
+          },
+          {
+            "Name": "HiDenny2",
+            "Status": "true"
+          }
+        ]
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Denny, seriously, pick up!",
+            "AudioClipPath": "HiDenn",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.75",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtTypeWriter",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtTypeWriterPlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Looks like a beat to shit typewriter. Sturdy and well made though.",
+            "AudioClipPath": "Berkeley/bCabin_typerwriter",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "4.5",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtTypeWriterPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtCabinCoffeeMug",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtCabinCoffeeMugPlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "There's a cup of coffee. *Sniffs* Probably made some time today.",
+            "AudioClipPath": "Berkeley/bCabin_coffeecup",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "3",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinCoffeeMugPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtCabinFoodCan",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtCabinFoodCanPlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "There's some food cans; they look empty.",
+            "AudioClipPath": "Berkeley/bCabin_emptycans",
+            "OnFinishEvent": "Reply01OnLookAtCabinFoodCan",
+            "OnFinishEventDelay": "0.1",
+            "HackAudioDuration": "3",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinFoodCanPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtCabinLogs",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtCabinLogsPlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Looks like they made a fire.",
+            "AudioClipPath": "Berkeley/bCabin_charredlog",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.75",
+            "HackAudioDuration": "4.5",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinFoodLogsPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtCabinDebris",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtCabinDebris",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "There's leaves and shit everywhere in here. It's not really safe from the elements.",
+            "AudioClipPath": "Berkeley/bCabin_leavesdebris",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.75",
+            "HackAudioDuration": "3",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinDebrisPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnCabinEnter",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "CabinEnterPlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Cabin's clear. There's noone here.",
+            "AudioClipPath": "Berkeley/bCabin_cabinenter_trigger",
+            "OnFinishEvent": "Reply1OnCabinEnter",
+            "OnFinishEventDelay": "0.1",
+            "HackAudioDuration": "3",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "CabinEnterPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply1OnCabinEnter",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "What do you see?",
+            "AudioClipPath": "Parker/pCabin_enter_reply_1",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.75",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtCabinStoneHead",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtCabinStoneHead",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "That's weird.",
+            "AudioClipPath": "Berkeley/bCabin_stonehead",
+            "OnFinishEvent": "Reply01OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0.1",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinStoneHead",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply01OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "What? What is it?",
+            "AudioClipPath": "Parker/pCabin_weirdStoneHead_reply1",
+            "OnFinishEvent": "Reply02OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0.1",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply02OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "A ... head?",
+            "AudioClipPath": "Berkeley/bCabin_stonehead_reply1",
+            "OnFinishEvent": "Reply03OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply03OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Oh my God. OH MY GOD. OH--",
+            "AudioClipPath": "Parker/pCabin_weirdStoneHead_reply2",
+            "OnFinishEvent": "Reply04OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinStoneHead",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply04OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "NO. No. Not like that. Just a big stone head. Made out of rock. It's not a human head.",
+            "AudioClipPath": "Berkeley/bCabin_stonehead_reply2",
+            "OnFinishEvent": "Reply05OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply05OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Jesus, Berkeley. ",
+            "AudioClipPath": "Parker/pCabin_weirdStoneHead_reply3",
+            "OnFinishEvent": "Reply06OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply06OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Look, why don't we try not to ASSUME dismemberment or decapitation from here on out, OK?",
+            "AudioClipPath": "Berkeley/bCabin_stonehead_reply3",
+            "OnFinishEvent": "Reply07OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0.2",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply07OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Yeah, OK. I think that'd be good.",
+            "AudioClipPath": "Parker/pCabin_weirdStoneHead_reply4",
+            "OnFinishEvent": "Reply08OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0.5",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply08OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "It is weird, though. I don't think it means anything.",
+            "AudioClipPath": "Berkeley/bCabin_stonehead_reply4",
+            "OnFinishEvent": "Reply09OnLookAtCabinStoneHead",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply09OnLookAtCabinStoneHead",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Good.",
+            "AudioClipPath": "Parker/pCabin_weirdStoneHead_reply5",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply01OnLookAtCabinFoodCan",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "And no sign of Coburn or the daughter?",
+            "AudioClipPath": "Parker/pCabin_emptyCans_reply5",
+            "OnFinishEvent": "Reply02OnLookAtCabinFoodCan",
+            "OnFinishEventDelay": "0.1",
+            "HackAudioDuration": "2",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply02OnLookAtCabinFoodCan",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "SeenCabinCellphone",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "No. It looks like he fed her though. That's probably a good sign.",
+            "AudioClipPath": "Berkeley/bCabin_emptycans_reply1",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.1",
+            "HackAudioDuration": "4",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply02OnLookAtCabinFoodCan",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "SeenCabinCellphone",
+          "Status": "true"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Just the phone. That's probably all I need to keep moving.",
+            "AudioClipPath": "Berkeley/bCabin_emptycans_reply1",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0.75",
+            "HackAudioDuration": "4",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "approachHillTrigger",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "bStar_hillFX_triggerPlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": null,
+            "AudioClipPath": "Berkeley/bStart_hillFX_trigger",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "bStar_hillFX_triggerPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtCabinBedroll",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtCabinBedrollPlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "There's a bed up against the wall. Looks like two people slept here last night.",
+            "AudioClipPath": "Berkeley/bCabin_bed",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinBedrollPlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnLookAtCabinCellphone",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "OnLookAtCabinCellphonePlayed",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "It's a phone.",
+            "AudioClipPath": "Berkeley/bCabin_phone_reply1",
+            "OnFinishEvent": "Reply01OnLookAtCabinCellphone",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "OnLookAtCabinCellphonePlayed",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "Reply01OnLookAtCabinCellphone",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "(Rest of convo to come later)",
+            "AudioClipPath": "null",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "SeeCabin",
+      "Requirements": {
+        "BlackboardFact": {
+          "Name": "bCabin_See_Played",
+          "Status": "false"
+        }
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "There's a cabin up a head.",
+            "AudioClipPath": "Berkeley/bCabin_cabinsee",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "bCabin_See_Played",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "PickUpRadio",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "*Mmph* *Ugh* Hey, hey, IÃ­m here.",
+            "AudioClipPath": "Berkeley/bStart_walkietalkie_use",
+            "OnFinishEvent": "OnPickUpRadioReply01",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnPickUpRadioReply01",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Thank god, I was starting to figure we lost you.",
+            "AudioClipPath": "Parker/pStart_walkieTalkie_reply1",
+            "OnFinishEvent": "OnPickUpRadioReply02",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnPickUpRadioReply02",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "No, not quite.",
+            "AudioClipPath": "Berkeley/bStart_walkietalkie_reply1",
+            "OnFinishEvent": "OnPickUpRadioReply03",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnPickUpRadioReply03",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "What happened?",
+            "AudioClipPath": "Parker/pStart_walkieTalkie_reply2",
+            "OnFinishEvent": "OnPickUpRadioReply04",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnPickUpRadioReply04",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "I donÃ­t know. Last thing I remember I tied off my rope and now IÃ­m talking to you.",
+            "AudioClipPath": "Berkeley/bStart_walkietalkie_reply2",
+            "OnFinishEvent": "OnPickUpRadioReply05",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnPickUpRadioReply05",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Jesus, be careful. Are you OK to keep moving?",
+            "AudioClipPath": "Parker/pStart_walkieTalkie_reply3",
+            "OnFinishEvent": "OnPickUpRadioReply06",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnPickUpRadioReply06",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Yeah. IÃ­m taking off now.",
+            "AudioClipPath": "Berkeley/bStart_walkietalkie_reply3b",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnStartRadioConversation",
+      "Requirements": {
+        "BlackboardFact": [
+          {
+            "Name": "PlayedRadioConversation01",
+            "Status": "false"
+          },
+          {
+            "Name": "SpeechPlaying",
+            "Status": "false"
+          }
+        ]
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "So is there a Mrs. Berkeley?",
+            "AudioClipPath": "Parker/pStart_conversation1_start",
+            "OnFinishEvent": "OnRadioChat01Choice",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "PlayedRadioConversation01",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply01",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Ha, no there is definitely not.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply1",
+            "OnFinishEvent": "OnRadioChat01Reply02",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply02",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "I imagine it must be hard to be with an FBI agent, especially one that travels halfway across the country on a momentÃ­s notice.",
+            "AudioClipPath": "Parker/pStart_conversation1_reply1",
+            "OnFinishEvent": "OnRadioChat01Reply03",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply03",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Yeah, popular opinion would agree with that sentiment.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply2",
+            "OnFinishEvent": "OnRadioChat01Reply04",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply04",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "I- IÃ­m sorry.",
+            "AudioClipPath": "Parker/pStart_conversation1_reply2",
+            "OnFinishEvent": "OnRadioChat01Reply05",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply05",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "ItÃ­s fine.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply3",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Choice",
+      "Requirements": null,
+      "Responses": {
+        "DialogChoiceResponseSpecification": {
+          "DialogToShow": {
+            "Choices": {
+              "DialogChoice": [
+                {
+                  "DisplayText": "Ha, no.",
+                  "EventResponse": "OnRadioChat01Reply01"
+                },
+                {
+                  "DisplayText": "There used to be.",
+                  "EventResponse": "OnRadioChat01Reply01b"
+                },
+                {
+                  "DisplayText": "That's not really pertinent.",
+                  "EventResponse": "OnRadioChat01Reply01c"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply01b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "There used to be.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply4",
+            "OnFinishEvent": "OnRadioChat01Reply02b",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply02b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Ah",
+            "AudioClipPath": "Parker/pStart_conversation1_reply3",
+            "OnFinishEvent": "OnRadioChat01Reply03b",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply03b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "I imagine it must be hard to be with an FBI agent; especially one that travels halfway across the country on a momentÃ­s notice.",
+            "AudioClipPath": "Parker/pStart_conversation1_reply1",
+            "OnFinishEvent": "OnRadioChat01Reply04b",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply04b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "I guess it must be.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply5",
+            "OnFinishEvent": "OnRadioChat01Reply05b",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply05b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Kids?",
+            "AudioClipPath": "Parker/pStart_conversation1_reply4",
+            "OnFinishEvent": "OnRadioChat01Reply06b",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply06b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "One.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply6",
+            "OnFinishEvent": "OnRadioChat01Reply07b",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply07b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "How old?",
+            "AudioClipPath": "Parker/pStart_conversation1_reply5",
+            "OnFinishEvent": "OnRadioChat01Reply08b",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply08b",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Seven. *Awk* Eight.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply7",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply01c",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "ThatÃ­s not really pertinent, is it?",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply8",
+            "OnFinishEvent": "OnRadioChat01Reply02c",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply02c",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Sure it is.",
+            "AudioClipPath": "Parker/pStart_conversation1_reply6",
+            "OnFinishEvent": "OnRadioChat01Reply03c",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply03c",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Can't say I agree.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply8",
+            "OnFinishEvent": "OnRadioChat01Reply04c",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply04c",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Right now you are in a survival situation. ItÃ­s my job to not just keep you focused but to keep you relaxed. Chit chat helps.",
+            "AudioClipPath": "Parker/pStart_conversation1_reply7",
+            "OnFinishEvent": "OnRadioChat01Reply05c",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply05c",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "Not that kind of chit chat.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply9",
+            "OnFinishEvent": "OnRadioChat01Reply06c",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply06c",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "I- I'm sorry.",
+            "AudioClipPath": "Parker/pStart_conversation1_reply2",
+            "OnFinishEvent": "OnRadioChat01Reply07c",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnRadioChat01Reply07c",
+      "Requirements": null,
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "It's fine.",
+            "AudioClipPath": "Berkeley/bStart_conversation1_reply3",
+            "OnFinishEvent": null,
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "false",
+            "MinimumDuration": "0"
+          }
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnStartRadioConversation",
+      "Requirements": {
+        "BlackboardFact": [
+          {
+            "Name": "SpeechPlaying",
+            "Status": "false"
+          },
+          {
+            "Name": "PlayedRadioConversation02",
+            "Status": "false"
+          }
+        ]
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "So is there a Mrs. Berkeley? (Alt 1)",
+            "AudioClipPath": "Parker/pStart_conversation1_start",
+            "OnFinishEvent": "OnRadioChat01Choice",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "PlayedRadioConversation02",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    },
+    {
+      "EventName": "OnStartRadioConversation",
+      "Requirements": {
+        "BlackboardFact": [
+          {
+            "Name": "SpeechPlaying",
+            "Status": "false"
+          },
+          {
+            "Name": "PlayedRadioConversation03",
+            "Status": "false"
+          }
+        ]
+      },
+      "Responses": {
+        "SpeechResponseSpecification": {
+          "SpeechToPlay": {
+            "Caption": "So is there a Mrs. Berkeley? (Alt 2)",
+            "AudioClipPath": "Parker/pStart_conversation1_start",
+            "OnFinishEvent": "OnRadioChat01Choice",
+            "OnFinishEventDelay": "0",
+            "HackAudioDuration": "0",
+            "AllowQueueing": "true",
+            "MinimumDuration": "0"
+          }
+        },
+        "BlackboardFactResponseSpecification": {
+          "FactName": "PlayedRadioConversation03",
+          "NewStatus": "true"
+        }
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventXML/GreyForestMasterList.xml"
+    }
+  ]
+}
