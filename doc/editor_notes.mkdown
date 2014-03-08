@@ -1,0 +1,21 @@
+types: event, text, insert shots, sounds
+
+
+guards against something happening to soon after something else, in a weird location or situation.
+
+
+worries: actually creating multiple versions of lines in the DB... should check against duplicates
+
+"Crit Path" -
+"Background"
+"Player Driven Events"
+
+
+Dialog can be LOCKED. Locked dialog can't be changed, it can only be cloned to an unlocked node.
+Dialog can be HIDDEN. It's never deleted. Hidden dialog is not exported.
+
+Moment:
+  Voice
+  Shot
+  Animation
+  Comment
