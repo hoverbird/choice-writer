@@ -1,28 +1,40 @@
-# module.exports = (grunt) ->
-#   grunt.initConfig(
-#     pkg: grunt.file.readJSON('package.json')
-#     concat:
-#       options:
-#         separator: ';'
-#       dist:
-#         src: ['src/**/*.js']
-#         dest: 'dist/<%= pkg.name %>.js'
-#   )
-#   grunt.registerTask 'default', 'coffee watch'
+fs = require 'fs'
+
+isModified = (filepath) ->
+  now = new Date()
+  modified =  fs.statSync(filepath).mtime
+  return (now - modified) < 10000
 
 gruntFunction = (grunt) ->
+  files = grunt.file.expandMapping(['js/coffeescript/**/*.coffee'], 'js/generated/', {
+    rename: (destBase, destPath) -> destBase + destPath.replace(/\.coffee$/, '.js')
+  })
+
+  pkg: grunt.file.readJSON 'package.json'
+  # console.log(files)
+
   gruntConfig =
     coffee:
-      glob_to_multiple:
+      options:
+        sourceMap: true
+        bare: true
+        force: true # needs to be added to the plugin
+      all:
         expand: true
-        flatten: true
-        cwd: 'js/coffeescript'
-        src: ['*.coffee']
-        dest: 'js/generated'
+        cwd: 'js/coffeescript/'
+        src: '**/*.coffee'
+        dest: 'js/compiled'
         ext: '.js'
+      modified:
+        expand: true
+        cwd: 'js/coffeescript/'
+        src: '**/*.coffee'
+        dest: 'js/compiled'
+        ext: '.js'
+        filter: isModified
 
     watch:
-      files: ['js/coffeescript/*.coffee']
+      files: ['js/coffeescript/**/*.coffee']
       tasks: ["coffee"]
 
     coffeelint:
