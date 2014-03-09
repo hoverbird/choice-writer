@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
   def index
-    render text: 'Sup!', layout: true
+    render text: '', layout: true
   end
 end
