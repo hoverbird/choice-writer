@@ -1,0 +1,5 @@
+<div class="dialog-lines dialog-fields span6 offset2">
+  <% tree.each_with_index do |node, index| %>
+    <%== erb :line, locals: {line: node.content, index: index} %>
+  <% end %>
+</div>

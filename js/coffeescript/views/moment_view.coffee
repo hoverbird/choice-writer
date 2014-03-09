@@ -18,7 +18,8 @@ define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, moment
       console.log "Nosup", this
 
     render: ->
-      this.$el.html(momentTemplate( @model.toJSON()))
+      console.log "Rendering a moment view", @model
+      this.$el.html(momentTemplate(@model.toJSON()))
       this
   )
   MomentView

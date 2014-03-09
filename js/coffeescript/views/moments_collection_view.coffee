@@ -1,17 +1,20 @@
-define ["backbone", "underscore", "views/moment_view", "models/moment"], (Backbone, _, MomentView, Moment) ->
+define ["backbone", "underscore", "views/moment_view", "models/moments_collection"], (Backbone, _, MomentView, MomentCollection) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 
     className: 'moments-collection'
 
-    render: ->
-      moments = [
-        new Moment(name: "A day in the life")
-        new Moment(name: "His last breath")
-        new Moment(name: "Their first kiss")
-      ]
+    initialize: ->
+      @collection = new MomentCollection();
+      @collection.bind "change", _.bind(this.render, this)
+      @collection.fetch success: ->
+        console.log("moment collection fetched")
+        debugger
 
-      _.each moments, (moment) =>
+    render: ->
+      debugger
+      _.each @collection, (moment) =>
+        console.log "a moment", moment
         momentView = new MomentView(model: moment)
         this.$el.append(momentView.render().el)
       this

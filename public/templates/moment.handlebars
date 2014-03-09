@@ -1,12 +1,42 @@
+<div class="dialog-line card span6">
+  <input type="hidden" name="id" value="{{ id }}">
+  <input type="hidden" name="next_line_id" value="{{ next_line_id }}">
+  <input type="hidden" name="scene" value="{{ scene }}">
 
-<div class="best plugin ever">
-  <h3>{{ name }}: <label>Click me</label>
+  <span class="replace-text">
+    <input
+         name="character"
+         type="text"
+         class="form-control typeahead"
+         value="{{ character }}">
 
-  {{! To include a partial: }}
-  {{! just provide the path to the partial without the extension }}
+    <h3 class="display card-heading simple dialog-line-display-character">{{ character }}</h3>
+  </span>
 
-  {{! cool_partial }}
+  <div class="card-body">
+    <span class="replace-text">
+      <input name="text"
+             type="text"
+             class="form-control"
+             value="{{ text }}">
 
-  {{! the path can also be relative to the current template: }}
-  {{! ./coolPartial }}
+      <div class="display dialog-line-display-text">
+        {{ text }}::::{{ markdown_text }}
+      </div>
+    </span>
+  </div>
+
+<!--     <div class="card-comments">{{! line.aftereffects }}</div> -->
 </div>
+
+<div class="section-divider" data-line-id="{{ id }}">
+  <hr class="insert-line"></hr>
+</div>
+
+{{! To include a partial: }}
+{{! just provide the path to the partial without the extension }}
+
+{{! cool_partial }}
+
+{{! the path can also be relative to the current template: }}
+{{! ./coolPartial }}
