@@ -16,20 +16,20 @@ gruntFunction = (grunt) ->
         force: true # needs to be added to the plugin
       all:
         expand: true
-        cwd: 'js/coffeescript/'
+        cwd: 'public/js/coffeescript/'
         src: '**/*.coffee'
         dest: 'public/js/generated'
         ext: '.js'
       modified:
         expand: true
-        cwd: 'js/coffeescript/'
+        cwd: 'public/js/coffeescript/'
         src: '**/*.coffee'
         dest: 'public/js/generated'
         ext: '.js'
         filter: isModified
 
     watch:
-      files: ['js/coffeescript/**/*.coffee']
+      files: ['public/js/coffeescript/**/*.coffee']
       tasks: ["coffee"]
 
 
