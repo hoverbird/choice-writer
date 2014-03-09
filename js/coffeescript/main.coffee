@@ -3,17 +3,17 @@ require.config
     # tries to load jQuery from Google's CDN first and falls back to load locally
     jquery: [
       "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min"
-      "../libs/jquery/jquery"
+      "../lib/jquery/jquery"
     ]
-    underscore: "../libs/underscore/underscore"
-    backbone: "../libs/backbone/backbone"
-    hbs: '../libs/require-handlebars-plugin/hbs'
+    underscore: "../lib/underscore/underscore"
+    backbone: "../lib/backbone/backbone"
+    hbs: '../lib/require-handlebars-plugin/hbs'
 
   hbs:
     helpers: true,                     # default: true
     i18n: false,                       # default: false
     templateExtension: 'handlebars',   # default: 'hbs'
-    partialsUrl: ''                    # default: ''
+    partialsUrl: '../../templates/partials'     # default: ''
 
   shim:
     backbone:

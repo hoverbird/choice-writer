@@ -18,13 +18,13 @@ gruntFunction = (grunt) ->
         expand: true
         cwd: 'js/coffeescript/'
         src: '**/*.coffee'
-        dest: 'js/generated'
+        dest: 'public/js/generated'
         ext: '.js'
       modified:
         expand: true
         cwd: 'js/coffeescript/'
         src: '**/*.coffee'
-        dest: 'js/generated'
+        dest: 'public/js/generated'
         ext: '.js'
         filter: isModified
 

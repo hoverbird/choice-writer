@@ -1,8 +1,8 @@
-define ["backbone", "underscore", 'hbs!views/moment'], (Backbone, _, momentTemplate) ->
+define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, momentTemplate) ->
   MomentView = Backbone.View.extend(
     tagName: 'div'
 
-    # NOTE: className etc. can be set to functions
+    # NOTE: className etc. can be functions
     className: 'dialog-line card span6'
 
     # momentTemplate: _.template "<h3><%= name %></h3>: <label>Click me</label>"
