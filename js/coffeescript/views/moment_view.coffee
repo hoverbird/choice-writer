@@ -15,3 +15,4 @@ define ["backbone", "underscore"], (Backbone, _) ->
       this.$el.html(@momentTemplate( @model.toJSON()))
       this
   )
+  MomentView

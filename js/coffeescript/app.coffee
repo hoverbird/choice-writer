@@ -1,9 +1,9 @@
-define ["backbone", "models/moment", "views/momentview"], (Backbone, Moment, MomentView) ->
+define ["backbone",
+        "jquery",
+        "views/moments_collection_view"], (Backbone, $, MomentsCollectionView) ->
   App = Backbone.View.extend(
     initialize: ->
-      moment = new Moment()
-      view = new MomentView(model: moment)
-      view.render()
-      document.body.appendChild view.el
+      momentsCollection = new MomentsCollectionView(el: $("<div class='moments-collection'>")).render()
+      document.body.appendChild momentsCollection.el
   )
   App
