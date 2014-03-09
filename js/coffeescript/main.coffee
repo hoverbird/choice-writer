@@ -7,6 +7,13 @@ require.config
     ]
     underscore: "../libs/underscore/underscore"
     backbone: "../libs/backbone/backbone"
+    hbs: '../libs/require-handlebars-plugin/hbs'
+
+  hbs:
+    helpers: true,                     # default: true
+    i18n: false,                       # default: false
+    templateExtension: 'handlebars',   # default: 'hbs'
+    partialsUrl: ''                    # default: ''
 
   shim:
     backbone:
