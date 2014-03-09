@@ -1,10 +1,11 @@
 {
     "name": "Choice Writer",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "dependencies": {
-        "jquery": "1.9",
-        "backbone": null,
-        "underscore": null,
-        "requirejs": null
+        "jquery": "2.1.0",
+        "backbone": "1.1.2",
+        "underscore": "1.6.0",
+        "requirejs": "2.1.11",
+        "handlebars": "2.0.0-alpha.2"
     }
 }
