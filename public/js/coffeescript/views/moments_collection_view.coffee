@@ -7,14 +7,13 @@ define ["backbone", "underscore", "views/moment_view", "models/moments_collectio
     initialize: ->
       @collection = new MomentCollection();
       @collection.bind "change", _.bind(this.render, this)
-      @collection.fetch success: ->
+      @collection.fetch success: =>
         console.log("moment collection fetched")
-        debugger
+        @collection.fetch()
 
     render: ->
-      debugger
-      _.each @collection, (moment) =>
-        console.log "a moment", moment
+      @collection.each (moment) =>
+        throw "Shit, son" unless moment?
         momentView = new MomentView(model: moment)
         this.$el.append(momentView.render().el)
       this

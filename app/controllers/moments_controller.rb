@@ -5,7 +5,7 @@ class MomentsController < ApplicationController
     respond_with [
       {id: "1",
       character: "Hank",
-      text: "A day in the life",
+      text: "A day in the liiiife",
       scene: "Cabin",
       next_line_id: "2",
       type: "Speech",
