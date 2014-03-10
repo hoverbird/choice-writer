@@ -4,7 +4,7 @@ define ["backbone",
         "views/moments_collection_view"], (Backbone, $, MomentCollection, MomentCollectionView) ->
   App = Backbone.View.extend(
     initialize: ->
-      view = new MomentCollectionView(el: $("<div class='moments-collection'>"))
-      document.body.appendChild(view.el)
+      view = new MomentCollectionView()
+      $('.container').append(view.el)
   )
   App

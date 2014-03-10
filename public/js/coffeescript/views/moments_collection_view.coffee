@@ -1,11 +1,16 @@
-define ["backbone", "underscore", "views/moment_view", "models/moments_collection"], (Backbone, _, MomentView, MomentCollection) ->
+define ["backbone",
+        "underscore",
+        "models/moments_collection",
+        "views/moment_view",
+        "hbs!/templates/moment_chain"], (Backbone, _, MomentCollection, MomentView, chainTemplate) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 
-    className: 'moments-collection'
+    #TODO:  should be "moment-chain"
+    className: "#moments"
 
     initialize: ->
-      @collection = new MomentCollection();
+      @collection = new MomentCollection()
       @collection.bind "change", _.bind(this.render, this)
       @collection.fetch success: =>
         console.log("moment collection fetched")
@@ -13,7 +18,7 @@ define ["backbone", "underscore", "views/moment_view", "models/moments_collectio
 
     render: ->
       @collection.each (moment) =>
-        throw "Shit, son" unless moment?
+        throw "Shit, son. No moments" unless moment?
         momentView = new MomentView(model: moment)
         this.$el.append(momentView.render().el)
       this
