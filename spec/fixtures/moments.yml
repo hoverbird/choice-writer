@@ -7,7 +7,6 @@ quiet:
   character: Henry
   location: Tower
   tags: paranoia
-  next_moment_id: 2
 
 too_quiet:
   id: 2
@@ -16,7 +15,7 @@ too_quiet:
   character: Delilah
   location: Tower
   tags: paranoia
-  next_moment_id: 3
+  previous_moment_id: 1
 
 nothing:
   id: 3
@@ -24,4 +23,13 @@ nothing:
   text: Eh, it’s probably nothing.
   character: Henry
   location: Tower
-  tags: paranoia
+  previous_moment_id: 2
+
+quiet_end:
+  id: 4
+  kind: Speech
+  text: You're probably right, buddy.
+  character: Delilah
+  location: Tower
+  tags:
+  previous_moment_id: 3
