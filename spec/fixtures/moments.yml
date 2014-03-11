@@ -1,5 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# Simple single-tracked chain
 quiet:
   id: 1
   kind: Speech
@@ -33,3 +34,65 @@ quiet_end:
   location: Tower
   tags:
   previous_moment_id: 3
+# End simple single-tracked chain
+
+# Chain with multiple nodes pointing backwards
+heard_a_noise:
+  id: 5
+  text: What was that?
+  kind: Speech
+  character: Henry
+  location: Tower
+  tags: paranoia
+
+heard_a_noise_what:
+  id: 6
+  kind: Speech
+  text: What was what?
+  character: Delilah
+  location: Tower
+  previous_moment_id: 5
+
+heard_a_noise_mouse:
+  id: 7
+  kind: Speech
+  text: It was probably just the mouse.
+  character: Delilah
+  location: Tower
+  previous_moment_id: 5
+
+heard_a_noise_cat:
+  id: 8
+  kind: Speech
+  text: It was probably just the cat.
+  character: Delilah
+  location: Tower
+  previous_moment_id: 5
+
+heard_a_noise_response_what:
+  id: 9
+  text: That noise I just heard.
+  kind: Speech
+  character: Henry
+  location: Tower
+  previous_moment_id: 6
+
+heard_a_noise_response_mouse:
+  id: 10
+  text: So annoying. Do you have any poison I can borrow?
+  kind: Speech
+  character: Henry
+  location: Tower
+  previous_moment_id: 7
+
+# TODO: The following cat response is essentially a dupe of the mouse response.
+# We need to eventually allow two responses to point to a single followup, without
+# copying.
+
+heard_a_noise_response_cat:
+  id: 11
+  text: So annoying. Do you have any poison I can borrow?
+  kind: Speech
+  character: Henry
+  location: Tower
+  previous_moment_id: 8
