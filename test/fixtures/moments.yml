@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+quiet:
+  id: 1
+  kind: Speech
+  text: It’s quiet in here...
+  character: Henry
+  location: Tower
+  tags: paranoia
+  next_moment_id: 2
+
+too_quiet:
+  id: 2
+  kind: Speech
+  text: A little *too* quiet...
+  character: Delilah
+  location: Tower
+  tags: paranoia
+  next_moment_id: 3
+
+nothing:
+  id: 3
+  kind: Speech
+  text: Eh, it’s probably nothing.
+  character: Henry
+  location: Tower
+  tags: paranoia
