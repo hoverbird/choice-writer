@@ -1,0 +1,16 @@
+sky_is_blue:
+  id: 1
+  name: Sky is blue
+  description: This tends to be pretty reliable, except in SF.
+  default_value: true
+
+henry_found_the_bug:
+  id: 2
+  name: Henry found the bug
+  description: This should be set to true when Henry finds the listening device in the watchtower.
+  default_value: false
+
+delilah_knows_about_the_mice:
+  id: 3
+  name: Henry saw a mouse, and mentioned that to Delilah.
+  default_value: false

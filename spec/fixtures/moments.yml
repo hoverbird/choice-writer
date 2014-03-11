@@ -56,7 +56,7 @@ heard_a_noise_what:
 heard_a_noise_mouse:
   id: 7
   kind: Speech
-  text: It was probably just the mouse.
+  text: It was probably just one of your many mice.
   character: Delilah
   location: Tower
   previous_moment_id: 5
@@ -96,3 +96,11 @@ heard_a_noise_response_cat:
   character: Henry
   location: Tower
   previous_moment_id: 8
+
+# Location: Teen Lake
+teen_lake_start:
+  id: 12
+  text: Get out of the water you fucking kids!
+  kind: Speech
+  character: Henry
+  location: Teen Lake

@@ -5,8 +5,6 @@ define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, moment
     # NOTE: className etc. can be functions
     className: 'dialog-line card span6'
 
-    # momentTemplate: _.template "<h3><%= name %></h3>: <label>Click me</label>"
-
     events:
       'dblclick label': 'edit'
       'click h3': 'unedit'
@@ -18,7 +16,7 @@ define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, moment
       console.log "Nosup", this
 
     render: ->
-      console.log "Rendering a moment view", @model
+      console.log "Rendering a moment view", @model.toJSON()
       this.$el.html(momentTemplate(@model.toJSON()))
       this
   )
