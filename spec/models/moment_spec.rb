@@ -21,13 +21,10 @@ describe Moment do
       let(:parsed_output) { JSON.parse(moment.to_unity_JSON) }
 
       it "should be valid" do
-        # pp moment.to_unity_JSON
-
         expect(parsed_output).to be_kind_of(Hash)
         expect(parsed_output["id"]).to equal(moment.id)
         expect(DateTime.parse(parsed_output["created_at"])).to(be_kind_of(DateTime), "to be a valid date format")
         expect(parsed_output["constraints"]).to be_kind_of(Array)
-
       end
     end
   end
@@ -48,7 +45,15 @@ describe Moment do
       expect(moments(:quiet).expand_from_root).to eq(expected_thread)
     end
 
+    it "should include all nodes when expanding from leaf" do
+      expect(moments(:quiet_end).expand_from_leaf).to eq(expected_thread)
+    end
+
     it "should expand to a chain with multiple responses if they exist for a given chain" do
+      expanded_chain = moments(:heard_a_noise_response_mouse).expand_from_leaf
+      expect(expanded_chain).to include(moments(:heard_a_noise_what))
+      expect(expanded_chain).to include(moments(:heard_a_noise_mouse))
+      expect(expanded_chain).to include(moments(:heard_a_noise_cat))
     end
   end
 
