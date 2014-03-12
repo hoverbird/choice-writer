@@ -1,13 +1,13 @@
 define ["backbone",
+        "jquery"
         "underscore",
         "models/moments_collection",
         "views/moment_view",
-        "hbs!/templates/moment_chain"], (Backbone, _, MomentCollection, MomentView, chainTemplate) ->
+        "hbs!/templates/moment_chain"], (Backbone, $, _, MomentCollection, MomentView, chainTemplate) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 
-    #TODO:  should be "moment-chain"
-    className: "#moments"
+    className: 'row moment-chain'
 
     initialize: ->
       renderThis =  _.bind(this.render, this)
@@ -17,11 +17,12 @@ define ["backbone",
       @collection.fetch success: renderThis
 
     render: ->
+      chain = $(chainTemplate()) # TODO should the chain template specify this iteration?
       @collection.each (moment) =>
         throw "Shit, son. No moments" unless moment?
-        console.log "Oops, a moment", moment.toJSON()
         momentView = new MomentView(model: moment)
-        this.$el.append(momentView.render().el)
+        chain.append(momentView.render().el)
+      this.$el.html(chain)
       this
   )
   MomentsCollectionView
