@@ -1,10 +1,10 @@
 define ["backbone",
         "jquery",
-        "models/moments_collection",
-        "views/moments_collection_view"], (Backbone, $, MomentCollection, MomentCollectionView) ->
+        "choice_router"], (Backbone, $, Router) ->
   App = Backbone.View.extend(
     initialize: ->
-      view = new MomentCollectionView()
-      $('.container').append(view.el)
+      router = new Router()
+      Backbone.history.start()
+      router.navigate('/home')
   )
   App
