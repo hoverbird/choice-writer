@@ -12,5 +12,6 @@ henry_found_the_bug:
 
 delilah_knows_about_the_mice:
   id: 3
-  name: Henry saw a mouse, and mentioned that to Delilah.
+  name: Delilah knows about mice
+  description: Henry saw a mouse, and mentioned that to Delilah.
   default_value: false

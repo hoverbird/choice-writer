@@ -1,23 +1,39 @@
 require 'spec_helper'
 
 describe Moment do
-  fixtures :moments
+  fixtures :moments, :facts, :constraints
 
   describe "an individual moment" do
+    let(:moment) { moments(:heard_a_noise_mouse) }
+
     it "should each point to the previous moment" do
       expect(moments(:too_quiet).previous_moment).to eq(moments(:quiet))
     end
 
     describe "which has constraints" do
       it "should be wired up correctly" do
-        expect(moments(:).constraints).to include(constraints(:henry_did_see_a_mouse))
-        expect(moments(:).facts).to include(constraints(:henry_saw_a_mouse))
+        expect(moment.constraints).to include(constraints(:delilah_does_know_about_the_mice))
+        expect(moment.facts).to include(facts(:delilah_knows_about_the_mice))
+      end
+    end
+
+    describe "JSON output" do
+      let(:parsed_output) { JSON.parse(moment.to_unity_JSON) }
+
+      it "should be valid" do
+        # pp moment.to_unity_JSON
+
+        expect(parsed_output).to be_kind_of(Hash)
+        expect(parsed_output["id"]).to equal(moment.id)
+        expect(DateTime.parse(parsed_output["created_at"])).to(be_kind_of(DateTime), "to be a valid date format")
+        expect(parsed_output["constraints"]).to be_kind_of(Array)
+
       end
     end
   end
 
   describe "in a single thread" do
-    let :expected_thread do
+    let(:expected_thread)do
       [ Moment.find(1),
         Moment.find(2),
         Moment.find(3),
@@ -36,8 +52,5 @@ describe Moment do
     end
   end
 
-  describe "JSON output" do
-
-  end
 
 end

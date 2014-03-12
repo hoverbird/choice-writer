@@ -21,4 +21,17 @@ class Moment < ActiveRecord::Base
     end
     moment_chain
   end
+
+  def to_unity_JSON
+    Jbuilder.encode do |json|
+      json.(self, :id, :created_at, :updated_at)
+
+      json.constraints self.constraints do |constraint|
+        json.fact_test constraint.fact_test
+        json.fact_name constraint.fact.name
+        json.fact_default_value constraint.fact.default_value
+      end
+    end
+  end
+
 end
