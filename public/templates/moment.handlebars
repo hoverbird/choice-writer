@@ -1,4 +1,4 @@
-<div class="dialog-line card {{ kind }}" data-moment-id="{{id}}" data-previous-moment-id="{{previous_moment_id}}">
+<span class="card {{ kind }} span4" data-moment-id="{{id}}" data-previous-moment-id="{{previous_moment_id}}">
   <input type="hidden" name="scene" value="{{ location }}">
 
   <span class="replace-text">
@@ -24,11 +24,11 @@
       </div>
     </span>
   </div>
-</div>
+</span>
 
-<div class="section-divider" data-line-id="{{ id }}">
+<!-- <div class="section-divider" data-line-id="{{ id }}">
   <hr class="insert-line"></hr>
-</div>
+</div> -->
 
 {{! To include a partial: }}
 {{! just provide the path to the partial without the extension }}

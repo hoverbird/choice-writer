@@ -48,7 +48,7 @@ heard_a_noise:
 heard_a_noise_what:
   id: 6
   kind: Speech
-  text: What was what?
+  text: ...what was what, Henry?
   character: Delilah
   location: Tower
   previous_moment_id: 5

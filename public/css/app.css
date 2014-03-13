@@ -7,7 +7,13 @@ input {
 }
 
 .card {
-  margin: 0 0 15px 0;
+/*  margin: 0 0 15px 0;*/
+  margin: 0 auto;
+  border: 1px solid blue;
+}
+
+.row {
+  border: 1px solid red;
 }
 
 .scenes-list ul {
@@ -32,7 +38,6 @@ input {
 .replace-text.editable .display {
   display: none;
 }
-
 
 .section-diver {
   padding: 20px;
