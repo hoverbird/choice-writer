@@ -11,9 +11,7 @@ define ["underscore", "backbone"], (_, Backbone) ->
       name: "A moment in time..."
 
     markdown_text: ->
-      my_text = this.get('text')
-      console.log "Textually", my_text
-      my_text
+      this.get('text')
 
     validate: (attributes) ->
       return "I'll need a name, bud" unless attributes.name?

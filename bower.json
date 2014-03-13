@@ -7,6 +7,7 @@
         "underscore": "1.6.0",
         "requirejs": "2.1.11",
         "handlebars": "2.0.0-alpha.2",
-        "require-handlebars-plugin": null
+        "require-handlebars-plugin": null,
+        "jsPlumb": "git://github.com/sporritt/jsPlumb.git#1.5.5"
     }
 }

@@ -22,18 +22,28 @@ define ["backbone",
       @collection.each (moment) =>
         throw "Shit, son. You missed a moment." unless moment?
         momentElement = new MomentView(model: moment).render().el
-
         previousMomentID = moment.get("previous_moment_id")
         siblingMoment = chain.find("*[data-previous-moment-id='#{previousMomentID}']")
 
         if siblingMoment.length
-          console.log "Found #{siblingMoment}, the sibling of #{moment.get('id')}"
           siblingMoment.parents('.row').after(momentElement)
         else
-          console.log "No sibs, rendering #{moment.get('id')}"
           chain.append($('<div class="row"></div>').append(momentElement))
-      console.log "Bout to render it all", chain.children()
       this.$el.html(chain)
+      this.linkNodes()
       this
+
+    linkNodes: ->
+      $(".card").each (i, e) ->
+        source = $(e)
+        if previousMomentId = source.data('previous-moment-id')
+          target = $("##{previousMomentId}-Speech-card")
+          jsPlumb.connect
+            source: source
+            target: target
+            anchors: [
+              [ "Perimeter", shape: "Triangle" ],
+              [ "Perimeter", shape: "Diamond" ]
+            ]
   )
   MomentsCollectionView

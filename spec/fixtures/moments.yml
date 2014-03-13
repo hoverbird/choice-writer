@@ -21,7 +21,7 @@ too_quiet:
 nothing:
   id: 3
   kind: Speech
-  text: Eh, it’s probably nothing.
+  text: Ha. That's such a cliché.
   character: Henry
   location: Tower
   previous_moment_id: 2
@@ -29,7 +29,7 @@ nothing:
 quiet_end:
   id: 4
   kind: Speech
-  text: You're probably right, buddy.
+  text: ...you've gotta say something to fill the air.
   character: Delilah
   location: Tower
   tags:
@@ -39,7 +39,7 @@ quiet_end:
 # Chain with multiple nodes pointing backwards
 heard_a_noise:
   id: 5
-  text: What was that?
+  text: What was THAT?
   kind: Speech
   character: Henry
   location: Tower

@@ -8,6 +8,7 @@ require.config
     underscore: "../lib/underscore/underscore"
     backbone: "../lib/backbone/backbone"
     hbs: '../lib/require-handlebars-plugin/hbs'
+    jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5',
 
   hbs:
     helpers: true,                     # default: true

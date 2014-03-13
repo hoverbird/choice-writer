@@ -8,12 +8,12 @@ input {
 
 .card {
 /*  margin: 0 0 15px 0;*/
-  margin: 0 auto;
-  border: 1px solid blue;
+  margin: 15px auto;
+/*  border: 1px solid blue;*/
 }
 
 .row {
-  border: 1px solid red;
+/*  border: 1px solid red;*/
 }
 
 .scenes-list ul {
