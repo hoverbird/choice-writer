@@ -1,9 +1,9 @@
 define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, momentTemplate) ->
   MomentView = Backbone.View.extend(
-    tagName: 'div'
+    tagName: 'span'
 
     # NOTE: className etc. can be functions
-    className: 'dialog-line card span6'
+    className: 'moment' # card span6 (formerly dialog-line)
 
     events:
       'dblclick label': 'edit'
@@ -16,7 +16,6 @@ define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, moment
       console.log "Nosup", this
 
     render: ->
-      console.log "Rendering a moment view", @model.toJSON()
       this.$el.html(momentTemplate(@model.toJSON()))
       this
   )

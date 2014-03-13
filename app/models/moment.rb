@@ -13,11 +13,10 @@ class Moment < ActiveRecord::Base
   end
 
   def expand_from_root
-    moment = self
-    moment_chain = [moment]
-    while moment = Moment.where(previous_moment: moment).first
-      logger.info moment.id
-      moment_chain.push moment
+    this_moment = self
+    moment_chain = [this_moment]
+    while this_moment = Moment.where(previous_moment: this_moment).first
+      moment_chain.push this_moment
     end
     moment_chain
   end
