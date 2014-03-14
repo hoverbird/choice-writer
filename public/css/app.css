@@ -38,7 +38,6 @@ input {
   display: none;
 }
 
-
 /*.replace-text.editable input {
   display: block;
 }*/
@@ -47,8 +46,9 @@ input {
   display: none;
 }*/
 
-.section-diver {
+.section-divider {
   padding: 20px;
+  margin-top: 30px;
 }
 .section-divider:hover {
   cursor: pointer;

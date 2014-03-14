@@ -1,8 +1,8 @@
 define ["backbone",
         "jquery",
-        "jsplumb",
+        # "jsplumb",
         "util",
-        "choice_router"], (Backbone, $, jsPlumb, Util, Router) ->
+        "choice_router"], (Backbone, $, Util, Router) ->
   App = Backbone.View.extend(
     initialize: ->
       router = new Router()

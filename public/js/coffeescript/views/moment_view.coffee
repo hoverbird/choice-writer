@@ -10,7 +10,7 @@ define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, moment
 
     edit: (event) ->
       editableSet = $(event.currentTarget.parentElement)
-      console.log "edit", event.currentTarget, editableSet
+      # console.log "edit", event.currentTarget, editableSet
       editableSet.addClass('editable')
       editableSet.find('input').focus()
 
