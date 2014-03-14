@@ -22,19 +22,19 @@ input {
 }
 
 .replace-text input {
+  display: none;
   color: #666;
   font-size: 18px;
-  display: none;
   border: 0;
   -webkit-appearance: none;
   margin-left: 13px;
 }
 
-.moment.editable input {
+.replace-text.editable input {
   display: block;
 }
 
-.moment.editable .display {
+.replace-text.editable .display {
   display: none;
 }
 

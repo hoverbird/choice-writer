@@ -2,22 +2,23 @@ define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, moment
   MomentView = Backbone.View.extend(
     tagName: 'span'
 
-    # NOTE: className etc. can be functions
     className: 'moment'
 
     events:
-      'click .display': 'edit'
-      'blur input': 'unedit'
+      'click .replace-text .display': 'edit'
+      'blur .replace-text input': 'unedit'
 
-    edit: ->
-      this.$el.addClass('editable')
-      this.$el.find('input').focus()
+    edit: (event) ->
+      editableSet = $(event.currentTarget.parentElement)
+      console.log "edit", event.currentTarget, editableSet
+      editableSet.addClass('editable')
+      editableSet.find('input').focus()
 
-    unedit: ->
-      attrs = this.$el.find("input").serializeObject()
-      @model.set(attrs)
-      @model.save()
-      this.$el.removeClass('editable')
+    unedit: (event) ->
+      editableSet = $(event.currentTarget.parentElement)
+      attrs = editableSet.find("input").serializeObject()
+      editableSet.removeClass('editable')
+      @model.set(attrs).save()
 
     render: ->
       this.$el.html(momentTemplate(@model.toJSON()))

@@ -1,6 +1,4 @@
 <span id="{{id}}-{{kind}}-card" class="card {{ kind }} span4" data-moment-id="{{id}}" data-previous-moment-id="{{previous_moment_id}}">
-  <input type="hidden" name="scene" value="{{ location }}">
-
   <span class="replace-text">
     <input
          name="character"
@@ -8,7 +6,7 @@
          class="form-control typeahead"
          value="{{ character }}">
 
-    <div class="display card-heading simple dialog-line-display-character">{{ character }}</h3>
+    <div class="display card-heading simple">{{ character }}</div>
   </span>
 
   <div class="card-body">
