@@ -3,17 +3,21 @@ define ["backbone", "underscore", 'hbs!/templates/moment'], (Backbone, _, moment
     tagName: 'span'
 
     # NOTE: className etc. can be functions
-    className: 'moment' # card span6 (formerly dialog-line)
+    className: 'moment'
 
     events:
-      'dblclick label': 'edit'
-      'click h3': 'unedit'
+      'click .display': 'edit'
+      'blur input': 'unedit'
 
     edit: ->
-      console.log "Supness", this
+      this.$el.addClass('editable')
+      this.$el.find('input').focus()
 
     unedit: ->
-      console.log "Nosup", this
+      attrs = this.$el.find("input").serializeObject()
+      @model.set(attrs)
+      @model.save()
+      this.$el.removeClass('editable')
 
     render: ->
       this.$el.html(momentTemplate(@model.toJSON()))

@@ -30,13 +30,22 @@ input {
   margin-left: 13px;
 }
 
-.replace-text.editable input {
+.moment.editable input {
   display: block;
 }
 
-.replace-text.editable .display {
+.moment.editable .display {
   display: none;
 }
+
+
+/*.replace-text.editable input {
+  display: block;
+}*/
+
+/*.replace-text.editable .display {
+  display: none;
+}*/
 
 .section-diver {
   padding: 20px;

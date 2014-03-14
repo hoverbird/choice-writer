@@ -1,6 +1,10 @@
 define ["underscore", "backbone"], (_, Backbone) ->
   Moment = Backbone.Model.extend(
+    url: '/moment/:id'
+
     initialize: ->
+      this.url = "/moments/#{@id}"
+
       this.on 'change', ->
         console.log "I really ought to redraw meself..."
 

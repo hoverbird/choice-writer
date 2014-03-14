@@ -3,9 +3,11 @@ Choice::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   root 'home#index'
-  get 'moments.json' => 'moments#index'
+  resources :moments
+
   get 'moments/location/:location.json' => 'moments#location'
   get 'locations' => 'locations#index'
+
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
