@@ -1,8 +1,9 @@
 class LocationsController < ApplicationController
-  respond_to :json
+  respond_to :json, :html
 
   def index
-    respond_with Moment.select(:location).distinct.collect(&:location)
+    @locations = Moment.select(:location).distinct.collect(&:location)
+    respond_with @locations
   end
 
 end

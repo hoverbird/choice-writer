@@ -7,7 +7,7 @@ define ["backbone",
     initialize: ->
       router = new Router()
       Backbone.history.start()
-      router.navigate('/home')
+      # router.navigate('/home')
       Util.setupNav()
       Util.railsifyBackbone()
   )

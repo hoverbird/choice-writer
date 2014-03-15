@@ -1,0 +1,5 @@
+<ul>
+<% for location in @locations %>
+  <li><a href="/#locations/<%= URI.encode(location) %>"><%= location %></a></li>
+<% end %>
+</ul>

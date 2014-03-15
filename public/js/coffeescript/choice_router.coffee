@@ -1,12 +1,12 @@
 define ["backbone", "views/moments_collection_view", "views/locations_view"], (Backbone, MomentCollectionView, LocationsView) ->
   ChoiceRouter = Backbone.Router.extend(
     routes:
-      "home": "showHome"
-      "location/:id": "showLocation"
-      "locations": "showLocations"
+      "home": "showMoments"
+      "locations/:id": "showMomentsByLocation"
+      # "locations": "showLocations"
 
-    showHome: ->
-      view = new MomentCollectionView()
+    showMomentsByLocation: (id) ->
+      view = new MomentCollectionView constraints: {location: id}
       $('.container').append(view.el)
 
     showLocations: ->
@@ -15,7 +15,6 @@ define ["backbone", "views/moments_collection_view", "views/locations_view"], (B
 
     defaultRoute: (other) ->
       console.log "Poor Choice. You attempted to reach a nonexistant route: #{other}"
-
 
   )
   ChoiceRouter

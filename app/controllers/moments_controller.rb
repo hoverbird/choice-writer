@@ -3,7 +3,11 @@ class MomentsController < ApplicationController
   skip_before_filter :verify_authenticity_token #TODO: remove this, patch Backbone. This is totes unsafe for public consumption.
 
   def index
-    respond_with Moment.all
+    if location_id = params[:location]
+      respond_with Moment.where(location: location_id).all
+    else
+      respond_with Moment.all
+    end
   end
 
   def update

@@ -9,12 +9,11 @@ define ["backbone",
 
     className: 'moment-chain'
 
-    initialize: ->
+    initialize: (constraints) ->
       renderThis =  _.bind(this.render, this)
-      @collection = new MomentCollection()
+      @collection = new MomentCollection(constraints)
       @collection.bind "change", renderThis
-      # Do the initial fetch
-      @collection.fetch success: renderThis
+      @collection.fetch success: renderThis # Do the initial fetch
 
     render: ->
       chain = $(chainTemplate()) # TODO should the chain template specify this?
