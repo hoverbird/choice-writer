@@ -1,0 +1,18 @@
+tower:
+  name: tower
+  id: 1
+
+paranoia:
+  name: paranoia
+  id: 2
+
+act1:
+  name: act1
+  folder: acts
+  id: 3
+
+act2:
+  name: act2
+  folder: acts
+  id: 4
+  

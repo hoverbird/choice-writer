@@ -1,5 +1,3 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 # Simple single-tracked chain
 quiet:
   id: 1
@@ -7,7 +5,6 @@ quiet:
   text: It’s quiet in here...
   character: Henry
   location: Tower
-  tags: paranoia
 
 too_quiet:
   id: 2
@@ -15,7 +12,6 @@ too_quiet:
   text: A little *too* quiet...
   character: Delilah
   location: Tower
-  tags: paranoia
   previous_moment_id: 1
 
 nothing:
@@ -32,7 +28,6 @@ quiet_end:
   text: ...you've gotta say something to fill the air.
   character: Delilah
   location: Tower
-  tags:
   previous_moment_id: 3
 # End simple single-tracked chain
 
@@ -43,7 +38,6 @@ heard_a_noise:
   kind: Speech
   character: Henry
   location: Tower
-  tags: paranoia
 
 heard_a_noise_what:
   id: 6

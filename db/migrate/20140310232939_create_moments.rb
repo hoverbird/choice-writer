@@ -5,14 +5,15 @@ class CreateMoments < ActiveRecord::Migration
     create_table :moments do |t|
       t.string :kind, null: false, default: "Speech"
       t.references :previous_moment
+      t.references :project
       t.text :text
       t.string :character
       t.string :location, null: false, default: "Anywhere"
       t.string :audio_file_path
 
-      t.text :tags
       t.decimal :buffer_seconds, precision: 5, scale: 3
 
+      t.index :project_id
       t.index :previous_moment_id
       t.index :location
       t.index :character

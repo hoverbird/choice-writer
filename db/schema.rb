@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310232939) do
+ActiveRecord::Schema.define(version: 20140316181236) do
 
   create_table "constraints", force: true do |t|
     t.integer  "moment_id"
@@ -35,11 +35,11 @@ ActiveRecord::Schema.define(version: 20140310232939) do
   create_table "moments", force: true do |t|
     t.string   "kind",                                       default: "Speech",   null: false
     t.integer  "previous_moment_id"
+    t.integer  "project_id"
     t.text     "text"
     t.string   "character"
     t.string   "location",                                   default: "Anywhere", null: false
     t.string   "audio_file_path"
-    t.text     "tags"
     t.decimal  "buffer_seconds",     precision: 5, scale: 3
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -48,5 +48,24 @@ ActiveRecord::Schema.define(version: 20140310232939) do
   add_index "moments", ["character"], name: "index_moments_on_character"
   add_index "moments", ["location"], name: "index_moments_on_location"
   add_index "moments", ["previous_moment_id"], name: "index_moments_on_previous_moment_id"
+  add_index "moments", ["project_id"], name: "index_moments_on_project_id"
+
+  create_table "projects", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "taggings", force: true do |t|
+    t.integer "tag_id"
+    t.integer "moment_id"
+  end
+
+  create_table "tags", force: true do |t|
+    t.string   "name",       null: false
+    t.string   "folder"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
