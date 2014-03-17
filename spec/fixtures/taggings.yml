@@ -17,3 +17,8 @@ teens_act2:
   id: 4
   moment_id: 12
   tag_id: 4
+
+too_quiet_paranoia:
+  id: 5
+  moment_id: 2
+  tag_id: 2

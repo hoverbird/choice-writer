@@ -2,6 +2,8 @@ class MomentsController < ApplicationController
   respond_to :json
   skip_before_filter :verify_authenticity_token #TODO: remove this, patch Backbone. This is totes unsafe for public consumption.
 
+  DEFAULT_PROJECT_ID = 1
+
   def index
     if location_id = params[:location]
       respond_with Moment.where(location: location_id).all
@@ -23,6 +25,10 @@ class MomentsController < ApplicationController
 
   def location
     respond_with Moment.where(location: params[:location])
+  end
+
+  def by_tag
+    respond_with Moment.joins(:tags).where("name = ?", params[:tag_name]).to_a
   end
 
   private

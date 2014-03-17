@@ -38,5 +38,5 @@ require [
   "backbone"
   "app"
 ], (jquery, _, Backbone, App) ->
-  new App
+  new App()
   return

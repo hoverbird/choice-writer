@@ -3,7 +3,11 @@ Choice::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   root 'home#index'
-  resources :moments
+  resources :moments do
+    collection do
+      get 'by_tag/:tag_name', to: 'moments#by_tag'
+    end
+  end
 
   get 'moments/location/:location.json' => 'moments#location'
   get 'locations' => 'locations#index'

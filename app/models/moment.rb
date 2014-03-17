@@ -2,6 +2,8 @@ class Moment < ActiveRecord::Base
   belongs_to :previous_moment, class_name: "Moment", foreign_key: "previous_moment_id"
   has_many :constraints
   has_many :facts, through: :constraints
+  has_many :taggings
+  has_many :tags, through: :taggings
 
   def expand_from_leaf
     this_moment = self

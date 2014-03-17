@@ -25,27 +25,27 @@
         <div class="box">
             <div class="row row-offcanvas row-offcanvas-left">
 
-
                 <!-- sidebar -->
                 <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
-
-                  	<ul class="nav">
+                  <ul class="nav">
               			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
                 	</ul>
 
-                    <ul class="nav hidden-xs" id="lg-menu">
-                        <li class="active"><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Featured</a></li>
-                        <li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Stories</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Saved</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Refresh</a></li>
-                    </ul>
-                    <ul class="list-unstyled hidden-xs" id="sidebar-footer">
-                        <li>
-                          <a href="http://www.bootply.com"><h3>Choice</h3> <i class="glyphicon glyphicon-heart-empty"></i> Campo Santo</a>
-                        </li>
-                    </ul>
+                  <ul class="nav hidden-xs" id="lg-menu">
+                    <% current_project_tags.each do |tag| %>
+<!--                       <li class="active"><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Featured</a></li> -->
+<!--                       <li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Stories</a></li> -->
+                      <li><a href="/moments/by_tag/<%= tag.name %>"><i class="glyphicon glyphicon-tag"></i> <%= tag.name %></a></li>
+<!--                       <li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Refresh</a></li> -->
+                    <% end %>
+                  </ul>
+                  <ul class="list-unstyled hidden-xs" id="sidebar-footer">
+                    <li>
+                      <a href="/"><h3>Choice</h3> <i class="glyphicon glyphicon-heart-empty"></i> Campo Santo</a>
+                    </li>
+                  </ul>
 
-                  	<!-- tiny only nav-->
+                	<!-- tiny only nav-->
                   <ul class="nav visible-xs" id="xs-menu">
                       	<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
                         <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
@@ -113,8 +113,9 @@
                           	<div class="row">
 
                              <!-- main col left -->
-                             <div class="col-sm-5">
-
+                             <div class="col-sm-5 left-col">
+                                <%= yield %>
+<!--
                                   <div class="panel panel-default">
                                     <div class="panel-thumbnail"><img src="/assets/example/bg_5.jpg" class="img-responsive"></div>
                                     <div class="panel-body">
@@ -154,9 +155,7 @@
                                     <div class="panel-heading"><h4>What Is Bootstrap?</h4></div>
                                    	<div class="panel-body">
                                     	Bootstrap is front end frameworkto build custom web applications that are fast, responsive &amp; intuitive. It consist of CSS and HTML for typography, forms, buttons, tables, grids, and navigation along with custom-built jQuery plug-ins and support for responsive layouts. With dozens of reusable components for navigation, pagination, labels, alerts etc..                          </div>
-                                  </div>
-
-
+                                  </div> -->
 
                               </div>
 
@@ -217,7 +216,7 @@
                                    </div>
 
                                    <div class="panel panel-default">
-                                    <div class="panel-thumbnail"><img src="/assets/example/bg_4.jpg" class="img-responsive"></div>
+<!--                                     <div class="panel-thumbnail"><img src="/assets/example/bg_4.jpg" class="img-responsive"></div> -->
                                     <div class="panel-body">
                                       <p class="lead">Social Good</p>
                                       <p>1,200 Followers, 83 Posts</p>
@@ -269,12 +268,12 @@
                 </div>
               </form>
           </div>
-          <div class="modal-footer">
-              <div>
+<!--           <div class="modal-footer">
+            <div>
               <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
                 <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-    		  </div>
-          </div>
+    		    </div>
+          </div> -->
       </div>
       </div>
     </div>

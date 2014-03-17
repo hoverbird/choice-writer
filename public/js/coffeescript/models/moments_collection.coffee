@@ -2,9 +2,13 @@ define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, M
   MomentsCollection = Backbone.Collection.extend(
     model: Moment
 
-    initialize: (opts) ->
+    initialize: (opts = {}) ->
+      console.log("Moments collection", opts)
       @url = '/moments'
       if constraints = opts.constraints
-        @url += "?#{$.param(opts.constraints)}"
+        if tag = constraints.tag
+          @url += "/by_tag/#{tag}"
+        else
+          @url += "?#{$.param(opts.constraints)}"
   )
   MomentsCollection
