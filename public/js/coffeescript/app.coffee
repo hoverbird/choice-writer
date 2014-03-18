@@ -9,7 +9,7 @@ define ["backbone",
       router = new Router()
       Backbone.history.start()
       new NavView()
-      router.navigate('/home')
+      # router.navigate('/home')
       Util.setupNav()
       Util.railsifyBackbone()
   )

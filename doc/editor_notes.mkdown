@@ -24,3 +24,11 @@ Moment:
 Graph Layout options:
 http://www.bramstein.com/projects/jlayout/
 https://github.com/samizdatco/arbor
+
+
+TODOS:
+* Make moments a single text field...?
+* Add search
+  * Move dev env to Postgres
+* Set up app server (heroku?)
+* Add "current project", scope all moments to that

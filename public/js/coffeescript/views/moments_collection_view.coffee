@@ -18,7 +18,6 @@ define ["backbone",
     render: ->
       chain = $(chainTemplate()) # TODO should the chain template specify this?
       @collection.each (moment) =>
-        throw "Shit, son. You missed a moment." unless moment?
         momentElement = new MomentView(model: moment).render().el
         previousMomentID = moment.get("previous_moment_id")
         siblingMoment = chain.find("*[data-previous-moment-id='#{previousMomentID}']")

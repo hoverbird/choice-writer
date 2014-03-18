@@ -5,6 +5,11 @@ class Moment < ActiveRecord::Base
   has_many :taggings
   has_many :tags, through: :taggings
 
+  def self.search(terms = "")
+    sanitized = sanitize_sql_array(["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
+    Moment.where("search_vector @@ #{sanitized}")
+  end
+
   def expand_from_leaf
     this_moment = self
     moment_chain = [this_moment]
