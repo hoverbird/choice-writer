@@ -3,7 +3,8 @@ define ["backbone", "views/moments_collection_view", "views/locations_view"], (B
     contentContainer: $(".left-col")
 
     routes:
-      "#": "showMoments"
+      "": "showMoments"
+      "home": "showMoments"
       "locations/:id": "showMomentsByLocation"
       "moments/by_tag/:tag": "showMomentsByTag"
 

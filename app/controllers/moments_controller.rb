@@ -12,6 +12,10 @@ class MomentsController < ApplicationController
     end
   end
 
+  def create
+    respond_with Moment.create(moment_params)
+  end
+
   def update
     moment = Moment.find(params[:id])
     if moment.update_attributes!(moment_params)

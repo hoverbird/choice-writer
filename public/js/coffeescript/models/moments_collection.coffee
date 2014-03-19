@@ -3,7 +3,6 @@ define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, M
     model: Moment
 
     initialize: (opts = {}) ->
-      console.log("Moments collection", opts)
       @url = '/moments'
       if constraints = opts.constraints
         if tag = constraints.tag

@@ -3,10 +3,15 @@ define ["underscore", "backbone"], (_, Backbone) ->
     url: '/moment/:id'
 
     initialize: ->
-      this.url = "/moments/#{@id}"
+      this.url = ->
+        "/moments/#{@id or ''}"
 
-      this.on 'change', ->
-        console.log "I really ought to redraw meself..."
+      this.on 'change:text', ->
+        console.log "change:text"
+        @parseText()
+
+      this.on 'change:tags', ->
+        console.log "change:tags"
 
       this.on 'invalid', ->
         console.log "Whoops, I'm no longer valid", this
@@ -18,7 +23,18 @@ define ["underscore", "backbone"], (_, Backbone) ->
       this.get('text')
 
     validate: (attributes) ->
-      return "I'll need a name, bud" unless attributes.name?
+      # return "I'll need a name, bud" unless attributes.name?
+
+    regexen:
+      characterName: /^[a-zA-z0-9]*(?=:)/
+      hashTags: /#[a-zA-z0-9]*\b/g
+
+    parseText: ->
+      text = this.get('text')
+      characterName = text.match(@regexen.characterName)
+      hashTags = text.match(@regexen.hashTags)
+      this.set(character: characterName)
+      this.set(tags: hashTags)
   )
 
   Moment

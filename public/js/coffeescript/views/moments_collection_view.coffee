@@ -9,6 +9,10 @@ define ["backbone",
 
     className: 'moment-chain'
 
+    keys:
+      'a+shift' : -> console.log('a plus shift!')
+      'return' : -> console.log('return')
+
     initialize: (constraints) ->
       renderThis =  _.bind(this.render, this)
       @collection = new MomentCollection(constraints)

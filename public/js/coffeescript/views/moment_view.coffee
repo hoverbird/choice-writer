@@ -23,16 +23,16 @@ define [
       editableSet = $(event.currentTarget.parentElement)
       attrs = editableSet.find("input").serializeObject()
       editableSet.removeClass('editable')
-      @model.set(attrs).save()
+      @model.set(attrs)
+      @model.save()
 
     newMoment: (event) ->
       moment = new Moment(
         previous_moment_id: @model.get('id')
         text: "Who even knowwwwws?"
       )
-      console.log "Shubba whut", moment
+      moment.save()
       newNode = new MomentView(model: moment).render().el
-      console.log "Shubba who", newNode
       this.$el.after(newNode)
 
     render: ->
