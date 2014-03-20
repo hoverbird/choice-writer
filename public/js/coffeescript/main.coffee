@@ -9,7 +9,7 @@ require.config
     backbone: "../lib/backbone/backbone"
     hbs: '../lib/require-handlebars-plugin/hbs'
     jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
-    'backbone.keys': '../lib/backbone.keys/dist/backbone.keys.min'
+    # 'backbone.keys': '../lib/backbone.keys/dist/backbone.keys.min'
     # jasmine: '../lib/jasmine-jquery/lib/jasmine-jquery'
     # 'jasmine-html': '../lib/jasmine-jquery/lib/jasmine/lib/jasmine-html'
 
@@ -40,8 +40,7 @@ require [
   "jquery"
   "underscore"
   "backbone"
-  "backbone.keys"
   "app"
-], (jquery, _, Backbone, BBKeys, App) ->
+], (jquery, _, Backbone, App) ->
   new App()
   return

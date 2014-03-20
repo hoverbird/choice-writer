@@ -1,5 +1,9 @@
-<span id="{{id}}-{{kind}}-card" class="card {{ kind }} span4" data-moment-id="{{id}}" data-previous-moment-id="{{previous_moment_id}}">
-  <span class="replace-text">
+<span id="{{id}}-{{kind}}-card"
+      class="card {{ kind }} {{ isHighlighted }} span4"
+      data-moment-id="{{id}}"
+      data-previous-moment-id="{{previous_moment_id}}"
+      style="color: {{textColor}}">
+<!--   <span class="replace-text">
     <input
          name="character"
          type="text"
@@ -7,7 +11,7 @@
          value="{{ character }}">
 
     <div class="display card-heading simple">{{ character }}</div>
-  </span>
+  </span> -->
 
   <div class="card-body">
     <span class="replace-text">

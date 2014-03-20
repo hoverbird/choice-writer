@@ -1,4 +1,6 @@
 define ["backbone", "jquery"], (Backbone, $) ->
+  Backbone.pubSub = _.extend({}, Backbone.Events)
+
   $.fn.serializeObject = ->
 
     json = {}
