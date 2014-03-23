@@ -43,6 +43,11 @@ class MomentsController < ApplicationController
     respond_with Moment.joins(:tags).where("name = ?", params[:tag_name]).to_a
   end
 
+  def by_folder
+    moments = Moment.where folder_id: params[:folder_id]
+    respond_with moments.to_a
+  end
+
   private
     def moment_params
       params.permit(:text, :character, :location)

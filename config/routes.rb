@@ -6,6 +6,7 @@ Choice::Application.routes.draw do
   resources :moments do
     collection do
       get 'by_tag/:tag_name', to: 'moments#by_tag'
+      get 'by_folder/:folder_id', to: 'moments#by_folder'
     end
   end
 

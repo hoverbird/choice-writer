@@ -1,0 +1,3 @@
+class FoldersController < ApplicationController
+
+end

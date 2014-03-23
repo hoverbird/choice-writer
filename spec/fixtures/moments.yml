@@ -5,6 +5,7 @@ quiet:
   text: It’s quiet in here...
   character: Henry
   location: Tower
+  folder_id: 1
 
 too_quiet:
   id: 2
@@ -13,6 +14,7 @@ too_quiet:
   character: Delilah
   location: Tower
   previous_moment_id: 1
+  folder_id: 1
 
 nothing:
   id: 3
@@ -21,6 +23,7 @@ nothing:
   character: Henry
   location: Tower
   previous_moment_id: 2
+  folder_id: 1
 
 quiet_end:
   id: 4
@@ -29,6 +32,8 @@ quiet_end:
   character: Delilah
   location: Tower
   previous_moment_id: 3
+  folder_id: 1
+
 # End simple single-tracked chain
 
 # Chain with multiple nodes pointing backwards
@@ -38,6 +43,7 @@ heard_a_noise:
   kind: Speech
   character: Henry
   location: Tower
+  folder_id: 1
 
 heard_a_noise_what:
   id: 6
@@ -46,6 +52,7 @@ heard_a_noise_what:
   character: Delilah
   location: Tower
   previous_moment_id: 5
+  folder_id: 1
 
 heard_a_noise_mouse:
   id: 7
@@ -54,6 +61,7 @@ heard_a_noise_mouse:
   character: Delilah
   location: Tower
   previous_moment_id: 5
+  folder_id: 1
 
 heard_a_noise_cat:
   id: 8
@@ -62,6 +70,7 @@ heard_a_noise_cat:
   character: Delilah
   location: Tower
   previous_moment_id: 5
+  folder_id: 1
 
 heard_a_noise_response_what:
   id: 9
@@ -70,6 +79,7 @@ heard_a_noise_response_what:
   character: Henry
   location: Tower
   previous_moment_id: 6
+  folder_id: 1
 
 heard_a_noise_response_mouse:
   id: 10
@@ -78,6 +88,7 @@ heard_a_noise_response_mouse:
   character: Henry
   location: Tower
   previous_moment_id: 7
+  folder_id: 1
 
 # TODO: The following cat response is essentially a dupe of the mouse response.
 # We need to eventually allow two responses to point to a single followup, without
@@ -90,6 +101,7 @@ heard_a_noise_response_cat:
   character: Henry
   location: Tower
   previous_moment_id: 8
+  folder_id: 1
 
 # Location: Teen Lake
 teen_lake_start:
@@ -98,3 +110,4 @@ teen_lake_start:
   kind: Speech
   character: Henry
   location: Teen Lake
+  folder_id: 3

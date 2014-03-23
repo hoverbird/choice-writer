@@ -1,0 +1,12 @@
+act1:
+  id: 1
+  name: Act 1
+
+act2:
+  id: 2
+  name: Act 2
+
+lake_scene:
+  id: 3
+  name: Teen Lake
+  parent_id: 1
