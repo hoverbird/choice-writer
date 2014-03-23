@@ -27,6 +27,14 @@ class MomentsController < ApplicationController
     end
   end
 
+  def destroy
+    logger.info "DESTROY #{params}"
+    moment = Moment.find(params[:id])
+    if moment.destroy!
+      respond_with moment
+    end
+  end
+
   def location
     respond_with Moment.where(location: params[:location])
   end

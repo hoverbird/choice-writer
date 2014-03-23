@@ -65,3 +65,13 @@ input {
   border: 0;
   border-top: 1px solid #dadada;
 }
+
+.moment .delete {
+  float: right;
+  cursor: pointer;
+/*  display: none;*/
+}
+
+.moment:hover .delete: {
+  display: inline;
+}

@@ -10,9 +10,10 @@ define [
     className: 'moment'
 
     events:
+      'click .section-divider': 'newMoment'
+      'click .delete': 'destroy'
       'click .replace-text .display': 'edit'
       'blur .replace-text input': 'unedit'
-      'click .section-divider': 'newMoment'
       'keyup': 'onKeyUp'
 
     initialize: ->
@@ -29,27 +30,31 @@ define [
       @editableSet.removeClass('editable')
       @model.set(attrs)
       @model.save()
-      @changeSelection()
+      # select the next moment (i.e. the moment AFTER this one)
+      @changeSelection afterId: @model.get('id')
 
-    changeSelection: ->
-      Backbone.pubSub.trigger 'selectNextMoment', id: @model.get('id')
+    # options: hash of either a momentId or an afterId
+    changeSelection: (options) ->
+      Backbone.pubSub.trigger('selectMoment', options)
 
-    select: ->
-      console.log "I'm a VIEW and I've changed selection", this
-      this.edit()
+    select: -> this.edit()
+
+    destroy: ->
+      @model.destroy success: (model, response) => this.$el.remove()
 
     onKeyUp: (event) ->
       if event.keyCode is 13 and event.shiftKey
         @unedit(event)
 
+    # TODO: unify this with collection view creation
     newMoment: (event) ->
-      moment = new Moment(
-        previous_moment_id: @model.get('id')
-        text: "..."
-      )
+      moment = new Moment(previous_moment_id: @model.get('id'))
       moment.save()
+      console.log("MomentView#newMoment", moment.get('id'))
       newNode = new MomentView(model: moment).render().el
       this.$el.after(newNode)
+      # select the newly created moment
+      moment.trigger('select')
 
     textColor: ->
       colorMap =

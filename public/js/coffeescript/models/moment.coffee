@@ -9,20 +9,20 @@ define ["underscore", "backbone"], (_, Backbone) ->
       this.on 'fetch', -> console.log "YAYson", this.toJSON()
 
       this.on 'change:text', ->
-        console.log "change:text"
+        console.log "change:text", @get('id')
         @parseText()
 
       this.on 'change:tags', ->
-        console.log "change:tags"
+        console.log "change:tags", @get('id')
 
       this.on 'change:character', ->
-        console.log "change:character"
+        console.log "change:character", @get('id')
 
       this.on 'invalid', ->
         console.log "Whoops, I'm no longer valid", this
 
     defaults:
-      name: ""
+      text: "..."
 
     markdown_text: ->
       this.get('text')
@@ -38,9 +38,8 @@ define ["underscore", "backbone"], (_, Backbone) ->
       text = this.get('text')
       characterName = text.match(@regexen.characterName)
       hashTags = text.match(@regexen.hashTags)
-      console.log("parsetext!!!", characterName, hashTags)
-      this.set(character: characterName[0])
-      this.set(tags: hashTags)
+      this.set(character: characterName[0]) if characterName?
+      this.set(tags: hashTags) if hashTags?
   )
 
   Moment

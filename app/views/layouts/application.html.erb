@@ -35,17 +35,14 @@
                     <% current_project_folders.each do |folder| %>
                       <li><a href="/moments/by_folder/<%= folder.id %>"><i class="glyphicon glyphicon-folder"></i> <%= folder.name %></a></li>
                     <% end %>
-                    <li><a href="#"><i class="glyphicon glyphicon-plus"></i> new tag</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-plus"></i> new folder</a></li>
 
                   </ul>
 
                   <h4>Tags</h4>
                   <ul class="nav hidden-xs" id="lg-menu">
                     <% current_project_tags.each do |tag| %>
-<!--                       <li class="active"><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Featured</a></li> -->
-<!--                       <li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Stories</a></li> -->
                       <li><a href="/moments/by_tag/<%= tag.name %>"><i class="glyphicon glyphicon-tag"></i> <%= tag.name %></a></li>
-<!--                       <li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Refresh</a></li> -->
                     <% end %>
                     <li><a href="#"><i class="glyphicon glyphicon-plus"></i> new tag</a></li>
 

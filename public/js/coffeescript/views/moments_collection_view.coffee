@@ -2,30 +2,47 @@ define ["backbone",
         "jquery"
         "underscore",
         "models/moments_collection",
+        "models/moment",
         "views/moment_view",
-        "hbs!/templates/moment_chain"], (Backbone, $, _, MomentCollection, MomentView, chainTemplate) ->
+        "hbs!/templates/moment_chain"], (Backbone, $, _, MomentCollection, Moment, MomentView, chainTemplate) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 
     className: 'moment-chain'
 
     initialize: (constraints) ->
-      Backbone.pubSub.on('selectNextMoment', this.selectMoment, this) #TODO: wish I could use event bubbling for this...
+      Backbone.pubSub.on('selectMoment', this.selectMoment, this)
       renderThis =  _.bind(this.render, this)
       @collection = new MomentCollection(constraints)
       @collection.bind "change", renderThis
       @collection.fetch success: renderThis # Do the initial fetch
 
-    selectMoment: (event) ->
-      console.log("selectMoment", event)
-      nextMoment = @collection.select (moment) -> moment.get('previous_moment_id') is event.id
-      console.log("gonna trigger select", nextMoment[0])
-      if nextMoment.length
-        nextMoment[0].trigger('select')
+    # Selects another moment in the collection. Options should contain either an
+    # id OR an afterId key, depending on whether we know the moment to select or
+    # whether it is relative selection (e.g. you want the moment AFTER another)
+    selectMoment: (options) ->
+      console.log("selectMoment", options)
+      momentToSelect = if options.afterId
+        @findMomentAfter options.afterId
+      else if options.id
+        @findMoment options.id
       else
-        newMoment after: event.id
+        throw "You can't select a moment without its ID!"
+      console.log("gonna trigger select", momentToSelect[0])
+      if momentToSelect.length
+        momentToSelect[0].trigger('select')
+      else
+        # If no moment was found, we create a new one.
+        this.newMoment previousMomentId: momentToSelect.id
+
+    findMomentAfter: (momentId) ->
+      @collection.select (moment) -> moment.get('previous_moment_id') is momentId
 
     newMoment: (options) ->
+      moment = new Moment(previous_moment_id: options.previousMomentId)
+      @collection.add moment
+      @render()
+      moment.trigger 'select'
 
     render: ->
       chain = $(chainTemplate()) # TODO should the chain template specify this?
