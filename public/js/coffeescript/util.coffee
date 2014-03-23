@@ -6,10 +6,10 @@ define ["backbone", "jquery"], (Backbone, $) ->
     json = {}
     push_counters = {}
     patterns =
-      validate  : /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
-      key       : /[a-zA-Z0-9_]+|(?=\[\])/g,
-      push      : /^$/,
-      fixed     : /^\d+$/,
+      validate  : /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/
+      key       : /[a-zA-Z0-9_]+|(?=\[\])/g
+      push      : /^$/
+      fixed     : /^\d+$/
       named     : /^[a-zA-Z0-9_]+$/
 
     @build = (base, key, value) ->

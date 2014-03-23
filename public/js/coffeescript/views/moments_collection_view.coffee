@@ -20,8 +20,12 @@ define ["backbone",
       console.log("selectMoment", event)
       nextMoment = @collection.select (moment) -> moment.get('previous_moment_id') is event.id
       console.log("gonna trigger select", nextMoment[0])
-      nextMoment[0].trigger('select') if nextMoment.length
+      if nextMoment.length
+        nextMoment[0].trigger('select')
+      else
+        newMoment after: event.id
 
+    newMoment: (options) ->
 
     render: ->
       chain = $(chainTemplate()) # TODO should the chain template specify this?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140316181236) do
+ActiveRecord::Schema.define(version: 20140320215021) do
 
   create_table "constraints", force: true do |t|
     t.integer  "moment_id"
@@ -32,10 +32,16 @@ ActiveRecord::Schema.define(version: 20140316181236) do
 
   add_index "facts", ["name"], name: "index_facts_on_name", unique: true
 
+  create_table "folders", force: true do |t|
+    t.string  "name"
+    t.integer "parent_id"
+  end
+
   create_table "moments", force: true do |t|
     t.string   "kind",                                       default: "Speech",   null: false
     t.integer  "previous_moment_id"
     t.integer  "project_id"
+    t.integer  "folder_id"
     t.text     "text"
     t.string   "character"
     t.string   "location",                                   default: "Anywhere", null: false
@@ -46,6 +52,7 @@ ActiveRecord::Schema.define(version: 20140316181236) do
   end
 
   add_index "moments", ["character"], name: "index_moments_on_character"
+  add_index "moments", ["folder_id"], name: "index_moments_on_folder_id"
   add_index "moments", ["location"], name: "index_moments_on_location"
   add_index "moments", ["previous_moment_id"], name: "index_moments_on_previous_moment_id"
   add_index "moments", ["project_id"], name: "index_moments_on_project_id"

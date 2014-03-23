@@ -6,6 +6,7 @@ class CreateMoments < ActiveRecord::Migration
       t.string :kind, null: false, default: "Speech"
       t.references :previous_moment
       t.references :project
+      t.references :folder
       t.text :text
       t.string :character
       t.string :location, null: false, default: "Anywhere"
@@ -14,6 +15,7 @@ class CreateMoments < ActiveRecord::Migration
       t.decimal :buffer_seconds, precision: 5, scale: 3
 
       t.index :project_id
+      t.index :folder_id
       t.index :previous_moment_id
       t.index :location
       t.index :character
