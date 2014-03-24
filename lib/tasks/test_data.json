@@ -1,0 +1,183 @@
+{
+  "$type": "System.Collections.Generic.List`1[[EventResponseSpecification, Assembly-CSharp]], mscorlib",
+  "$values": [
+    {
+      "$type": "EventResponseSpecification, Assembly-CSharp",
+      "EventName": "approach_rocks_closestToTower",
+      "Requirements": {
+        "$type": "BlackboardFact[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "BlackboardFact, Assembly-CSharp",
+            "Name": "approached_rocks_closestToTower",
+            "Status": false
+          }
+        ]
+      },
+      "Responses": {
+        "$type": "System.Collections.Generic.List`1[[ResponseSpecification, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$type": "BlackboardFactResponseSpecification, Assembly-CSharp",
+            "FactName": "approached_rocks_closestToTower",
+            "NewStatus": true
+          },
+          {
+            "$type": "SpeechResponseSpecification, Assembly-CSharp",
+            "SpeechToPlay": {
+              "$type": "SpeechInstance, Assembly-CSharp",
+              "Caption": "Those are some nice rocks.",
+              "AudioClipPath": "Patrick Dialog Test/approach rocks1",
+              "OnFinishEvent": null,
+              "OnFinishEventDelay": 0.0,
+              "HackAudioDuration": 0.0,
+              "AllowQueueing": true,
+              "MinimumDuration": 0.0
+            }
+          }
+        ]
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventData/pipelinetest.json"
+    },
+    {
+      "$type": "EventResponseSpecification, Assembly-CSharp",
+      "EventName": "touch_rocks_closestToTower",
+      "Requirements": {
+        "$type": "BlackboardFact[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "BlackboardFact, Assembly-CSharp",
+            "Name": "bTouchedRocks1",
+            "Status": false
+          }
+        ]
+      },
+      "Responses": {
+        "$type": "System.Collections.Generic.List`1[[ResponseSpecification, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$type": "SpeechResponseSpecification, Assembly-CSharp",
+            "SpeechToPlay": {
+              "$type": "SpeechInstance, Assembly-CSharp",
+              "Caption": "They're warm to the touch.",
+              "AudioClipPath": "Patrick Dialog Test/use rocks1",
+              "OnFinishEvent": null,
+              "OnFinishEventDelay": 0.0,
+              "HackAudioDuration": 0.0,
+              "AllowQueueing": true,
+              "MinimumDuration": 0.0
+            }
+          },
+          {
+            "$type": "BlackboardFactResponseSpecification, Assembly-CSharp",
+            "FactName": "bTouchedRocks1",
+            "NewStatus": true
+          }
+        ]
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventData/pipelinetest.json"
+    },
+    {
+      "$type": "EventResponseSpecification, Assembly-CSharp",
+      "EventName": "enterZoloftZone",
+      "Requirements": {
+        "$type": "BlackboardFact[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "BlackboardFact, Assembly-CSharp",
+            "Name": "bhasEnteredZoloftZone",
+            "Status": false
+          }
+        ]
+      },
+      "Responses": {
+        "$type": "System.Collections.Generic.List`1[[ResponseSpecification, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$type": "SpeechResponseSpecification, Assembly-CSharp",
+            "SpeechToPlay": {
+              "$type": "SpeechInstance, Assembly-CSharp",
+              "Caption": "I feel really down all of a sudden.",
+              "AudioClipPath": "Patrick Dialog Test/enter zoloft zone1",
+              "OnFinishEvent": null,
+              "OnFinishEventDelay": 0.0,
+              "HackAudioDuration": 0.0,
+              "AllowQueueing": true,
+              "MinimumDuration": 0.0
+            }
+          },
+          {
+            "$type": "BlackboardFactResponseSpecification, Assembly-CSharp",
+            "FactName": "bhasEnteredZoloftZone",
+            "NewStatus": true
+          }
+        ]
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventData/pipelinetest.json"
+    },
+    {
+      "$type": "EventResponseSpecification, Assembly-CSharp",
+      "EventName": "enteredTower",
+      "Requirements": {
+        "$type": "BlackboardFact[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "BlackboardFact, Assembly-CSharp",
+            "Name": "bHasEnteredTower",
+            "Status": false
+          }
+        ]
+      },
+      "Responses": {
+        "$type": "System.Collections.Generic.List`1[[ResponseSpecification, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$type": "SpeechResponseSpecification, Assembly-CSharp",
+            "SpeechToPlay": {
+              "$type": "SpeechInstance, Assembly-CSharp",
+              "Caption": "Hey, tower.",
+              "AudioClipPath": "Patrick Dialog Test/enter tower 1",
+              "OnFinishEvent": null,
+              "OnFinishEventDelay": 0.0,
+              "HackAudioDuration": 0.0,
+              "AllowQueueing": true,
+              "MinimumDuration": 0.0
+            }
+          },
+          {
+            "$type": "BlackboardFactResponseSpecification, Assembly-CSharp",
+            "FactName": "bHasEnteredTower",
+            "NewStatus": false
+          }
+        ]
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventData/pipelinetest.json"
+    },
+    {
+      "$type": "EventResponseSpecification, Assembly-CSharp",
+      "EventName": "No Event",
+      "Requirements": {
+        "$type": "BlackboardFact[], Assembly-CSharp",
+        "$values": []
+      },
+      "Responses": {
+        "$type": "System.Collections.Generic.List`1[[ResponseSpecification, Assembly-CSharp]], mscorlib",
+        "$values": []
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventData/pipelinetest.json"
+    },
+    {
+      "$type": "EventResponseSpecification, Assembly-CSharp",
+      "EventName": "No Event",
+      "Requirements": {
+        "$type": "BlackboardFact[], Assembly-CSharp",
+        "$values": []
+      },
+      "Responses": {
+        "$type": "System.Collections.Generic.List`1[[ResponseSpecification, Assembly-CSharp]], mscorlib",
+        "$values": []
+      },
+      "SourceFilePath": "Assets/OriginalAssets/EventData/pipelinetest.json"
+    }
+  ]
+}
