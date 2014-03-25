@@ -17,13 +17,25 @@ describe Moment do
       end
     end
 
-    describe "JSON output" do
-      let(:parsed_output) { JSON.parse(moment.to_unity_JSON) }
+    describe "web JSON output" do
+      let(:parsed_output) { JSON.parse(moment.to_web_JSON) }
 
       it "should be valid" do
         expect(parsed_output).to be_kind_of(Hash)
         expect(parsed_output["id"]).to equal(moment.id)
         expect(DateTime.parse(parsed_output["created_at"])).to(be_kind_of(DateTime), "to be a valid date format")
+        expect(parsed_output["constraints"]).to be_kind_of(Array)
+      end
+    end
+
+    describe "unity JSON output" do
+      let(:parsed_output) { JSON.parse(moment.to_unity_JSON) }
+
+      it "should be valid" do
+        expect(parsed_output).to be_kind_of(Hash)
+        expect(parsed_output["$type"]).to equal("EventResponseSpecification, Assembly-CSharp")
+        expect(parsed_output["EventName"]).to equal("approach_rocks_closestToTower")
+
         expect(parsed_output["constraints"]).to be_kind_of(Array)
       end
     end
