@@ -1,10 +1,13 @@
 # encoding: utf-8
 
+namespace :db do
+  task :reset => ["db:drop", "db:migrate"]
+end
+
 namespace :campo do
   desc "Parse scrivener files in Sean's format and convert them to Unity-approved JSON"
   task "scrivener:slurp", [:filename] => :environment do |t, args|
     scrivener_source = File.read(args[:filename])
-
 
     # /        - delimiter
     # \{       - opening literal brace escaped because it is a special character used for quantifiers eg {2,3}
@@ -18,15 +21,40 @@ namespace :campo do
     # /        - delimiter
     requirements_matcher = /\{([^}]+)\}/
 
-    name_matcher = /^([A-Z0-9_]*)\n/
+    header_matcher = /^([A-Z0-9_]*)\n/
+    name_matcher = /^[A-Z0-9_]*/
+
     choice_matcher = /^[1-9]\./
 
-    name_chunks  = scrivener_source.split(name_matcher)
+    moment_id_matcher = /\[([0-9]+)\]/
+    previous_moment_ids_matcher = /:([0-9,])+/
+
+    name_chunks  = scrivener_source.split(header_matcher)
     name_chunks.reject! {|c| c.empty?}
 
     begin
-      last_line = nil
-      name_chunks.each_slice(2) do |char, text|
+      previous_moment, previous_moment_id = nil, nil
+
+      name_chunks.each_slice(2) do |header, text|
+
+        # Pull the character name out of the header
+        char = header.match(name_matcher)[0]
+        header.gsub! char, ''
+
+        # If any chars are left in the header...
+        if header.present?
+          previous_moment_id_match = header.match(previous_moment_ids_matcher)
+          previous_moment_ids = previous_moment_id_match[1].split(',')
+          header.gsub!(previous_moment_id_match[0], '')
+          puts "previous_moment_ids, #{previous_moment_ids}"
+          previous_moment_id = previous_moment_ids.first if previous_moment_ids.present?
+
+          moment_id_match = header.match(moment_id_matcher)
+          moment_id = moment_id_match[1]
+          header.gsub!(moment_id_match[0], '')
+          puts "moment_id, #{moment_id}"
+        end
+
         unless text && char
           puts ":::SKIPPING MISMATCHED PAIRS:::"
           puts "#{char}:#{text}"
@@ -48,7 +76,15 @@ namespace :campo do
           text.gsub!(requirements_matcher, '')
         end
 
-        moment = Moment.create!(text: text, character: char)
+        moment = Moment.create!(
+          text: text,
+          character: char.humanize,
+          previous_moment: previous_moment
+        )
+
+        # For the next iteration
+        previous_moment = moment
+
         # Reqs is now a tuple of Fact objects and constraint strings
         reqs.each do |tuple|
           constraint = Constraint.create!(
@@ -65,8 +101,6 @@ namespace :campo do
         end
         puts "--------------"
       end
-    # rescue StandardError => e
-    #   puts "ERROR on"
     end
   end
 
