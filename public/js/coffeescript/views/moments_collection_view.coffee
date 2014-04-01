@@ -1,10 +1,11 @@
-define ["backbone",
+define ["backbone"
         "jquery"
-        "underscore",
-        "models/moments_collection",
-        "models/moment",
-        "views/moment_view",
-        "hbs!/templates/moment_chain"], (Backbone, $, _, MomentCollection, Moment, MomentView, chainTemplate) ->
+        "underscore"
+        "barley"
+        "models/moments_collection"
+        "models/moment"
+        "views/moment_view"
+        "hbs!/templates/moment_chain"], (Backbone, $, _, Barley, MomentCollection, Moment, MomentView, chainTemplate) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 
@@ -56,20 +57,20 @@ define ["backbone",
         else
           chain.append($('<div class="row"></div>').append(momentElement))
       this.$el.html(chain)
-      # this.linkNodes()
+      this.linkNodes()
       this
 
-    # linkNodes: ->
-    #   $(".card").each (i, e) ->
-    #     source = $(e)
-    #     if previousMomentId = source.data('previous-moment-id')
-    #       target = $("##{previousMomentId}-Speech-card")
-    #       jsPlumb.connect
-    #         source: source
-    #         target: target
-    #         anchors: [
-    #           [ "Perimeter", shape: "Triangle" ],
-    #           [ "Perimeter", shape: "Diamond" ]
-    #         ]
+    linkNodes: ->
+      $(".card").each (i, e) ->
+        source = $(e)
+        if previousMomentId = source.data('previous-moment-id')
+          target = $("##{previousMomentId}-Speech-card")
+          jsPlumb.connect
+            source: source
+            target: target
+            anchors: [
+              [ "Perimeter", shape: "Triangle" ],
+              [ "Perimeter", shape: "Diamond" ]
+            ]
   )
   MomentsCollectionView
