@@ -29,8 +29,13 @@ class Moment < ActiveRecord::Base
     moment_chain
   end
 
-  def to_web_JSON
-    Jbuilder.encode do |json|
+  # TODO: this is terribly inefficient
+  def next_moments
+    @next_moments ||= Moment.where(previous_moment: this_moment).to_a
+  end
+
+  def as_web_JSON
+    Jbuilder.new do |json|
       json.(self, :id, :created_at, :updated_at)
 
       json.constraints self.constraints do |constraint|
@@ -41,27 +46,60 @@ class Moment < ActiveRecord::Base
     end
   end
 
-  def self.collection_to_unity_JSON(collection)
-    {
-      "$type": "System.Collections.Generic.List`1[[EventResponseSpecification, Assembly-CSharp]], mscorlib",
-      "values": collection.map {|moment| moment.to_unity_JSON}
-    }.to_json
-  end
+  def self.collection_as_unity_JSON(moments = :all)
+    moments = Moment.all.to_a unless moments.kind_of?(Array)
+    Jbuilder.new do |json|
+      json.key_format! :camelize => :upper
 
-  def to_unity_JSON
-    Jbuilder.encode do |json|
-      json.set! "$type", "EventResponseSpecification, Assembly-CSharp"
-      json.set! "EventName", "approach_rocks_closestToTower"
+      json.set! "$type", collection_type("EventResponseSpecification")
+      json.set! "$values", moments do |moment|
+        json.set! "$type", "vgEventResponseSpecification, Assembly-CSharp"
+        json.event_name "approach_rocks_closestToTower" #TODO: don't hardcode
 
-      json.constraints self.constraints do |constraint|
-        json.fact_test constraint.fact_test
-        json.fact_name constraint.fact.name
-        json.fact_default_value constraint.fact.default_value
-      end
+        # Requirements
+        json.set! "Requirements" do
+          json.set! "$type", collection_type("BlackboardFact")
+          json.set! "$values" do
+            json.array! moment.constraints do |constraint|
+              json.set! "NewStatus", constraint.fact.default_value
+              json.set! "FactName", constraint.fact.name
+            end
+          end
+        end # end Requirements
+
+        json.set! "Responses" do
+          json.set! "$type", collection_type("ResponseSpecification")
+          json.set! "$values" do
+            json.array! do
+              json.set! "$type", "vgSpeechResponseSpecification, Assembly-CSharp"
+              json.set! "SpeechToPlay" do
+                json.set! "$type", "vgSpeechInstance, Assembly-CSharp" do
+                  json.set! "Caption", moment.text
+
+                  json.set! "HackAudioDuration", 0.0
+                  json.set! "AllowQueueing", true
+                  json.set! "MinimumDuration", 0.0
+
+                  # if moment.has_audio?
+                  #   json.set! "AudioClipPath", self.audio_clip_path "HiDenny.wav"
+                  # end
+
+                  if moment.nextMoments && nextMoments.size == 1
+                    json.set! "OnFinishEvent", "Reply#{nextMoment.id}to#{moment.id}"
+                    json.set! "OnFinishEventDelay", moment.buffer_seconds
+                  end
+                end
+              end
+            end
+          end
+        end #end Responses
+
+      end # end Moment
     end
   end
 
-
-
-
+  private
+    def self.collection_type(type_string)
+      "System.Collections.Generic.List`1[[vg#{type_string}, Assembly-CSharp]], mscorlib"
+    end
 end

@@ -28,7 +28,6 @@ class MomentsController < ApplicationController
   end
 
   def destroy
-    logger.info "DESTROY #{params}"
     moment = Moment.find(params[:id])
     if moment.destroy!
       respond_with moment
@@ -46,6 +45,13 @@ class MomentsController < ApplicationController
   def by_folder
     moments = Moment.where folder_id: params[:folder_id]
     respond_with moments.to_a
+  end
+
+  def for_unity
+    json_blob = Moment.collection_as_unity_JSON(:all).target!
+    respond_to do |format|
+      format.json { render :json => json_blob }
+    end
   end
 
   private

@@ -18,7 +18,7 @@ describe Moment do
     end
 
     describe "web JSON output" do
-      let(:parsed_output) { JSON.parse(moment.to_web_JSON) }
+      let(:parsed_output) { JSON.parse(moment.as_web_JSON.target!) }
 
       it "should be valid" do
         expect(parsed_output).to be_kind_of(Hash)
@@ -29,15 +29,19 @@ describe Moment do
     end
 
     describe "unity JSON output" do
-      let(:parsed_output) { JSON.parse(moment.to_unity_JSON) }
+      let(:parsed) { JSON.parse(Moment.collection_as_unity_JSON([moment])) }
+      let(:requirements) { parsed["Requirements"] }
 
       it "should be valid" do
-        expect(parsed_output).to be_kind_of(Hash)
-        expect(parsed_output["$type"]).to equal("EventResponseSpecification, Assembly-CSharp")
-        expect(parsed_output["EventName"]).to equal("approach_rocks_closestToTower")
-
-        expect(parsed_output["constraints"]).to be_kind_of(Array)
+        expect(parsed).to be_kind_of(Hash)
+        expect(parsed["$type"]).to eq("vgEventResponseSpecification, Assembly-CSharp")
+        expect(parsed["EventName"]).to eq("approach_rocks_closestToTower")
       end
+
+      it "should be have a valid Requirements sub-object" do
+        expect(requirements["$type"]).to eq("System.Collections.Generic.List`1[[vgBlackboardFact, Assembly-CSharp]], mscorlib")
+      end
+
     end
   end
 
