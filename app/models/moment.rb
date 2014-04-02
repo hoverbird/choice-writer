@@ -11,6 +11,77 @@ class Moment < ActiveRecord::Base
     Moment.where("search_vector @@ #{sanitized}")
   end
 
+  def self.collection_as_unity_JSON(moments = :all)
+    moments = Moment.all.to_a unless moments.kind_of?(Array)
+    Jbuilder.new do |json|
+      json.key_format! :camelize => :upper
+
+      json.set! "$type", collection_type("EventResponseSpecification")
+      json.set! "$values", moments do |moment|
+        json.set! "$type", "vgEventResponseSpecification, Assembly-CSharp"
+
+        if moment.previous_moment
+          json.event_name moment.previous_moment.on_finish_event
+        else
+          json.event_name "unbound_event_fix_me"
+        end
+
+        # Requirements
+        json.set! "Requirements" do
+          json.set! "$type", collection_type("BlackboardFact")
+          json.set! "$values" do
+            json.array! moment.constraints do |constraint|
+              json.set! "NewStatus", constraint.fact.default_value
+              json.set! "FactName", constraint.fact.name
+            end
+          end
+        end # end Requirements
+
+        fake_response_array = ["TODO: remove this jbuilder hackery"]
+
+        json.set! "Responses" do
+          json.set! "$type", collection_type("ResponseSpecification")
+          json.set! "$values" do
+            json.array! fake_response_array do |f|
+              json.set! "$type", "vgSpeechResponseSpecification, Assembly-CSharp"
+              json.set! "SpeechToPlay" do
+                json.set! "$type", "vgSpeechInstance, Assembly-CSharp"
+                json.set! "Caption", moment.clean_text
+
+                # Always trigger a finish event, even if there is not currently another response
+                json.set! "OnFinishEvent", moment.on_finish_event
+                json.set! "OnFinishEventDelay", moment.buffer_seconds
+
+                json.set! "HackAudioDuration", 0.0
+                json.set! "AllowQueueing", true
+                json.set! "MinimumDuration", 0.0
+
+                # if moment.has_audio?
+                #   json.set! "AudioClipPath", self.audio_clip_path "HiDenny.wav"
+                # end
+              end
+            end
+          end
+        end #end Responses
+
+      end # end Moment
+    end
+  end
+  # end self.collection_as_unity_JSON
+
+  def on_finish_event
+    "#{kind}_#{character_slug}_#{id}_finished"
+  end
+
+  def character_slug
+    character_base = self.character.present? ? self.character : 'anonymous'
+    character_base.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
+
+  def clean_text
+    text && text.chomp
+  end
+
   def expand_from_leaf
     this_moment = self
     moment_chain = [this_moment]
@@ -46,57 +117,6 @@ class Moment < ActiveRecord::Base
     end
   end
 
-  def self.collection_as_unity_JSON(moments = :all)
-    moments = Moment.all.to_a unless moments.kind_of?(Array)
-    Jbuilder.new do |json|
-      json.key_format! :camelize => :upper
-
-      json.set! "$type", collection_type("EventResponseSpecification")
-      json.set! "$values", moments do |moment|
-        json.set! "$type", "vgEventResponseSpecification, Assembly-CSharp"
-        json.event_name "approach_rocks_closestToTower" #TODO: don't hardcode
-
-        # Requirements
-        json.set! "Requirements" do
-          json.set! "$type", collection_type("BlackboardFact")
-          json.set! "$values" do
-            json.array! moment.constraints do |constraint|
-              json.set! "NewStatus", constraint.fact.default_value
-              json.set! "FactName", constraint.fact.name
-            end
-          end
-        end # end Requirements
-
-        json.set! "Responses" do
-          json.set! "$type", collection_type("ResponseSpecification")
-          json.set! "$values" do
-            json.array! do
-              json.set! "$type", "vgSpeechResponseSpecification, Assembly-CSharp"
-              json.set! "SpeechToPlay" do
-                json.set! "$type", "vgSpeechInstance, Assembly-CSharp" do
-                  json.set! "Caption", moment.text
-
-                  json.set! "HackAudioDuration", 0.0
-                  json.set! "AllowQueueing", true
-                  json.set! "MinimumDuration", 0.0
-
-                  # if moment.has_audio?
-                  #   json.set! "AudioClipPath", self.audio_clip_path "HiDenny.wav"
-                  # end
-
-                  if moment.nextMoments && nextMoments.size == 1
-                    json.set! "OnFinishEvent", "Reply#{nextMoment.id}to#{moment.id}"
-                    json.set! "OnFinishEventDelay", moment.buffer_seconds
-                  end
-                end
-              end
-            end
-          end
-        end #end Responses
-
-      end # end Moment
-    end
-  end
 
   private
     def self.collection_type(type_string)
