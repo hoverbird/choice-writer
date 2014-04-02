@@ -7,7 +7,7 @@ Choice::Application.routes.draw do
     collection do
       get 'by_tag/:tag_name', to: 'moments#by_tag'
       get 'by_folder/:folder_id', to: 'moments#by_folder'
-      get 'for_unity', to: 'moments#for_unity'
+      get 'v0/unity', to: 'moments#for_unity'
     end
   end
 

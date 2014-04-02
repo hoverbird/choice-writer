@@ -104,4 +104,12 @@ namespace :campo do
     end
   end
 
+  desc "Copy all Moment events into perforce"
+  task "p4:update" do
+    p4_target = "/Users/hoverbird/code/campo/p4/patrick_sax/Tools/ChoiceEditor/event_responses.json"
+    json = `curl choice.192.168.11.13.xip.io/moments/v0/unity`
+    raise "Not valid JSON: #{json}" unless JSON.parse(json)
+    puts "JSON looks good! Writing to #{p4_target}"
+    File.open(p4_target, 'w') { |f| f.write json }
+  end
 end

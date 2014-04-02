@@ -27,12 +27,14 @@ class Moment < ActiveRecord::Base
         end
 
         # Requirements
-        json.set! "Requirements" do
-          json.set! "$type", collection_type("BlackboardFact")
-          json.set! "$values" do
-            json.array! moment.constraints do |constraint|
-              json.set! "NewStatus", constraint.fact.default_value
-              json.set! "FactName", constraint.fact.name
+        if moment.constraints.present?
+          json.set! "Requirements" do
+            json.set! "$type", collection_type("BlackboardFact")
+            json.set! "$values" do
+              json.array! moment.constraints do |constraint|
+                json.set! "NewStatus", constraint.fact.default_value
+                json.set! "FactName", constraint.fact.name
+              end
             end
           end
         end # end Requirements
@@ -50,11 +52,11 @@ class Moment < ActiveRecord::Base
 
                 # Always trigger a finish event, even if there is not currently another response
                 json.set! "OnFinishEvent", moment.on_finish_event
-                json.set! "OnFinishEventDelay", moment.buffer_seconds
+                json.set! "OnFinishEventDelay", moment.buffer_seconds if moment.buffer_seconds
 
-                json.set! "HackAudioDuration", 0.0
-                json.set! "AllowQueueing", true
-                json.set! "MinimumDuration", 0.0
+                json.set! "HackAudioDuration", 0.0 if false
+                json.set! "MinimumDuration", 0.0 if false
+                json.set! "AllowQueueing", true if false #moment.allowQueueing
 
                 # if moment.has_audio?
                 #   json.set! "AudioClipPath", self.audio_clip_path "HiDenny.wav"
