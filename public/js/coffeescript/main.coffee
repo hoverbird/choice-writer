@@ -9,7 +9,7 @@ require.config
     backbone: "../lib/backbone/backbone"
     hbs: '../lib/require-handlebars-plugin/hbs'
     jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
-    # barleyEditor: '../lib/barley-editor.min'
+    # barley: '../lib/barley-editor.min.js'
     # 'backbone.keys': '../lib/backbone.keys/dist/backbone.keys.min'
     # jasmine: '../lib/jasmine-jquery/lib/jasmine-jquery'
     # 'jasmine-html': '../lib/jasmine-jquery/lib/jasmine/lib/jasmine-html'
@@ -29,13 +29,12 @@ require.config
       ]
       # custom export name, this would be lowercase otherwise
       exports: "Backbone"
-
-    barleyConfig:
-      deps: [
-        "barleyConfig"
-        "../lib/barley-editor.min"
-      ]
-      exports: "Barley"
+    # 
+    # barley:
+    #   deps: [
+    #     "barleyConfig"
+    #   ]
+    #   exports: "Barley"
 
   # how long the it tries to load a script before giving up, the default is 7
   waitSeconds: 10

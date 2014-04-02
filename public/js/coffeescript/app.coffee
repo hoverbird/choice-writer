@@ -2,7 +2,7 @@ define ["backbone"
         "jquery"
         "underscore"
         "util"
-        # "barley"
+        # "barleyConfig"
         "jsplumb"
         "choice_router",
         "views/side_nav"], (Backbone, $, _, Util, jsplumb, Router, NavView) ->

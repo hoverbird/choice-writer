@@ -1,11 +1,10 @@
 define ["backbone"
         "jquery"
         "underscore"
-        "barley"
         "models/moments_collection"
         "models/moment"
         "views/moment_view"
-        "hbs!/templates/moment_chain"], (Backbone, $, _, Barley, MomentCollection, Moment, MomentView, chainTemplate) ->
+        "hbs!/templates/moment_chain"], (Backbone, $, _, MomentCollection, Moment, MomentView, chainTemplate) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 

@@ -58,8 +58,8 @@ define [
 
     textColor: ->
       colorMap =
-        "henry": "red"
-        "delilah": "blue"
+        "henry": "#EB5C47"
+        "delilah": "#EE7F50"
       charName = @model.get('character')
       if charName and characterColor = colorMap[charName.toLowerCase()]
         characterColor
