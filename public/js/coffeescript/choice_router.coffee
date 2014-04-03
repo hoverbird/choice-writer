@@ -24,7 +24,6 @@ define ["backbone", "views/moments_collection_view", "views/locations_view"], (B
     showMoments: (id) ->
       view = new MomentCollectionView()
       @contentContainer.html(view.el)
-      window.barley.editor.init()
 
     defaultRoute: (other) ->
       console.log "Poor Choice. You attempted to reach a nonexistant route: #{other}"

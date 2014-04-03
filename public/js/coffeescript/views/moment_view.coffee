@@ -18,6 +18,7 @@ define [
 
     initialize: ->
       @model.on 'select', this.select.bind(this)
+      # this.on 'blur', this.gotMeh.bind(this)
 
     edit: (event) ->
       @editableSet ||= this.$el.find('.replace-text')

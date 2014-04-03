@@ -14,7 +14,8 @@ barley.bar.settings.lock_edits = false
 barley.editor.save = (obj) ->
   k = obj.data("barley")
   v = obj.html()
-  console.log "Key: \"" + k + "\" Value: " + v + "\""
+  console.log "Barley save"
+  # console.log "Key: \"" + k + "\" Value: " + v + "\""
   return
 
 # 3. Error Tracking - What happens when the editor returns an error
@@ -34,4 +35,4 @@ barley.editor.jazz = -> "Yeah!"
 #   console.log "Video Upload/Embed Called"
 #   return
 
-barley
+# barley

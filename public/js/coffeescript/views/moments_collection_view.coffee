@@ -56,7 +56,8 @@ define ["backbone"
         else
           chain.append($('<div class="row"></div>').append(momentElement))
       this.$el.html(chain)
-      this.linkNodes()
+      # this.linkNodes()
+      # window.barley.editor.init()
       this
 
     linkNodes: ->
