@@ -1,0 +1,2 @@
+class Speech < Response
+end

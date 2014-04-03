@@ -18,7 +18,6 @@ define [
 
     initialize: ->
       @model.on 'select', this.select.bind(this)
-      # this.on 'blur', this.gotMeh.bind(this)
 
     edit: (event) ->
       @editableSet ||= this.$el.find('.replace-text')
@@ -44,8 +43,7 @@ define [
       @model.destroy success: (model, response) => this.$el.remove()
 
     onKeyUp: (event) ->
-      if event.keyCode is 13 and event.shiftKey
-        @unedit(event)
+      @unedit(event) if event.keyCode is 13 and event.shiftKey
 
     # TODO: unify this with collection view creation
     newMoment: (event) ->
@@ -58,10 +56,11 @@ define [
       moment.trigger('select')
 
     textColor: ->
+      charName = @model.get('character')
       colorMap =
         "henry": "#EB5C47"
         "delilah": "#EE7F50"
-      charName = @model.get('character')
+        "dir": "blue"
       if charName and characterColor = colorMap[charName.toLowerCase()]
         characterColor
       else

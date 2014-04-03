@@ -8,6 +8,8 @@ namespace :campo do
   desc "Parse scrivener files in Sean's format and convert them to Unity-approved JSON"
   task "scrivener:slurp", [:filename] => :environment do |t, args|
     scrivener_source = File.read(args[:filename])
+    folder_name = args[:filename].split('/').last.gsub('.txt', '')
+    folder = Folder.find_or_create_by_name(folder_name)
 
     # /        - delimiter
     # \{       - opening literal brace escaped because it is a special character used for quantifiers eg {2,3}
@@ -80,6 +82,7 @@ namespace :campo do
         response = Response.create!(
           text: text,
           character: char.humanize,
+          folder: folder
         )
 
         event = if event_name
@@ -109,7 +112,9 @@ namespace :campo do
 
         # Reqs is now a tuple of Fact objects and requirement strings
         reqs.each do |tuple|
-          fact = Fact.find_or_create_by_name(tuple[0])
+          puts "REQ TUPLE: #{tuple}"
+
+          fact = Fact.find_or_create_by_name(tuple[0].name)
           puts "Found or created fact: #{fact.name}"
 
           requirement = Requirement.create!(

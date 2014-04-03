@@ -3,25 +3,20 @@ define ["backbone", "views/moments_collection_view", "views/locations_view"], (B
     contentContainer: $(".left-col")
 
     routes:
-      "": "showMoments"
-      "home": "showMoments"
-      "locations/:id": "showMomentsByLocation"
-      "moments/by_tag/:tag": "showMomentsByTag"
-      "moments/by_folder/:folder_id": "showMomentsByFolder"
+      "": "showResponses"
+      "home": "showResponses"
+      "responses/by_tag/:tag": "showRepsonsesByTag"
+      "responses/by_folder/:folder_id": "showResponsesByFolder"
 
-    showMomentsByLocation: (id) ->
-      view = new MomentCollectionView constraints: { location: id }
-      @contentContainer.html(view.el)
-
-    showMomentsByTag: (tag) ->
+    showResponsesByTag: (tag) ->
       view = new MomentCollectionView constraints: { tag: tag }
       @contentContainer.html(view.el)
 
-    showMomentsByFolder: (folder_id) ->
+    showResponsesByFolder: (folder_id) ->
       view = new MomentCollectionView constraints: { folder_id: folder_id }
       @contentContainer.html(view.el)
 
-    showMoments: (id) ->
+    showResponses: (id) ->
       view = new MomentCollectionView()
       @contentContainer.html(view.el)
 

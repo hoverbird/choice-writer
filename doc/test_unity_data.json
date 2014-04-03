@@ -1,6 +1,7 @@
 {
   "$type": "System.Collections.Generic.List`1[[vgEventResponseSpecification, Assembly-CSharp]], mscorlib",
   "$values": [
+
     {
       "$type": "vgEventResponseSpecification, Assembly-CSharp",
       "EventName": "DennySpeech",
@@ -33,6 +34,8 @@
       },
       "SourceFilePath": "Assets/_TestData/EventData/GreyForestMasterList.json"
     },
+    
+
     {
       "$type": "vgEventResponseSpecification, Assembly-CSharp",
       "EventName": "DennySpeech",
