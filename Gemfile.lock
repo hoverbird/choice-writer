@@ -201,7 +201,7 @@ DEPENDENCIES
   nokogiri
   pg
   rails (= 4.0.3)
-  rails_admin
+  rails_admin (= 0.6.1)
   redcarpet
   rspec-rails (~> 3.0.0.beta)
   rubytree
