@@ -13,16 +13,12 @@
 
 ActiveRecord::Schema.define(version: 20140320215021) do
 
-  create_table "constraints", force: true do |t|
-    t.integer  "moment_id"
-    t.integer  "fact_id"
-    t.string   "fact_test",       default: "be_true", null: false
-    t.string   "fact_test_value"
+  create_table "events", force: true do |t|
+    t.string   "name",        null: false
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "constraints", ["moment_id", "fact_id"], name: "index_constraints_on_moment_id_and_fact_id"
 
   create_table "facts", force: true do |t|
     t.string "name",          null: false
@@ -35,42 +31,56 @@ ActiveRecord::Schema.define(version: 20140320215021) do
   create_table "folders", force: true do |t|
     t.string  "name"
     t.integer "parent_id"
+    t.integer "project_id"
   end
 
-  create_table "moments", force: true do |t|
-    t.string   "kind",                                       default: "Speech",   null: false
-    t.integer  "previous_moment_id"
-    t.integer  "project_id"
+  add_index "folders", ["project_id", "parent_id"], name: "index_folders_on_project_id_and_parent_id"
+
+  create_table "projects", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "requirements", force: true do |t|
+    t.integer "event_id"
+    t.integer "fact_id"
+    t.string  "fact_test",       default: "be_true", null: false
+    t.string  "fact_test_value"
+  end
+
+  add_index "requirements", ["event_id", "fact_id"], name: "index_requirements_on_event_id_and_fact_id"
+
+  create_table "responses", force: true do |t|
+    t.string   "type",                                          default: "Speech", null: false
+    t.integer  "event_id"
+    t.integer  "on_finish_event_id"
     t.integer  "folder_id"
     t.text     "text"
     t.string   "character"
-    t.string   "location",                                   default: "Anywhere", null: false
-    t.string   "audio_file_path"
-    t.decimal  "buffer_seconds",     precision: 5, scale: 3
+    t.string   "audio_clip_path"
+    t.decimal  "on_finish_event_delay", precision: 5, scale: 3
+    t.decimal  "minimum_duration",      precision: 5, scale: 3
+    t.decimal  "hack_audio_duration",   precision: 5, scale: 3
+    t.boolean  "allow_queueing"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "moments", ["character"], name: "index_moments_on_character"
-  add_index "moments", ["folder_id"], name: "index_moments_on_folder_id"
-  add_index "moments", ["location"], name: "index_moments_on_location"
-  add_index "moments", ["previous_moment_id"], name: "index_moments_on_previous_moment_id"
-  add_index "moments", ["project_id"], name: "index_moments_on_project_id"
-
-  create_table "projects", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "responses", ["character"], name: "index_responses_on_character"
+  add_index "responses", ["event_id"], name: "index_responses_on_event_id"
+  add_index "responses", ["folder_id"], name: "index_responses_on_folder_id"
 
   create_table "taggings", force: true do |t|
     t.integer "tag_id"
-    t.integer "moment_id"
+    t.integer "response_id"
   end
 
+  add_index "taggings", ["tag_id", "response_id"], name: "index_taggings_on_tag_id_and_response_id"
+
   create_table "tags", force: true do |t|
-    t.string   "name",       null: false
-    t.string   "folder"
+    t.string   "name",        null: false
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
