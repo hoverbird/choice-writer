@@ -1,11 +1,11 @@
 delilah_does_know_about_the_mice:
   id: 1
   fact_id: 3
-  moment_id: 7
+  event_id: 7
   fact_test: be_true
 
 delilah_does_not_know_about_the_mice:
   id: 3
   fact_id: 2
-  moment_id: 8
+  event_id: 8
   fact_test: be_false

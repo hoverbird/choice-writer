@@ -1,24 +1,24 @@
 heard_a_noise_paranoia:
   id: 1
-  moment_id: 5
+  response_id: 5
   tag_id: 2
 
 heard_a_noise_tower:
   id: 2
-  moment_id: 5
+  response_id: 5
   tag_id: 1
 
 quiet_act1:
   id: 3
-  moment_id: 1
+  response_id: 1
   tag_id: 3
 
 teens_act2:
   id: 4
-  moment_id: 12
+  response_id: 12
   tag_id: 4
 
 too_quiet_paranoia:
   id: 5
-  moment_id: 2
+  response_id: 2
   tag_id: 2
