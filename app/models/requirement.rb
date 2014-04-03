@@ -1,4 +1,4 @@
-class Constraint < ActiveRecord::Base
+class Requirement < ActiveRecord::Base
   belongs_to :fact
-  belongs_to :moment
+  belongs_to :event
 end

@@ -3,17 +3,18 @@ Choice::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   root 'home#index'
-  resources :moments do
+  resources :responses do
     collection do
       get 'by_tag/:tag_name', to: 'moments#by_tag'
       get 'by_folder/:folder_id', to: 'moments#by_folder'
-      get 'v0/unity', to: 'moments#for_unity'
     end
   end
 
-  get 'moments/location/:location.json' => 'moments#location'
-  get 'locations' => 'locations#index'
-
+  resources :events do
+    collection do
+      get 'v0/unity', to: 'events#for_unity'
+    end
+  end
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

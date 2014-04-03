@@ -1,39 +1,38 @@
-class Moment < ActiveRecord::Base
-  belongs_to :folder
-  belongs_to :previous_moment, class_name: "Moment", foreign_key: "previous_moment_id"
-  has_many :constraints
-  has_many :facts, through: :constraints
+class Response < ActiveRecord::Base
+  belongs_to :event
+  belongs_to :on_finish_event, class_name: "Event", foreign_key: "on_finish_event_id"
+
+  has_many :requirements
+  has_many :facts, through: :requirements
+
   has_many :taggings
   has_many :tags, through: :taggings
 
+  belongs_to :folder
+
   def self.search(terms = "")
     sanitized = sanitize_sql_array(["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
-    Moment.where("search_vector @@ #{sanitized}")
+    Response.where("search_vector @@ #{sanitized}")
   end
 
-  def self.collection_as_unity_JSON(moments = :all)
-    moments = Moment.all.to_a unless moments.kind_of?(Array)
+  def self.collection_as_unity_JSON(events = :all)
+    events = Event.all.to_a unless events.kind_of?(Array)
     Jbuilder.new do |json|
       json.key_format! :camelize => :upper
 
       json.set! "$type", collection_type("EventResponseSpecification")
-      json.set! "$values", moments do |moment|
+      json.set! "$values", events do |event|
+        json.event_name event.name
         json.set! "$type", "vgEventResponseSpecification, Assembly-CSharp"
 
-        if moment.previous_moment
-          json.event_name moment.previous_moment.on_finish_event
-        else
-          json.event_name "unbound_event_fix_me"
-        end
-
         # Requirements
-        if moment.constraints.present?
+        if event.requirements.present?
           json.set! "Requirements" do
             json.set! "$type", collection_type("BlackboardFact")
             json.set! "$values" do
-              json.array! moment.constraints do |constraint|
-                json.set! "NewStatus", constraint.fact.default_value
-                json.set! "FactName", constraint.fact.name
+              json.array! event.requirements do |requirement|
+                json.set! "NewStatus", requirement.fact.default_value
+                json.set! "FactName", requirement.fact.name
               end
             end
           end
@@ -44,23 +43,21 @@ class Moment < ActiveRecord::Base
         json.set! "Responses" do
           json.set! "$type", collection_type("ResponseSpecification")
           json.set! "$values" do
-            json.array! fake_response_array do |f|
+            json.array! event.responses do |r|
               json.set! "$type", "vgSpeechResponseSpecification, Assembly-CSharp"
               json.set! "SpeechToPlay" do
                 json.set! "$type", "vgSpeechInstance, Assembly-CSharp"
-                json.set! "Caption", moment.clean_text
+                json.set! "Caption", r.clean_text
 
                 # Always trigger a finish event, even if there is not currently another response
-                json.set! "OnFinishEvent", moment.on_finish_event
-                json.set! "OnFinishEventDelay", moment.buffer_seconds if moment.buffer_seconds
+                json.set! "OnFinishEvent", r.on_finish_event
+                json.set! "OnFinishEventDelay", r.buffer_seconds if r.buffer_seconds
 
-                json.set! "HackAudioDuration", 0.0 if false
-                json.set! "MinimumDuration", 0.0 if false
-                json.set! "AllowQueueing", true if false #moment.allowQueueing
+                json.set! "HackAudioDuration", r.hack_audio_duration if r.hack_audio_duration
+                json.set! "MinimumDuration", r.minimum_duration if r.minimum_duration
+                json.set! "AllowQueueing", r.allow_queueing unless r.allow_queueing.nil?
+                json.set! "AudioClipPath", r.audio_clip_path if r.audio_clip_path
 
-                # if moment.has_audio?
-                #   json.set! "AudioClipPath", self.audio_clip_path "HiDenny.wav"
-                # end
               end
             end
           end
@@ -72,7 +69,8 @@ class Moment < ActiveRecord::Base
   # end self.collection_as_unity_JSON
 
   def on_finish_event
-    "#{kind}_#{character_slug}_#{id}_finished"
+    # "#{kind}_#{character_slug}_#{id}_finished"
+    on_finish_event.name
   end
 
   def character_slug
