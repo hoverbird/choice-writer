@@ -4,6 +4,7 @@ namespace :db do
   task :reset => ["db:drop", "db:migrate"]
 end
 
+# rake campo:scrivener:slurp[/path/to/file.txt]
 namespace :campo do
   desc "Parse scrivener files in Sean's format and convert them to Unity-approved JSON"
   task "scrivener:slurp", [:filename] => :environment do |t, args|
