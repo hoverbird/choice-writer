@@ -7,8 +7,8 @@ gem "nokogiri"
 gem 'rails', '4.0.3'
 gem 'rails_admin', '0.6.1'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use Postgres!
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -27,13 +27,11 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem "pg"
-gem "google_drive"
-gem "erubis"
-gem "hashie"
-gem "rubytree"
-gem "redcarpet"
-
+# gem "google_drive"
+# gem "erubis"
+# gem "hashie"
+# gem "rubytree"
+# gem "redcarpet"
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
