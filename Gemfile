@@ -1,6 +1,8 @@
 #encoding: utf-8
 source 'https://rubygems.org'
 
+ruby '1.9.3'
+
 gem "nokogiri"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

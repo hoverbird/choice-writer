@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320215021) do
+ActiveRecord::Schema.define(version: 20140405205613) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "events", force: true do |t|
     t.string   "name",        null: false
@@ -26,7 +29,7 @@ ActiveRecord::Schema.define(version: 20140320215021) do
     t.string "default_value"
   end
 
-  add_index "facts", ["name"], name: "index_facts_on_name", unique: true
+  add_index "facts", ["name"], name: "index_facts_on_name", unique: true, using: :btree
 
   create_table "folders", force: true do |t|
     t.string  "name"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 20140320215021) do
     t.integer "project_id"
   end
 
-  add_index "folders", ["project_id", "parent_id"], name: "index_folders_on_project_id_and_parent_id"
+  add_index "folders", ["project_id", "parent_id"], name: "index_folders_on_project_id_and_parent_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name",       null: false
@@ -49,7 +52,7 @@ ActiveRecord::Schema.define(version: 20140320215021) do
     t.string  "fact_test_value"
   end
 
-  add_index "requirements", ["event_id", "fact_id"], name: "index_requirements_on_event_id_and_fact_id"
+  add_index "requirements", ["event_id", "fact_id"], name: "index_requirements_on_event_id_and_fact_id", using: :btree
 
   create_table "responses", force: true do |t|
     t.string   "type",                                          default: "Speech", null: false
@@ -65,18 +68,20 @@ ActiveRecord::Schema.define(version: 20140320215021) do
     t.boolean  "allow_queueing"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.tsvector "search_vector"
   end
 
-  add_index "responses", ["character"], name: "index_responses_on_character"
-  add_index "responses", ["event_id"], name: "index_responses_on_event_id"
-  add_index "responses", ["folder_id"], name: "index_responses_on_folder_id"
+  add_index "responses", ["character"], name: "index_responses_on_character", using: :btree
+  add_index "responses", ["event_id"], name: "index_responses_on_event_id", using: :btree
+  add_index "responses", ["folder_id"], name: "index_responses_on_folder_id", using: :btree
+  add_index "responses", ["search_vector"], name: "responses_search_idx", using: :gin
 
   create_table "taggings", force: true do |t|
     t.integer "tag_id"
     t.integer "response_id"
   end
 
-  add_index "taggings", ["tag_id", "response_id"], name: "index_taggings_on_tag_id_and_response_id"
+  add_index "taggings", ["tag_id", "response_id"], name: "index_taggings_on_tag_id_and_response_id", using: :btree
 
   create_table "tags", force: true do |t|
     t.string   "name",        null: false

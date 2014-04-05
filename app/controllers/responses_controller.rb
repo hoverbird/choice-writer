@@ -6,6 +6,11 @@ class ResponsesController < ApplicationController
     respond_with Response.all
   end
 
+  def search
+    query = params[:query]
+    respond_with Response.search(query)
+  end
+
   def create
     respond_with Response.create(event_params)
   end

@@ -6,6 +6,7 @@ Choice::Application.routes.draw do
   root 'home#index'
   resources :responses do
     collection do
+      get 'search/:query', to: 'responses#search'
       get 'by_tag/:tag_name', to: 'responses#by_tag'
       get 'by_folder/:folder_id', to: 'responses#by_folder'
     end
