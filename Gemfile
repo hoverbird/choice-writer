@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 
 ruby '1.9.3'
 
-gem "nokogiri"
+gem 'unicorn'
+gem 'nokogiri'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
@@ -23,17 +24,10 @@ gem 'jbuilder', '~> 2.0.5'
 
 gem 'yajl-ruby'
 
-
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
-# gem "google_drive"
-# gem "erubis"
-# gem "hashie"
-# gem "rubytree"
-# gem "redcarpet"
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
