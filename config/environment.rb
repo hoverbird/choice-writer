@@ -5,4 +5,4 @@ require 'multi_json'
 MultiJson.use :yajl
 
 # Initialize the Rails application.
-Choice::Application.initialize!
+ChoiceWriter::Application.initialize!

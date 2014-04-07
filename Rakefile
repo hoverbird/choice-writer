@@ -5,4 +5,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Choice::Application.load_tasks
+ChoiceWriter::Application.load_tasks

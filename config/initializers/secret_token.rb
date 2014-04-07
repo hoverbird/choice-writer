@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Choice::Application.config.secret_key_base = '7e4130dfae897eed518f88df007dc7c46042ad6f23cae0d0271925618c77de4f9cedf1734b2a82da813415b85befb38ca1a107fb57c09632ad27d96987a8a710'
+ChoiceWriter::Application.config.secret_key_base = '7e4130dfae897eed518f88df007dc7c46042ad6f23cae0d0271925618c77de4f9cedf1734b2a82da813415b85befb38ca1a107fb57c09632ad27d96987a8a710'
