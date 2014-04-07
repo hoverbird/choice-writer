@@ -13,3 +13,7 @@ test:
   pool: 5
   username: hoverbird
   password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
