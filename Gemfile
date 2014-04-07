@@ -5,12 +5,14 @@ ruby '1.9.3'
 
 gem 'puma'
 gem 'nokogiri'
+# gem 'mongo_mapper'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
 gem 'rails_admin', '0.6.1'
 
-# Use Postgres!
+# Use Postgres
 gem 'pg'
 
 # Use SCSS for stylesheets

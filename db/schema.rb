@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140405205613) do
+ActiveRecord::Schema.define(version: 20140407174735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "choices", force: true do |t|
+    t.integer "dialog_tree_id",                 null: false
+    t.integer "event_id",                       null: false
+    t.string  "text",           default: "...", null: false
+  end
+
+  add_index "choices", ["dialog_tree_id"], name: "index_choices_on_dialog_tree_id", using: :btree
+  add_index "choices", ["event_id"], name: "index_choices_on_event_id", using: :btree
 
   create_table "events", force: true do |t|
     t.string   "name",        null: false
