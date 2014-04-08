@@ -1,0 +1,17 @@
+heard_a_noise_choice_1:
+  id: 1
+  text: ...what was what, Henry?
+  dialog_tree_id: 7
+  event_id: 8
+
+heard_a_noise_choice_2:
+  id: 2
+  text: It was probably just one of your many mice.
+  dialog_tree_id: 7
+  event_id: 6
+
+heard_a_noise_choice_2:
+  id: 3
+  text: It was probably just the cat.
+  dialog_tree_id: 7
+  event_id: 7

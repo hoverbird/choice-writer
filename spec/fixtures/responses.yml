@@ -1,38 +1,38 @@
 # Simple single-tracked chain
 quiet:
   id: 1
-  kind: Speech
+  type: Speech
   text: It’s quiet in here...
   character: Henry
-  location: Tower
   folder_id: 1
+  on_finish_event_id: 1
 
 too_quiet:
   id: 2
-  kind: Speech
+  type: Speech
   text: A little *too* quiet...
   character: Delilah
-  location: Tower
-  previous_moment_id: 1
   folder_id: 1
+  event_id: 1
+  on_finish_event_id: 2
 
 nothing:
   id: 3
-  kind: Speech
+  type: Speech
   text: Ha. That's such a cliché.
   character: Henry
-  location: Tower
-  previous_moment_id: 2
   folder_id: 1
+  event_id: 2
+  on_finish_event_id: 3
 
 quiet_end:
   id: 4
-  kind: Speech
+  type: Speech
   text: ...you've gotta say something to fill the air.
   character: Delilah
-  location: Tower
-  previous_moment_id: 3
   folder_id: 1
+  event_id: 3
+  on_finish_event_id: 4
 
 # End simple single-tracked chain
 
@@ -40,55 +40,33 @@ quiet_end:
 heard_a_noise:
   id: 5
   text: What was THAT?
-  kind: Speech
+  type: Speech
   character: Henry
-  location: Tower
   folder_id: 1
+  on_finish_event_id: 5
 
-heard_a_noise_what:
-  id: 6
-  kind: Speech
-  text: ...what was what, Henry?
-  character: Delilah
-  location: Tower
-  previous_moment_id: 5
-  folder_id: 1
-
-heard_a_noise_mouse:
+heard_a_noise_dialog_choice:
   id: 7
-  kind: Speech
-  text: It was probably just one of your many mice.
+  type: DialogTree
   character: Delilah
-  location: Tower
-  previous_moment_id: 5
   folder_id: 1
-
-heard_a_noise_cat:
-  id: 8
-  kind: Speech
-  text: It was probably just the cat.
-  character: Delilah
-  location: Tower
-  previous_moment_id: 5
-  folder_id: 1
+  event_id: 5
 
 heard_a_noise_response_what:
   id: 9
   text: That noise I just heard.
-  kind: Speech
+  type: Speech
   character: Henry
-  location: Tower
-  previous_moment_id: 6
   folder_id: 1
+  event_id: 6
 
 heard_a_noise_response_mouse:
   id: 10
   text: So annoying. Do you have any poison I can borrow?
-  kind: Speech
+  type: Speech
   character: Henry
-  location: Tower
-  previous_moment_id: 7
   folder_id: 1
+  event_id: 7
 
 # TODO: The following cat response is essentially a dupe of the mouse response.
 # We need to eventually allow two responses to point to a single followup, without
@@ -97,17 +75,15 @@ heard_a_noise_response_mouse:
 heard_a_noise_response_cat:
   id: 11
   text: So annoying. Do you have any poison I can borrow?
-  kind: Speech
+  type: Speech
   character: Henry
-  location: Tower
-  previous_moment_id: 8
   folder_id: 1
+  event_id: 8
 
 # Location: Teen Lake
 teen_lake_start:
   id: 12
   text: Get out of the water you fucking kids!
-  kind: Speech
+  type: Speech
   character: Henry
-  location: Teen Lake
   folder_id: 3
