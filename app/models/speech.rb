@@ -1,2 +1,0 @@
-class Speech < Response
-end

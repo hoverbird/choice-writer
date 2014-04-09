@@ -1,0 +1,65 @@
+# Simple single-tracked chain
+quiet_start:
+  id: 13
+  name: OnSceneStart
+  folder_id: 1
+
+quiet_finished:
+  id: 1
+  name: OnConvoQuiet
+  folder_id: 1
+
+too_quiet_finished:
+  id: 2
+  name: OnConvoTooQuiet
+  folder_id: 1
+
+nothing_finished:
+  id: 3
+  name: OnnConvoNothing
+  folder_id: 1
+
+quiet_end_finished:
+  id: 4
+  name: OnConvoQuietEnd
+  folder_id: 1
+
+# End simple single-tracked chain
+
+# Chain with multiple nodes pointing backwards
+heard_a_noise_finished:
+  id: 5
+  name: OnConvoHeardANoise
+
+heard_a_noise_what_choice:
+  id: 6
+  name: OnDialogChoiceWhat
+
+heard_a_noise_mouse_choice:
+  id: 7
+  name: OnDialogChoiceMouse
+
+heard_a_noise_cat_choice:
+  id: 8
+  name: OnDialogChoiceCat
+
+heard_a_noise_response_what_finished:
+  id: 9
+  name: OnConvoWhat
+
+heard_a_noise_response_mouse_finished:
+  id: 10
+  name: OnConvoMouse
+
+heard_a_noise_response_cat_finished:
+  id: 11
+  name: OnConvoCat
+
+# Location: Teen Lake
+teen_lake_start_finished:
+  id: 12
+  name: OnSceneStartTeenLake
+
+whatever_is_next:
+  id: 14
+  name: OnScriptedJank

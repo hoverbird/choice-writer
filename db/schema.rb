@@ -25,12 +25,23 @@ ActiveRecord::Schema.define(version: 20140407174735) do
   add_index "choices", ["dialog_tree_id"], name: "index_choices_on_dialog_tree_id", using: :btree
   add_index "choices", ["event_id"], name: "index_choices_on_event_id", using: :btree
 
-  create_table "events", force: true do |t|
+  create_table "event_responses", force: true do |t|
+    t.integer  "folder_id"
     t.string   "name",        null: false
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "event_responses", ["folder_id"], name: "index_event_responses_on_folder_id", using: :btree
+
+  create_table "fact_mutations", force: true do |t|
+    t.integer "response_id"
+    t.integer "fact_id"
+    t.string  "new_value"
+  end
+
+  add_index "fact_mutations", ["response_id", "fact_id"], name: "index_fact_mutations_on_response_id_and_fact_id", using: :btree
 
   create_table "facts", force: true do |t|
     t.string "name",          null: false
@@ -55,21 +66,21 @@ ActiveRecord::Schema.define(version: 20140407174735) do
   end
 
   create_table "requirements", force: true do |t|
-    t.integer "event_id"
+    t.integer "event_response_id"
     t.integer "fact_id"
-    t.string  "fact_test",       default: "be_true", null: false
+    t.string  "fact_test",         default: "be_true", null: false
     t.string  "fact_test_value"
   end
 
-  add_index "requirements", ["event_id", "fact_id"], name: "index_requirements_on_event_id_and_fact_id", using: :btree
+  add_index "requirements", ["event_response_id", "fact_id"], name: "index_requirements_on_event_response_id_and_fact_id", using: :btree
 
   create_table "responses", force: true do |t|
+    t.integer  "event_response_id"
     t.string   "type",                                          default: "Speech", null: false
-    t.integer  "event_id"
-    t.integer  "on_finish_event_id"
-    t.integer  "folder_id"
+    t.string   "on_finish_event_name"
     t.text     "text"
     t.string   "character"
+    t.string   "location"
     t.string   "audio_clip_path"
     t.decimal  "on_finish_event_delay", precision: 5, scale: 3
     t.decimal  "minimum_duration",      precision: 5, scale: 3
@@ -81,16 +92,15 @@ ActiveRecord::Schema.define(version: 20140407174735) do
   end
 
   add_index "responses", ["character"], name: "index_responses_on_character", using: :btree
-  add_index "responses", ["event_id"], name: "index_responses_on_event_id", using: :btree
-  add_index "responses", ["folder_id"], name: "index_responses_on_folder_id", using: :btree
+  add_index "responses", ["event_response_id"], name: "index_responses_on_event_response_id", using: :btree
   add_index "responses", ["search_vector"], name: "responses_search_idx", using: :gin
 
   create_table "taggings", force: true do |t|
     t.integer "tag_id"
-    t.integer "response_id"
+    t.integer "event_response_id"
   end
 
-  add_index "taggings", ["tag_id", "response_id"], name: "index_taggings_on_tag_id_and_response_id", using: :btree
+  add_index "taggings", ["tag_id", "event_response_id"], name: "index_taggings_on_tag_id_and_event_response_id", using: :btree
 
   create_table "tags", force: true do |t|
     t.string   "name",        null: false

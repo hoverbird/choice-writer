@@ -1,35 +1,35 @@
 require 'spec_helper'
 
-describe Moment do
-  fixtures :moments, :facts, :constraints
+describe Response do
+  fixtures :responses, :facts, :constraints
 
-  describe "an individual moment" do
-    let(:moment) { moments(:heard_a_noise_mouse) }
+  describe "an individual response" do
+    let(:response) { responses(:heard_a_noise_mouse) }
 
-    it "should each point to the previous moment" do
-      expect(moments(:too_quiet).previous_moment).to eq(moments(:quiet))
+    it "should each point to the previous response" do
+      expect(responses(:too_quiet).previous_response).to eq(responses(:quiet))
     end
 
     describe "which has constraints" do
       it "should be wired up correctly" do
-        expect(moment.constraints).to include(constraints(:delilah_does_know_about_the_mice))
-        expect(moment.facts).to include(facts(:delilah_knows_about_the_mice))
+        expect(response.constraints).to include(constraints(:delilah_does_know_about_the_mice))
+        expect(response.facts).to include(facts(:delilah_knows_about_the_mice))
       end
     end
 
     describe "web JSON output" do
-      let(:parsed_output) { JSON.parse(moment.as_web_JSON.target!) }
+      let(:parsed_output) { JSON.parse(response.as_web_JSON.target!) }
 
       it "should be valid" do
         expect(parsed_output).to be_kind_of(Hash)
-        expect(parsed_output["id"]).to equal(moment.id)
+        expect(parsed_output["id"]).to equal(response.id)
         expect(DateTime.parse(parsed_output["created_at"])).to(be_kind_of(DateTime), "to be a valid date format")
         expect(parsed_output["constraints"]).to be_kind_of(Array)
       end
     end
 
     describe "unity JSON output" do
-      let(:parsed) { JSON.parse(Moment.collection_as_unity_JSON([moment])) }
+      let(:parsed) { JSON.parse(response.collection_as_unity_JSON([response])) }
       let(:requirements) { parsed["Requirements"] }
 
       it "should be valid" do
@@ -47,29 +47,29 @@ describe Moment do
 
   describe "in a single thread" do
     let(:expected_thread)do
-      [ Moment.find(1),
-        Moment.find(2),
-        Moment.find(3),
-        Moment.find(4) ]
+      [ Response.find(1),
+        Response.find(2),
+        Response.find(3),
+        Response.find(4) ]
     end
 
-    it "should expand to a full chain from a leaf moment" do
-      expect(moments(:quiet_end).expand_from_leaf).to eq(expected_thread)
+    it "should expand to a full chain from a leaf response" do
+      expect(responses(:quiet_end).expand_from_leaf).to eq(expected_thread)
     end
 
-    it "should expand to a full chain from a root moment" do
-      expect(moments(:quiet).expand_from_root).to eq(expected_thread)
+    it "should expand to a full chain from a root response" do
+      expect(responses(:quiet).expand_from_root).to eq(expected_thread)
     end
 
     it "should include all nodes when expanding from leaf" do
-      expect(moments(:quiet_end).expand_from_leaf).to eq(expected_thread)
+      expect(responses(:quiet_end).expand_from_leaf).to eq(expected_thread)
     end
 
     it "should expand to a chain with multiple responses if they exist for a given chain" do
-      expanded_chain = moments(:heard_a_noise_response_mouse).expand_from_leaf
-      expect(expanded_chain).to include(moments(:heard_a_noise_what))
-      expect(expanded_chain).to include(moments(:heard_a_noise_mouse))
-      expect(expanded_chain).to include(moments(:heard_a_noise_cat))
+      expanded_chain = responses(:heard_a_noise_response_mouse).expand_from_leaf
+      expect(expanded_chain).to include(responses(:heard_a_noise_what))
+      expect(expanded_chain).to include(responses(:heard_a_noise_mouse))
+      expect(expanded_chain).to include(responses(:heard_a_noise_cat))
     end
   end
 

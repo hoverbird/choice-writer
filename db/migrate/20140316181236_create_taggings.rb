@@ -2,9 +2,9 @@ class CreateTaggings < ActiveRecord::Migration
   def change
     create_table :taggings do |t|
       t.references :tag
-      t.references :response
+      t.references :event_response
 
-      t.index [:tag_id, :response_id]
+      t.index [:tag_id, :event_response_id]
     end
   end
 end

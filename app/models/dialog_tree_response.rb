@@ -1,0 +1,2 @@
+class DialogTreeResponse < Response
+end

@@ -3,7 +3,7 @@ class ResponsesController < ApplicationController
   skip_before_filter :verify_authenticity_token #TODO: remove this, patch Backbone. This is totes unsafe for public consumption.
 
   def index
-    respond_with Response.all
+    respond_with(Response.collection_as_unity_JSON(:all))
   end
 
   def search

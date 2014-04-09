@@ -4,8 +4,16 @@ namespace :db do
   task :reset => ["db:drop", "db:migrate"]
 end
 
+
 # rake campo:scrivener:slurp[/path/to/file.txt]
 namespace :campo do
+
+  task "gdoc" => :environment do
+    require File.expand_path(File.dirname(__FILE__)) + '/tiny_gdoc_importer.rb'
+    i = EventResponseImporter.new
+    puts i.rows
+  end
+
   desc "Parse scrivener files in Sean's format and convert them to Unity-approved JSON"
   task "scrivener:slurp", [:filename] => :environment do |t, args|
     scrivener_source = File.read(args[:filename])

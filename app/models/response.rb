@@ -2,13 +2,11 @@ class Response < ActiveRecord::Base
   belongs_to :event
   belongs_to :on_finish_event, class_name: "Event", foreign_key: "on_finish_event_id"
 
-  has_many :requirements
-  has_many :facts, through: :requirements
-
-  has_many :taggings
-  has_many :tags, through: :taggings
+  has_many :fact_mutations
+  has_many :mutated_facts, through: :fact_mutations
 
   belongs_to :folder
+  delegate :event_name, to: :event
 
   def self.search(terms = "")
     sanitized = sanitize_sql_array(["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
@@ -67,11 +65,6 @@ class Response < ActiveRecord::Base
     end
   end
   # end self.collection_as_unity_JSON
-
-  def on_finish_event
-    # "#{kind}_#{character_slug}_#{id}_finished"
-    on_finish_event.name
-  end
 
   def character_slug
     character_base = self.character.present? ? self.character : 'anonymous'

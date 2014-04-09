@@ -1,38 +1,35 @@
 # Simple single-tracked chain
 quiet:
   id: 1
-  type: Speech
+  type: SpeechResponse
   text: It’s quiet in here...
   character: Henry
-  folder_id: 1
-  on_finish_event_id: 1
+  on_finish_event_name: quiet_finished
+  event_response_id: 13
 
 too_quiet:
   id: 2
-  type: Speech
+  type: SpeechResponse
   text: A little *too* quiet...
   character: Delilah
-  folder_id: 1
-  event_id: 1
-  on_finish_event_id: 2
+  event_response_id: 1
+  on_finish_event_name: too_quiet_finished
 
 nothing:
   id: 3
-  type: Speech
+  type: SpeechResponse
   text: Ha. That's such a cliché.
   character: Henry
-  folder_id: 1
-  event_id: 2
-  on_finish_event_id: 3
+  event_response_id: 2
+  on_finish_event_name: nothing_finished
 
 quiet_end:
   id: 4
-  type: Speech
+  type: SpeechResponse
   text: ...you've gotta say something to fill the air.
   character: Delilah
-  folder_id: 1
-  event_id: 3
-  on_finish_event_id: 4
+  event_response_id: 3
+  on_finish_event_name: quiet_end_finished
 
 # End simple single-tracked chain
 
@@ -42,31 +39,27 @@ heard_a_noise:
   text: What was THAT?
   type: Speech
   character: Henry
-  folder_id: 1
-  on_finish_event_id: 5
+  on_finish_event_name: heard_a_noise_finished
 
 heard_a_noise_dialog_choice:
   id: 7
-  type: DialogTree
+  type: DialogTreeResponse
   character: Delilah
-  folder_id: 1
-  event_id: 5
+  event_response_id: 5
 
 heard_a_noise_response_what:
   id: 9
   text: That noise I just heard.
-  type: Speech
+  type: SpeechResponse
   character: Henry
-  folder_id: 1
-  event_id: 6
+  event_response_id: 6
 
 heard_a_noise_response_mouse:
   id: 10
   text: So annoying. Do you have any poison I can borrow?
-  type: Speech
+  type: SpeechResponse
   character: Henry
-  folder_id: 1
-  event_id: 7
+  event_response_id: 7
 
 # TODO: The following cat response is essentially a dupe of the mouse response.
 # We need to eventually allow two responses to point to a single followup, without
@@ -75,15 +68,13 @@ heard_a_noise_response_mouse:
 heard_a_noise_response_cat:
   id: 11
   text: So annoying. Do you have any poison I can borrow?
-  type: Speech
+  type: SpeechResponse
   character: Henry
-  folder_id: 1
-  event_id: 8
+  event_response_id: 8
 
 # Location: Teen Lake
 teen_lake_start:
   id: 12
   text: Get out of the water you fucking kids!
-  type: Speech
+  type: SpeechResponse
   character: Henry
-  folder_id: 3
