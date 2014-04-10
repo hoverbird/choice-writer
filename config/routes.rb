@@ -12,7 +12,7 @@ ChoiceWriter::Application.routes.draw do
     end
   end
 
-  resources :events do
+  resources :event_responses do
     collection do
       get 'v0/unity', to: 'events#for_unity'
     end

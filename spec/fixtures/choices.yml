@@ -1,17 +1,17 @@
 heard_a_noise_choice_1:
   id: 1
   text: ...what was what, Henry?
-  dialog_tree_id: 7
-  event_id: 8
+  dialog_tree_response_id: 7
+  event_name: OnDialogChoiceWhat
 
 heard_a_noise_choice_2:
   id: 2
   text: It was probably just one of your many mice.
-  dialog_tree_id: 7
-  event_id: 6
+  dialog_tree_response_id: 7
+  event_name: OnDialogChoiceMouse
 
 heard_a_noise_choice_2:
   id: 3
   text: It was probably just the cat.
-  dialog_tree_id: 7
-  event_id: 7
+  dialog_tree_response_id: 7
+  event_name: OnDialogChoiceCat

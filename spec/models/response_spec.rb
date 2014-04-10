@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Response do
-  fixtures :responses, :facts, :constraints
+describe SpeechResponse do
+  fixtures :responses, :facts, :requirements
 
   describe "an individual response" do
     let(:response) { responses(:heard_a_noise_mouse) }
@@ -12,7 +12,7 @@ describe Response do
 
     describe "which has constraints" do
       it "should be wired up correctly" do
-        expect(response.constraints).to include(constraints(:delilah_does_know_about_the_mice))
+        expect(response.constraints).to include(requirements(:delilah_does_know_about_the_mice))
         expect(response.facts).to include(facts(:delilah_knows_about_the_mice))
       end
     end
@@ -24,7 +24,7 @@ describe Response do
         expect(parsed_output).to be_kind_of(Hash)
         expect(parsed_output["id"]).to equal(response.id)
         expect(DateTime.parse(parsed_output["created_at"])).to(be_kind_of(DateTime), "to be a valid date format")
-        expect(parsed_output["constraints"]).to be_kind_of(Array)
+        expect(parsed_output["requirements"]).to be_kind_of(Array)
       end
     end
 
@@ -47,10 +47,10 @@ describe Response do
 
   describe "in a single thread" do
     let(:expected_thread)do
-      [ Response.find(1),
-        Response.find(2),
-        Response.find(3),
-        Response.find(4) ]
+      [ SpeechResponse.find(1),
+        SpeechResponse.find(2),
+        SpeechResponse.find(3),
+        SpeechResponse.find(4) ]
     end
 
     it "should expand to a full chain from a leaf response" do

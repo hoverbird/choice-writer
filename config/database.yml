@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: choice_dev
+  database: choice_dev5
   pool: 5
   username: hoverbird
   password:

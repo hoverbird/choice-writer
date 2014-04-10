@@ -3,7 +3,7 @@ class FactResponse < Response
   has_many :facts, through: fact_mutations
 
   def to_unity_json
-    unity_hash = Hashie::Mash.new
+    unity_hash = {}
     unity_hash["$type"] = "vgBlackboardFactResponseSpecification, Assembly-CSharp"
 
     mutation = fact_mutations.first
