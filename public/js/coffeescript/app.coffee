@@ -3,9 +3,9 @@ define ["backbone"
         "underscore"
         "util"
         # "barleyConfig"
-        "jsplumb"
-        "choice_router",
-        "views/side_nav"], (Backbone, $, _, Util, jsplumb, Router, NavView) ->
+        # "jsplumb"
+        "choice_router"
+        "views/side_nav"], (Backbone, $, _, Util, Router, NavView) ->
   App = Backbone.View.extend(
     initialize: ->
       router = new Router()

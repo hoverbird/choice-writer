@@ -1,6 +1,6 @@
 define ['backbone'], (Backbone, template) ->
   SideNav = Backbone.View.extend(
-    el:$('#sidebar'),
+    el: $('#sidebar')
 
     # events:
     #   "click .nav a": "navClick"

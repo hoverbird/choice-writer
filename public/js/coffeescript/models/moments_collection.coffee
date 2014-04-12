@@ -3,7 +3,7 @@ define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, M
     model: Moment
 
     initialize: (opts = {}) ->
-      @url = '/responses'
+      @url = '/event_responses'
       if constraints = opts.constraints
         if tag = constraints.tag
           @url += "/by_tag/#{tag}"

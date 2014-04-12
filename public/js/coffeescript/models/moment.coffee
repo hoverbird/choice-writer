@@ -1,6 +1,20 @@
-define ["underscore", "backbone"], (_, Backbone) ->
-  Moment = Backbone.Model.extend(
+define [
+  "underscore"
+  "backbone"
+  "models/response_collection"
+  "models/response"
+], (_, Backbone, ResponseCollection, Response) ->
+  Moment = Backbone.RelationalModel.extend(
     url: '/moment/:id'
+
+    relations: [
+      {
+        key: 'Responses'
+        type: Backbone.HasMany
+        collectionType: ResponseCollection
+        relatedModel: Response
+      }
+    ]
 
     initialize: ->
       this.url = ->

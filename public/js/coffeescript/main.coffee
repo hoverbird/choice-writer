@@ -7,8 +7,9 @@ require.config
     ]
     underscore: "../lib/underscore/underscore"
     backbone: "../lib/backbone/backbone"
+    'backbone-relational' : '../lib/backbone-relational/backbone-relational'
     hbs: '../lib/require-handlebars-plugin/hbs'
-    jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
+    # jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
     # barley: '../lib/barley-editor.min.js'
     # 'backbone.keys': '../lib/backbone.keys/dist/backbone.keys.min'
     # jasmine: '../lib/jasmine-jquery/lib/jasmine-jquery'
@@ -27,14 +28,10 @@ require.config
         "jquery"
         "underscore"
       ]
-      # custom export name, this would be lowercase otherwise
-      exports: "Backbone"
-    # 
-    # barley:
-    #   deps: [
-    #     "barleyConfig"
-    #   ]
-    #   exports: "Barley"
+      exports: "Backbone" # custom export name, this would be lowercase otherwise
+
+    'backbone-relational':
+      deps: ['backbone']
 
   # how long the it tries to load a script before giving up, the default is 7
   waitSeconds: 10
