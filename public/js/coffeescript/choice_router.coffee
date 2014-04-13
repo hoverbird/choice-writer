@@ -18,7 +18,6 @@ define ["backbone", "views/moments_collection_view", "views/locations_view"], (B
       @contentContainer.html(view.el)
 
     showResponses: (id) ->
-      console.log("SHOW RESPONSES")
       view = new MomentCollectionView()
       @contentContainer.html(view.el)
 

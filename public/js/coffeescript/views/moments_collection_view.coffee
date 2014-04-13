@@ -10,10 +10,10 @@ define ["backbone"
 
     className: 'moment-chain'
 
-    initialize: (constraints) ->
+    initialize: (viewOptions) ->
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
       renderThis =  _.bind(this.render, this)
-      @collection = new MomentCollection(constraints)
+      @collection = new MomentCollection(viewOptions)
       @collection.bind "change", renderThis
       @collection.fetch success: renderThis # Do the initial fetch
 

@@ -2,8 +2,9 @@ define [
   "backbone"
   "underscore"
   "models/moment"
+  "views/response_collection_view"
   'hbs!/templates/moment'
-], (Backbone, _, Moment, momentTemplate) ->
+], (Backbone, _, Moment, ResponseCollectionView, momentTemplate) ->
   MomentView = Backbone.View.extend(
     tagName: 'span'
 
@@ -69,6 +70,10 @@ define [
     render: ->
       viewData = _.extend(@model.toJSON(), textColor: @textColor())
       this.$el.html(momentTemplate(viewData))
+      if response_collection = @model.get("Responses")
+        console.log "Jank", response_collection
+        responseViews = new ResponseCollectionView(responses: response_collection.models)
+        this.$el.append(responseViews.el)
       this
   )
   MomentView

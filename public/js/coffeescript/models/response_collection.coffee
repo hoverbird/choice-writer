@@ -2,6 +2,11 @@ define ["underscore", "backbone", "models/response", "backbone-relational"], (_,
   ResponseCollection = Backbone.Collection.extend(
     model: Response
 
-    initialize: ->
+    url: "event_response/responses/:id"
+
+    initialize: (responses) ->
+      return unless responses?
+      console.log "Initializing ResponseCollection (not the view)", responses, @model
+
   )
   ResponseCollection
