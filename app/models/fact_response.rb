@@ -16,7 +16,7 @@ class FactResponse < Response
 
   def to_web_json
     mutation = fact_mutations.first
-    { "Type" => response_type,
+    { "Type" => self.class.name,
       "FactName" => mutation.fact.name,
       "NewStatus" => mutation.new_value}
   end
