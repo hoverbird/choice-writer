@@ -3,7 +3,7 @@ define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, M
     model: Moment
 
     initialize: (opts = {}) ->
-      @url = '/event_responses'
+      @url = '/event_responses/v0/web'
       if constraints = opts.constraints
         if tag = constraints.tag
           @url += "/by_tag/#{tag}"
@@ -11,5 +11,8 @@ define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, M
           @url += "/by_folder/#{folder_id}"
         else
           @url += "?#{$.param(opts.constraints)}"
+      console.log "Initting MoCo", @url
+      @url
+
   )
   MomentsCollection

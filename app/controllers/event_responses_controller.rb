@@ -2,8 +2,8 @@ class EventResponsesController < ApplicationController
 
   def index
     event_responses = EventResponse.all.to_a
-    event_responses_hash = EventResponse.collection_to_unity_hash(event_responses)["$values"]
-    
+    event_responses_hash = EventResponse.collection_to_web_hash(event_responses)
+
     respond_to do |format|
       format.json { render :json => event_responses_hash }
     end

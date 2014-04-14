@@ -14,7 +14,8 @@ ChoiceWriter::Application.routes.draw do
 
   resources :event_responses do
     collection do
-      get 'v0/unity', to: 'events#for_unity'
+      get 'v0/unity', to: 'event_responses#for_unity'
+      get 'v0/web'  , to: 'event_responses#index'
     end
   end
 

@@ -17,6 +17,6 @@ class DialogTreeResponse < Response
 
   def to_web_hash
     { "Type" => self.class.name,
-      "Values" => choices.collect {|choice| choice.to_unity_hash} }
+      "Choices" => choices.collect {|choice| choice.to_web_hash} }
   end
 end
