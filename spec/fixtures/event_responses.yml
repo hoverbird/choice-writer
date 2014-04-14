@@ -16,7 +16,7 @@ too_quiet_finished:
 
 nothing_finished:
   id: 3
-  name: OnnConvoNothing
+  name: OnConvoNothing
   folder_id: 1
 
 quiet_end_finished:

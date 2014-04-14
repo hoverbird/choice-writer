@@ -13,4 +13,11 @@ class FactResponse < Response
 
     unity_hash
   end
+
+  def to_web_json
+    mutation = fact_mutations.first
+    { "Type" => response_type,
+      "FactName" => mutation.fact.name,
+      "NewStatus" => mutation.new_value}
+  end
 end

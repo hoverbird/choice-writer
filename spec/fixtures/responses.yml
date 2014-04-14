@@ -1,18 +1,18 @@
 # Simple single-tracked chain
-quiet:
+quiet_start:
   id: 1
+  event_response_id: 13
   type: SpeechResponse
   text: It’s quiet in here...
   character: Henry
   on_finish_event_name: quiet_finished
-  event_response_id: 13
 
 too_quiet:
   id: 2
+  event_response_id: 1
   type: SpeechResponse
   text: A little *too* quiet...
   character: Delilah
-  event_response_id: 1
   on_finish_event_name: too_quiet_finished
 
 nothing:

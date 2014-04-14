@@ -17,6 +17,23 @@ class EventResponse < ActiveRecord::Base
     unity_hash
   end
 
+  def self.collection_to_web_hash(event_response_collection)
+    event_response_collection.collect {|event_response| event_response.to_web_hash }
+  end
+
+  def to_web_hash
+    @web_hash = {"EventName" => name}
+
+    if requirements.present?
+      @web_hash["Requirements"] = requirements.collect {|req| req.to_web_hash}
+    end
+
+    if responses.present?
+      @web_hash["Responses"] = responses.collect {|resp| resp.to_web_hash}
+    end
+    @web_hash
+  end
+
   def to_unity_hash
     @unity_hash = Hashie::Mash.new
     @unity_hash.EventName = name

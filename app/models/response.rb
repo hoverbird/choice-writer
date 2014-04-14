@@ -66,6 +66,10 @@ class Response < ActiveRecord::Base
   end
   # end self.collection_as_unity_JSON
 
+  def response_type
+    self.class.name
+  end
+
   def character_slug
     character_base = self.character.present? ? self.character : 'anonymous'
     character_base.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
