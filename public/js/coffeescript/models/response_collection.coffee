@@ -6,7 +6,6 @@ define ["underscore", "backbone", "models/response", "backbone-relational"], (_,
 
     initialize: (responses) ->
       return unless responses?
-      console.log "Initializing ResponseCollection (not the view)", responses, @model
 
   )
   ResponseCollection

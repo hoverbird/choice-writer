@@ -70,10 +70,12 @@ define [
     render: ->
       viewData = _.extend(@model.toJSON(), textColor: @textColor())
       this.$el.html(momentTemplate(viewData))
-      if response_collection = @model.get("Responses")
-        console.log "Jank", response_collection
+      if (response_collection = @model.get("Responses")) and response_collection.length
         responseViews = new ResponseCollectionView(responses: response_collection.models)
+        console.log "Rendered some ResponseCollectionView", responseViews.el
         this.$el.append(responseViews.el)
+      else
+        console.log "No Responses for", @model
       this
   )
   MomentView

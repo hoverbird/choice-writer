@@ -1,28 +1,11 @@
-<span id="{{id}}-{{kind}}-card"
-      class="card {{ kind }} {{ isHighlighted }} span4"
+<span id="{{id}}-{{EventName}}-response"
+      class="card span4"
       data-moment-id="{{id}}"
-      data-previous-moment-id="{{previous_moment_id}}"
-      style="color: {{textColor}}">
+      data-previous-moment-id="{{previous_moment_id}}">
 
-<!--  <div class="moment" data-barley="moment-text" data-barley-editor="mini">{{ text }}</h2> -->
+  {{ EventName }}
 
-  <div class="card-body">
-    <span class="replace-text">
-      <input name="text"
-             type="text"
-             class="form-control"
-             value="{{ text }}">
-
-      <div class="display dialog-line-display-text">
-        {{ text }}
-      </div>
-    </span>
-  </div>
 </span>
-
-<div class="delete">
-  &#x2717;
-</div>
 
 <div class="section-divider" data-line-id="{{ id }}">
   <hr class="insert-line"></hr>

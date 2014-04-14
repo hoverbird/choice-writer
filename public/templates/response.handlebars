@@ -1,3 +1,18 @@
-<span id="{{id}}-{{kind}}-response" class="response {{ kind }}">
-  I'm a response. {{id}}
+<span id="{{id}}-{{type}}-response" class="response {{ type }}">
+  <span class="replace-text" style="color: {{textColor}}">
+    <input name="text"
+           type="text"
+           class="form-control"
+           value="{{ Caption }}">
+
+    <div class="display dialog-line-display-text">
+      {{ Caption}}
+    </div>
+  </span>
+  <div class="onFinish">
+    ...{{OnFinishEvent}}
+  </div>
+  <div class="delete">
+    &#x2717;
+  </div>
 </span>

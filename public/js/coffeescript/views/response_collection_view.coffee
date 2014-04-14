@@ -10,14 +10,13 @@ define ["backbone"
 
     initialize: (opts) ->
       return unless opts and opts.responses
-      console.log("initting the response_collection VIEW", opts)
       @collection = opts.responses
       this.render()
 
     render: () ->
       _(@collection).each (response) =>
-        console.log "appending", response
-        responseElement = new ResponseView(model: response).render().el
-        this.$el.append responseElement
+        responseElement = new ResponseView(model: response).render()
+        this.$el.append responseElement.el
+      this
   )
   ResponseCollectionView

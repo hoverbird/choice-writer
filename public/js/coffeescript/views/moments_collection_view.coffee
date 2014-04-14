@@ -15,7 +15,8 @@ define ["backbone"
       renderThis =  _.bind(this.render, this)
       @collection = new MomentCollection(viewOptions)
       @collection.bind "change", renderThis
-      @collection.fetch success: renderThis # Do the initial fetch
+      @collection.fetch success: (data) ->
+        renderThis data
 
     # Selects another moment in the collection. Options should contain either an
     # id OR an afterId key, depending on whether we know the moment to select or
@@ -48,13 +49,14 @@ define ["backbone"
       chain = $(chainTemplate()) # TODO should the chain template specify this?
       @collection.each (moment) =>
         momentElement = new MomentView(model: moment).render().el
-        previousMomentID = moment.get("previous_moment_id")
-        siblingMoment = chain.find("*[data-previous-moment-id='#{previousMomentID}']")
-
-        if siblingMoment.length
-          siblingMoment.parents('.row').after(momentElement)
-        else
-          chain.append($('<div class="row"></div>').append(momentElement))
+        chain.append momentElement
+        # previousMomentID = moment.get("previous_moment_id")
+        # siblingMoment = chain.find("*[data-previous-moment-id='#{previousMomentID}']")
+        #
+        # if siblingMoment.length
+        #   siblingMoment.parents('.row').after(momentElement)
+        # else
+        #   chain.append($('<div class="row"></div>').append(momentElement))
       this.$el.html(chain)
       # this.linkNodes()
       # window.barley.editor.init()

@@ -10,6 +10,7 @@ define [
     className: 'response'
 
     render: ->
-      console.log "!!!!!!!! YA RENDERED A RESPONSE !!!!", @model.toJSON()
+      console.log "ResponseView#render", @model.toJSON()
       this.$el.html(responseTemplate @model.toJSON())
+      this
   )
