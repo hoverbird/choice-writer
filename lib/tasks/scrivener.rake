@@ -14,6 +14,81 @@ namespace :campo do
     puts i.rows
   end
 
+  task "ingest_json", [:filename] => :environment do |t, args|
+    EventResponse.destroy_all
+    Response.destroy_all
+    FactMutation.destroy_all
+    Requirement.destroy_all
+
+    json_doc = File.read(args[:filename])
+
+    folder_name = args[:filename].split('/').last.gsub('.json', '')
+    folder = Folder.find_or_create_by_name(folder_name)
+
+    j = JSON.parse json_doc
+    event_responses = j["$values"]
+
+    event_responses.each do |er_data|
+      er = EventResponse.new({
+        name: er_data['EventName'],
+        folder: folder
+      })
+
+      if er_data["Requirements"] and er_data["Requirements"]["$values"]
+        er_data["Requirements"]["$values"].each do |req_data|
+          fact = Fact.find_or_create_by_name(req_data["Name"])
+          status = req_data["Status"]
+
+          if fact.new_record?
+            fact.default_value = status
+          end
+
+          requirement = Requirement.new(fact: fact)
+          if !status.nil?
+            requirement.fact_test = "be_equal"
+            requirement.fact_test_value = req_data["Status"]
+          end
+          er.requirements << requirement
+        end
+      end
+
+      er.save!
+      if er_data["Responses"] and er_data["Responses"]["$values"]
+        er_data["Responses"]["$values"].each do |resp_data|
+          response_type = resp_data["$type"]
+          case response_type
+            when /SpeechResponse/
+              pp "Speech To Play!"
+              speech_hash = resp_data.delete("SpeechToPlay")
+              resp_data.merge!(speech_hash)
+              pp resp_data
+              response = SpeechResponse.create(
+                event_response: er,
+                on_finish_event_name: resp_data["OnFinishEvent"],
+                text: resp_data["Caption"],
+                on_finish_event_delay: resp_data["OnFinishEventDelay"],
+                audio_clip_path: resp_data["AudioClipPath"],
+                allow_queueing: resp_data["AllowQueueing"],
+                hack_audio_duration: resp_data["HackAudioDuration"]
+              )
+            when /DialogTreeResponse/
+              response = DialogTreeResponse.create(event_response: er)
+            when /FactResponse/
+              response = FactResponse.create(event_response: er)
+              fact = Fact.find_or_create_by_name(resp_data["FactName"])
+              FactMutation.create(new_value: resp_data["NewStatus"], fact: fact, response: response)
+          else
+            raise "Unknown response type!"
+          end
+        end
+      end
+
+      er.save!
+      pp "Created EventResponse"
+      pp er.to_web_hash
+    end
+  end
+
   desc "Parse scrivener files in Sean's format and convert them to Unity-approved JSON"
   task "scrivener:slurp", [:filename] => :environment do |t, args|
     scrivener_source = File.read(args[:filename])
