@@ -1,4 +1,15 @@
 class SpeechResponse < Response
+  before_save :parse_character_from_text
+
+  CHARACTER_PATTERN = /^([a-zA-z0-9]*)(:)?/
+
+  def parse_character_from_text
+    if char_name = text.match(CHARACTER_PATTERN)
+      self.character = char_name[1]
+      text.gsub! char_name[0], ''
+      text.strip!
+    end
+  end
 
   def to_unity_hash
     unity_hash = Hashie::Mash.new

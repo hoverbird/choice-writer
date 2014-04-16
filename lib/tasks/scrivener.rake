@@ -8,6 +8,17 @@ end
 # rake campo:scrivener:slurp[/path/to/file.txt]
 namespace :campo do
 
+  task "ingest_everything" => :environment do
+    EventResponse.destroy_all
+    Response.destroy_all
+    FactMutation.destroy_all
+    Requirement.destroy_all
+
+    `rake campo:ingest_json[/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/TeenLakesideEventList.json]`
+    `rake campo:ingest_json[/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/CacheBoxEventList.json]`
+    `rake campo:ingest_json[/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/TeenPartyZoneEventList.json]`
+  end
+
   task "gdoc" => :environment do
     require File.expand_path(File.dirname(__FILE__)) + '/tiny_gdoc_importer.rb'
     i = EventResponseImporter.new
@@ -15,11 +26,6 @@ namespace :campo do
   end
 
   task "ingest_json", [:filename] => :environment do |t, args|
-    EventResponse.destroy_all
-    Response.destroy_all
-    FactMutation.destroy_all
-    Requirement.destroy_all
-
     json_doc = File.read(args[:filename])
 
     folder_name = args[:filename].split('/').last.gsub('.json', '')
@@ -76,7 +82,7 @@ namespace :campo do
             when /FactResponse/
               response = FactResponse.create(event_response: er)
               fact = Fact.find_or_create_by_name(resp_data["FactName"])
-              FactMutation.create(new_value: resp_data["NewStatus"], fact: fact, response: response)
+              FactMutation.create(new_value: resp_data["NewStatus"], fact: fact, fact_response: response)
           else
             raise "Unknown response type!"
           end

@@ -19,7 +19,7 @@ define ["underscore", "backbone", "backbone-relational"], (_, Backbone) ->
 
 
     regexen:
-      characterName: /^[a-zA-z0-9]*(?=:)/
+      characterName: /^[a-zA-z0-9]*:?/
       hashTags: /#[a-zA-z0-9]*\b/g
       requirements: /{()}/g
 
