@@ -4,14 +4,14 @@
   {{/if}}
 
   {{#if Requirements}}
-    <span class="requirements">
+    <div class="requirements">
       {{#each Requirements}}
-        <div class="requirement">
+        <span class="requirement">
           {{#if @first}} if {{/if}}
           <a href="#">{{name}}</a> = {{status}}
           {{#unless @last}} and {{/unless}}
-        </div>
+        </span>
       {{/each}}
-    </span>
+    </div>
   {{/if}}
 </div>

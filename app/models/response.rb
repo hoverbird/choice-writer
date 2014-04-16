@@ -3,7 +3,7 @@ class Response < ActiveRecord::Base
   belongs_to :on_finish_event, class_name: "Event", foreign_key: "on_finish_event_id"
 
   has_many :fact_mutations
-  has_many :mutated_facts, through: :fact_mutations
+  has_many :facts, through: :fact_mutations
 
   belongs_to :folder
   delegate :event_name, to: :event

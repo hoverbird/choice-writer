@@ -6,19 +6,12 @@ input {
   font-style: Roboto, arial, sans-serif;
 }
 
-.card {
+.event_response {
+  background-color: white;
   margin: 15px auto;
-/*  border: 1px solid blue;*/
 }
 
 .row {
-/*  border: 1px solid red;*/
-}
-
-.scenes-list ul {
-  text-align: left;
-  width: 300px;
-  list-syle: none;
 }
 
 .replace-text input {
@@ -38,21 +31,17 @@ input {
   display: none;
 }
 
-/*.replace-text.editable input {
-  display: block;
-}*/
-
-/*.replace-text.editable .display {
-  display: none;
-}*/
-
+.character-name {
+  margin: 0 auto;
+  max-width: 180px;
+  font-size: 18px;
+}
 .section-divider {
   padding: 20px;
   margin-top: 30px;
 }
 .section-divider:hover {
   cursor: pointer;
-  /*margin: 20px auto 10px auto;*/
 }
 
 .section-divider hr{
@@ -66,12 +55,41 @@ input {
   border-top: 1px solid #dadada;
 }
 
-.moment .delete {
-  float: right;
-  cursor: pointer;
-/*  display: none;*/
+.pre-response {
+  color: #dadada;
+  font-size: 13px;
 }
 
-.moment:hover .delete: {
+.pre-response a, .response a {
+  color: #dadada;
+  text-decoration: underline;
+}
+
+.speech-text {
+  font-size: 21px;
+  font-family: iABCRegular, Georgia, serif;
+  line-height: 32px;
+}
+
+.event-response {
+  background: #FEFEFA;
+  padding: 5px;
+  margin: 0 auto 8px auto;
+}
+
+.speech-response {
+  padding-top: 8px;
+}
+
+.fact-response, .on-finish-event-name {
+  color: #dadada;
+}
+
+.response .delete {
+  color: #dadada;
+  cursor: pointer;
+}
+
+.response:hover .delete: {
   display: inline;
 }

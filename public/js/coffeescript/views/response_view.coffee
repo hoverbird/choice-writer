@@ -16,7 +16,7 @@ define [
         else throw "Can't render; unknown Response Type"
 
     className: ->
-      "response #{@model.cleanType()}"
+      "response #{@model.cleanType()}-response"
 
     render: ->
       this.$el.html @responseTemplate(@model.toJSON())

@@ -5,16 +5,13 @@
          class="form-control"
          value="{{ Caption }}">
 
-  <div class="speech-text display dialog-line-display-text">
+  <span class="speech-text display dialog-line-display-text">
     {{ Caption}}
-  </div>
+  </span>
+  <span class="delete">&#x2717;</span>
 </span>
-{{#OnFinishEvent}}
-<div class="onFinish">
-  &#8627; {{OnFinishEvent}}
+{{#if OnFinishEventName}}
+<div class="on-finish-event-name">
+  &#8627; trigger <a href="#">{{OnFinishEventName}}</a>
 </div>
-{{/OnFinishEvent}}
-
-<div class="delete">
-  &#x2717;
-</div>
+{{/if}}

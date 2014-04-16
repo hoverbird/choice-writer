@@ -29,7 +29,8 @@ class EventResponse < ActiveRecord::Base
     end
 
     if responses.present?
-      @web_hash["Responses"] = responses.collect {|resp| resp.to_web_hash}
+      sorted_responses = responses.sort_by {|r| r.type }.reverse
+      @web_hash["Responses"] = sorted_responses.collect {|resp| resp.to_web_hash}
     end
     @web_hash
   end

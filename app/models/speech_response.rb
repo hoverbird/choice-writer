@@ -25,11 +25,11 @@ class SpeechResponse < Response
   def to_web_hash
     unity_hash = { ID: id, Type: self.class.name }
 
-    unity_hash["Character"] = character || "UNKNOWN"
+    unity_hash["Character"] = character || "HENRY"
     unity_hash["Caption"] = clean_text
 
     # Always trigger a finish event, even if there is not currently another response
-    unity_hash["OnFinishEvent"] = on_finish_event
+    unity_hash["OnFinishEventName"] = on_finish_event_name
     unity_hash["OnFinishEventDelay"] = on_finish_event_delay if on_finish_event_delay
 
     unity_hash["HackAudioDuration"] = hack_audio_duration if hack_audio_duration
