@@ -1,4 +1,9 @@
 class Fact < ActiveRecord::Base
+  has_many :fact_mutations
+  has_many :responses, through: :mutations
+
+  has_many :requirements
+  has_many :event_responses, through: :requirements
 
   def to_unity_hash(requirement_value)
     unity_hash = {}

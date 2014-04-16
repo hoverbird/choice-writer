@@ -1,8 +1,8 @@
 class FactResponse < Response
-  has_many :fact_mutations
-  has_many :facts, through: fact_mutations
+  has_many :fact_mutations, foreign_key: :response_id
+  has_many :facts, through: :fact_mutations
 
-  def to_unity_json
+  def to_unity_hash
     unity_hash = {}
     unity_hash["$type"] = "vgBlackboardFactResponseSpecification, Assembly-CSharp"
 
@@ -14,10 +14,11 @@ class FactResponse < Response
     unity_hash
   end
 
-  def to_web_json
+  def to_web_hash
     mutation = fact_mutations.first
-    { "Type" => self.class.name,
-      "FactName" => mutation.fact.name,
-      "NewStatus" => mutation.new_value}
+    { ID: id,
+      Type: self.class.name,
+      FactName: mutation.fact.name,
+      NewStatus: mutation.new_value }
   end
 end

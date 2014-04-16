@@ -22,7 +22,7 @@ class EventResponse < ActiveRecord::Base
   end
 
   def to_web_hash
-    @web_hash = {"EventName" => name}
+    @web_hash = { ID: id, EventName: name }
 
     if requirements.present?
       @web_hash["Requirements"] = requirements.collect {|req| req.to_web_hash}

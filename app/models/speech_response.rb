@@ -23,8 +23,9 @@ class SpeechResponse < Response
   end
 
   def to_web_hash
-    unity_hash = {"Type" => self.class.name}
+    unity_hash = { ID: id, Type: self.class.name }
 
+    unity_hash["Character"] = character || "UNKNOWN"
     unity_hash["Caption"] = clean_text
 
     # Always trigger a finish event, even if there is not currently another response

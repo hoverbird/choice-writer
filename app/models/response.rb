@@ -1,5 +1,5 @@
 class Response < ActiveRecord::Base
-  belongs_to :event
+  belongs_to :event_response
   belongs_to :on_finish_event, class_name: "Event", foreign_key: "on_finish_event_id"
 
   has_many :fact_mutations
