@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20140410005326) do
 
   create_table "responses", force: true do |t|
     t.integer  "event_response_id"
-    t.string   "type",                                          default: "Speech", null: false
+    t.string   "type",                                          default: "SpeechResponse", null: false
     t.string   "on_finish_event_name"
     t.text     "text"
     t.string   "character"

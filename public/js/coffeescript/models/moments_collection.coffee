@@ -11,7 +11,7 @@ define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, M
           @url += "/by_folder/#{folder_id}"
         else
           @url += "?#{$.param(opts.constraints)}"
-      console.log "Initting MoCo", @url
+      # console.log "Initting MoCo", @url
       @url
 
   )

@@ -3,12 +3,10 @@ define [
   "underscore"
   "models/moment"
   "views/response_collection_view"
-  'hbs!/templates/moment'
+  'hbs!/templates/event_response'
 ], (Backbone, _, Moment, ResponseCollectionView, momentTemplate) ->
   MomentView = Backbone.View.extend(
-    tagName: 'span'
-
-    className: 'moment'
+    className: 'event-response'
 
     events:
       'click .section-divider': 'newMoment'
@@ -21,6 +19,8 @@ define [
       @model.on 'select', this.select.bind(this)
 
     edit: (event) ->
+      console.log "Edit #{event}"
+      debugger
       @editableSet ||= this.$el.find('.replace-text')
       @editableSet.addClass('editable')
       @editableSet.find('input').focus()
@@ -32,6 +32,7 @@ define [
       @model.set(attrs)
       @model.save()
       # select the next moment (i.e. the moment AFTER this one)
+      debugger
       @changeSelection afterId: @model.get('id')
 
     # options: hash of either a momentId or an afterId
@@ -50,7 +51,7 @@ define [
     newMoment: (event) ->
       moment = new Moment(previous_moment_id: @model.get('id'))
       moment.save()
-      console.log("MomentView#newMoment", moment.get('id'))
+      # console.log("MomentView#newMoment", moment.get('id'))
       newNode = new MomentView(model: moment).render().el
       this.$el.after(newNode)
       # select the newly created moment
@@ -72,8 +73,7 @@ define [
       this.$el.html(momentTemplate(viewData))
       if (response_collection = @model.get("Responses")) and response_collection.length
         responseViews = new ResponseCollectionView(responses: response_collection.models)
-        console.log "Rendered some ResponseCollectionView", responseViews.el
-        this.$el.append(responseViews.el)
+        responseViews.$el.insertAfter(this.$el.find(".pre-response"))
       else
         console.log "No Responses for", @model
       this

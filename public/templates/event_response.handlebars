@@ -1,0 +1,17 @@
+<div class="pre-response">
+  {{#if EventName}}
+    ⬑ <a class="event-name" href="#">{{ EventName }}</a>
+  {{/if}}
+
+  {{#if Requirements}}
+    <span class="requirements">
+      {{#each Requirements}}
+        <div class="requirement">
+          {{#if @first}} if {{/if}}
+          <a href="#">{{name}}</a> = {{status}}
+          {{#unless @last}} and {{/unless}}
+        </div>
+      {{/each}}
+    </span>
+  {{/if}}
+</div>

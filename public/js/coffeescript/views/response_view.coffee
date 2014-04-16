@@ -1,16 +1,24 @@
 define [
   "backbone"
   "underscore"
-  "models/response"
-  'hbs!/templates/response'
-], (Backbone, _, Response, responseTemplate) ->
-  ResponseView = Backbone.View.extend(
-    tagName: 'span'
+  'hbs!/templates/speech_response'
+  'hbs!/templates/fact_response'
+  'hbs!/templates/dialog_tree_response'
+], (Backbone, _, SpeechResponseTmpl, FactResponseTmpl, DialogTreeResponseTmpl) ->
 
-    className: 'response'
+  ResponseView = Backbone.View.extend(
+
+    initialize: ->
+      @responseTemplate = switch @model.get("Type")
+        when "SpeechResponse" then SpeechResponseTmpl
+        when "FactResponse" then FactResponseTmpl
+        when "DialogTreeResponse" then DialogTreeResponseTmpl
+        else throw "Can't render; unknown Response Type"
+
+    className: ->
+      "response #{@model.cleanType()}"
 
     render: ->
-      console.log "ResponseView#render", @model.toJSON()
-      this.$el.html(responseTemplate @model.toJSON())
+      this.$el.html @responseTemplate(@model.toJSON())
       this
   )

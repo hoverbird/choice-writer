@@ -6,7 +6,6 @@ define ["underscore", "backbone", "backbone-relational"], (_, Backbone) ->
       this.on 'fetch', -> console.log "Response", this.toJSON()
 
       this.on 'change:Caption', ->
-        console.log "Response change:Caption", this.toJSON() # @get('id'), @get('Caption')
         @parseText() if @get("Type") is "SpeechResponse"
 
       this.on 'change:tags', ->
@@ -24,12 +23,16 @@ define ["underscore", "backbone", "backbone-relational"], (_, Backbone) ->
       hashTags: /#[a-zA-z0-9]*\b/g
       requirements: /{()}/g
 
+    cleanType: ->
+      @get("Type").slice(0, -8).toLowerCase()
+
     parseText: ->
       text = this.get('Caption')
-      characterName = text.match(@regexen.characterName)
-      hashTags = text.match(@regexen.hashTags)
-      this.set(character: characterName[0]) if characterName?
-      this.set(tags: hashTags) if hashTags?
+      if text
+        characterName = text.match(@regexen.characterName)
+        hashTags = text.match(@regexen.hashTags)
+        this.set(character: characterName[0]) if characterName?
+        this.set(tags: hashTags) if hashTags?
 
   )
   Response
