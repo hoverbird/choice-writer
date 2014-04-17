@@ -1,7 +1,7 @@
 class SpeechResponse < Response
   before_save :parse_character_from_text
 
-  CHARACTER_PATTERN = /^([a-zA-z0-9]*)(:)?/
+  CHARACTER_PATTERN = /^([A-Z0-9]*)(:)/
 
   def parse_character_from_text
     if char_name = text.match(CHARACTER_PATTERN)

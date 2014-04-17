@@ -11,6 +11,6 @@ class Requirement < ActiveRecord::Base
   end
 
   def to_web_hash
-    {ID: id, Name: => fact.name, Status: => fact_test_value }
+    {ID: id, Name: fact.name, Status: fact_test_value }
   end
 end

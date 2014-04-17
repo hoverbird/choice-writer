@@ -31,7 +31,7 @@
                   <h4>Folders</h4>
                   <ul class="nav hidden-xs" id="lg-menu">
                     <% current_project_folders.each do |folder| %>
-                      <li><a href="/moments/by_folder/<%= folder.id %>"><i class="glyphicon glyphicon-folder"></i> <%= folder.name %></a></li>
+                      <li><a href="/responses/by_folder/<%= folder.id %>"><i class="glyphicon glyphicon-folder"></i> <%= folder.name %></a></li>
                     <% end %>
                     <li><a href="#"><i class="glyphicon glyphicon-plus"></i> new folder</a></li>
 
@@ -40,7 +40,7 @@
                   <h4>Tags</h4>
                   <ul class="nav hidden-xs" id="lg-menu">
                     <% current_project_tags.each do |tag| %>
-                      <li><a href="/moments/by_tag/<%= tag.name %>"><i class="glyphicon glyphicon-tag"></i> <%= tag.name %></a></li>
+                      <li><a href="/responses/by_tag/<%= tag.name %>"><i class="glyphicon glyphicon-tag"></i> <%= tag.name %></a></li>
                     <% end %>
                     <li><a href="#"><i class="glyphicon glyphicon-plus"></i> new tag</a></li>
 
@@ -53,11 +53,11 @@
 
                 	<!-- tiny only nav-->
                   <ul class="nav visible-xs" id="xs-menu">
-                      	<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                        <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
-                      	<li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
-                        <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-                    </ul>
+                  	<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+                    <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+                  	<li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+                    <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+                  </ul>
 
                 </div>
                 <!-- /sidebar -->

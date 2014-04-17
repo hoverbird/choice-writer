@@ -9,6 +9,15 @@ class EventResponsesController < ApplicationController
     end
   end
 
+  def by_folder
+    event_responses = EventResponse.where(folder_id: params[:id]).to_a
+    event_responses_hash = EventResponse.collection_to_web_hash(event_responses)
+
+    respond_to do |format|
+      format.json { render :json => event_responses_hash }
+    end
+  end
+
   def for_unity
     raw_json = EventResponse.collection_as_unity_JSON(:all).target!
     # TODO: re-parsing and generating. stupid, inefficient. JBuilder should have pretty_generate >:(
