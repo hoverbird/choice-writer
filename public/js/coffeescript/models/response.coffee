@@ -31,8 +31,8 @@ define ["underscore", "backbone", "backbone-relational"], (_, Backbone) ->
       if text
         characterName = text.match(@regexen.characterName)
         hashTags = text.match(@regexen.hashTags)
-        this.set(character: characterName[0]) if characterName?
-        this.set(tags: hashTags) if hashTags?
+        this.set(Character: characterName[0]) if characterName?
+        this.set(Tags: hashTags) if hashTags?
 
   )
   Response

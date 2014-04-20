@@ -8,7 +8,7 @@
       {{#each Requirements}}
         <span class="requirement">
           {{#if @first}} if {{/if}}
-          <a href="#">{{Name}}</a> = {{Status}}
+          <a href="#">{{Name}}</a> = {{RequiredStatus}}
           {{#unless @last}} and {{/unless}}
         </span>
       {{/each}}

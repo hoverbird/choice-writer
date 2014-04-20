@@ -12,4 +12,12 @@ class Fact < ActiveRecord::Base
     unity_hash["Status"] = requirement_value
     unity_hash
   end
+
+  def to_web_hash
+    {
+      Name: name,
+      Description: description,
+      DefaultStatus: default_value || 'f'
+    }
+  end
 end

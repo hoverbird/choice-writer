@@ -1,10 +1,13 @@
-define ["backbone"
-        "jquery"
-        "underscore"
-        "models/moments_collection"
-        "models/moment"
-        "views/moment_view"
-        "hbs!/templates/moment_chain"], (Backbone, $, _, MomentCollection, Moment, MomentView, chainTemplate) ->
+define [
+  "backbone"
+  "jquery"
+  "underscore"
+  "models/moments_collection"
+  "models/moment"
+  "views/moment_view"
+  "views/fact"
+  "hbs!/templates/moment_chain"
+], (Backbone, $, _, MomentCollection, Moment, MomentView, FactView, chainTemplate) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 
@@ -15,8 +18,9 @@ define ["backbone"
       renderThis =  _.bind(this.render, this)
       @collection = new MomentCollection(viewOptions)
       @collection.bind "change", renderThis
-      @collection.fetch success: (data) ->
-        renderThis data
+      @collection.fetch success: (data) =>
+        @renderFacts.call(this, data)
+        @render.call(this, data)
 
     # Selects another moment in the collection. Options should contain either an
     # id OR an afterId key, depending on whether we know the moment to select or
@@ -45,9 +49,27 @@ define ["backbone"
       @render()
       moment.trigger 'select'
 
+    # gather a hash of facts and default values as referenced in all reqs and resps
+    # in the collection. we should probably do this on the server.
+    renderFacts: (collection) ->
+      facts = {}
+      _(collection.models).each (er) ->
+        if responses = er.get("Responses")
+          _(responses.models).each (resp) ->
+            if resp and resp.get("Type") is "FactResponse"
+              # console.log "FactResponse", resp
+              facts[resp.get("Name")] = resp.get("DefaultStatus")
+        if requirements = er.get("Requirements")
+          _(requirements).each (req) ->
+            # console.log("req", req)
+            facts[req.name] = req.DefaultStatus
+
+
+
     render: ->
       chain = $(chainTemplate()) # TODO should the chain template specify this?
       @collection.each (moment) =>
+
         momentElement = new MomentView(model: moment).render().el
         chain.append momentElement
         # previousMomentID = moment.get("previous_moment_id")
