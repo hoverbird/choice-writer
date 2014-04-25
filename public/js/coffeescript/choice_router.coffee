@@ -1,4 +1,4 @@
-define ["backbone", "views/moments_collection_view", "views/locations_view"], (Backbone, MomentCollectionView, LocationsView) ->
+define ["backbone", "views/moments_collection_view"], (Backbone, MomentCollectionView) ->
   ChoiceRouter = Backbone.Router.extend(
     contentContainer: $(".left-col")
 

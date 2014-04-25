@@ -4,7 +4,7 @@ define [
   "models/moment"
   "views/response_collection_view"
   'hbs!/templates/event_response'
-], (Backbone, _, Moment, ResponseCollectionView, momentTemplate) ->
+], (Backbone, _, Moment, ResponseCollectionView, eventResponseTemplate) ->
   MomentView = Backbone.View.extend(
     className: 'event-response'
 
@@ -70,7 +70,7 @@ define [
 
     render: ->
       viewData = _.extend(@model.toJSON(), textColor: @textColor())
-      this.$el.html(momentTemplate(viewData))
+      this.$el.html(eventResponseTemplate(viewData))
       if (response_collection = @model.get("Responses")) and response_collection.length
         responseViews = new ResponseCollectionView(responses: response_collection.models)
         responseViews.$el.insertAfter(this.$el.find(".pre-response"))

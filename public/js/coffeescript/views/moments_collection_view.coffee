@@ -5,9 +5,9 @@ define [
   "models/moments_collection"
   "models/moment"
   "views/moment_view"
-  "views/fact"
+  "views/fact_setting_collection"
   "hbs!/templates/moment_chain"
-], (Backbone, $, _, MomentCollection, Moment, MomentView, FactView, chainTemplate) ->
+], (Backbone, $, _, MomentCollection, Moment, MomentView, FactSettingsView, chainTemplate) ->
   MomentsCollectionView = Backbone.View.extend(
     tagName: 'div'
 
@@ -63,6 +63,7 @@ define [
           _(requirements).each (req) ->
             # console.log("req", req)
             facts[req.name] = req.DefaultStatus
+      $('.fact-settings').html(new FactSettingsView(facts).render().el)
 
 
 

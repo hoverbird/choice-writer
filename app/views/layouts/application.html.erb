@@ -29,7 +29,7 @@
                   <h4>Folders</h4>
                   <ul class="nav hidden-xs" id="lg-menu">
                     <% current_project_folders.each do |folder| %>
-                      <li><a href="/responses/by_folder/<%= folder.id %>"><i class="glyphicon glyphicon-folder"></i> <%= folder.name %></a></li>
+                      <li><a href="/responses/by_folder/<%= folder.id %>"><i class="glyphicon glyphicon-folder"></i> <%= folder.name.underscore.humanize[0..-12] %></a></li>
                     <% end %>
                     <li><a href="#"><i class="glyphicon glyphicon-plus"></i> new folder</a></li>
 
@@ -45,7 +45,10 @@
                   </ul>
                   <ul class="list-unstyled hidden-xs" id="sidebar-footer">
                     <li>
-                      <a href="/"><h3>Choice</h3> <i class="glyphicon glyphicon-heart-empty"></i> Campo Santo</a>
+                      <a href="/">
+                        <h3>Choice Writer</h3>
+                        Version 0.0.3
+                      </a>
                     </li>
                   </ul>
 
@@ -105,11 +108,13 @@
                     <!-- /top nav -->
 
                     <div class="padding">
-                        <div class="full col-sm-9">
+                        <div class="full col-sm-10">
                           <div class="row">
 
-                            <div class="col-sm-8 left-col">
+                            <div class="col-sm-6 left-col">
                               <%= yield %>
+                            </div>
+                            <div class="col-sm-4 right-col fact-settings">
                             </div>
 
                           </div>

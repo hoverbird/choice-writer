@@ -1,0 +1,7 @@
+<h4>Blackboard Facts</h4>
+{{ ./partials/fact_setting }}
+<ul class="fact-settings">
+{{#each .}}
+  <li><input type="checkbox" value="{{this}}"> <a href="#">{{@key}}</a></li>
+{{/each}}
+</ul>
