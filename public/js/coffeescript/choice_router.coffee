@@ -13,7 +13,6 @@ define ["backbone", "views/moments_collection_view"], (Backbone, MomentCollectio
       @contentContainer.html(view.el)
 
     showResponsesByFolder: (folder_id) ->
-      console.log("foldah")
       view = new MomentCollectionView constraints: { folder_id: folder_id }
       @contentContainer.html(view.el)
 
