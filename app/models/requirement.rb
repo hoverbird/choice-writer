@@ -11,6 +11,6 @@ class Requirement < ActiveRecord::Base
   end
 
   def to_web_hash
-    {ID: id, RequiredStatus: fact_test_value}.merge(fact.to_web_hash)
+    {ID: id, FactTest: fact_test, FactTestValue: fact_test_value}.merge(fact.to_web_hash)
   end
 end

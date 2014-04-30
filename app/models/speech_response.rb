@@ -50,4 +50,7 @@ class SpeechResponse < Response
 
     unity_hash
   end
+
+  def common_hash_attributes
+  end
 end

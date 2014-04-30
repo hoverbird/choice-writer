@@ -1,15 +1,30 @@
-<div class="character-name">{{Character}}</div>
+<div class="replace-text character-name">
+  <input name="text"
+         type="text"
+         class="form-control"
+         value="{{ Character }}">
+  <span class="display character-name">
+    {{ Character }}
+  </span>
+</div>
+
 <span class="replace-text" style="color: {{textColor}}">
   <input name="text"
          type="text"
          class="form-control"
          value="{{ Caption }}">
 
-  <span class="speech-text display dialog-line-display-text">
+  <span class="display speech-text">
     {{ Caption}}
   </span>
-  <span class="delete">&#x2717;</span>
 </span>
+
+<pre class="response-data hidden">
+  ID: {{ID}}
+  OnFinishEventDelay: {{OnFinishEventDelay}}
+</pre>
+<span class="delete">&#x2717;</span>
+
 {{#if OnFinishEventName}}
 <div class="on-finish-event-name">
   &#8627; trigger <a href="#">{{OnFinishEventName}}</a>
