@@ -34,21 +34,24 @@ class SpeechResponse < Response
   end
 
   def to_web_hash
-    unity_hash = { ID: id, Type: self.class.name }
-
-    unity_hash["Character"] = character || "HENRY"
-    unity_hash["Caption"] = clean_text
+    web_hash = {
+      id: id,
+      # event_response_id: event_response_id,
+      Type: self.class.name,
+      character: character || "HENRY",
+      text: clean_text
+    }
 
     # Always trigger a finish event, even if there is not currently another response
-    unity_hash["OnFinishEventName"] = on_finish_event_name
-    unity_hash["OnFinishEventDelay"] = on_finish_event_delay if on_finish_event_delay
+    web_hash["on_finish_event_name"] = on_finish_event_name
+    web_hash["on_finish_event_delay"] = on_finish_event_delay if on_finish_event_delay
 
-    unity_hash["HackAudioDuration"] = hack_audio_duration if hack_audio_duration
-    unity_hash["MinimumDuration"] = minimum_duration if minimum_duration
-    unity_hash["AllowQueueing"] = allow_queueing unless allow_queueing.nil?
-    unity_hash["AudioClipPath"] = audio_clip_path if audio_clip_path
+    web_hash["hack_audio_duration"] = hack_audio_duration if hack_audio_duration
+    web_hash["minimum_duration"] = minimum_duration if minimum_duration
+    web_hash["allow_queueing"] = allow_queueing unless allow_queueing.nil?
+    web_hash["audio_clip_path"] = audio_clip_path if audio_clip_path
 
-    unity_hash
+    web_hash
   end
 
   def common_hash_attributes

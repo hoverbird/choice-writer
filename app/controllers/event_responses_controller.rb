@@ -9,6 +9,14 @@ class EventResponsesController < ApplicationController
     end
   end
 
+  def create
+    raise "Creating Event Responses needs to be reimplemented"
+  end
+
+  def update
+    raise "Updating Event Responses needs to be implemented"
+  end
+
   def by_folder
     event_responses = EventResponse.where(folder_id: params[:id]).to_a
     event_responses_hash = EventResponse.collection_to_web_hash(event_responses)

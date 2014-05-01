@@ -8,6 +8,9 @@ class EventResponse < ActiveRecord::Base
 
   belongs_to :folder
 
+  #TODO: validate that a response to a given event name is unique among its number of reqs
+  # event name with the requirement count to ID
+
   def self.collection_to_unity_hash(event_response_collection)
     unity_hash = Hashie::Mash.new
     unity_hash["$type"] = "System.Collections.Generic.List`1[[vgEventResponseSpecification, Assembly-CSharp]], mscorlib"
@@ -22,7 +25,7 @@ class EventResponse < ActiveRecord::Base
   end
 
   def to_web_hash
-    @web_hash = { ID: id, EventName: name }
+    @web_hash = { id: id, EventName: name }
 
     if requirements.present?
       @web_hash["Requirements"] = requirements.collect {|req| req.to_web_hash}
@@ -38,6 +41,7 @@ class EventResponse < ActiveRecord::Base
   def to_unity_hash
     @unity_hash = Hashie::Mash.new
     @unity_hash.EventName = name
+    @unity_hash.DatabaseId = unity_id
 
     if requirements.present?
       @unity_hash.Requirements = {
@@ -57,6 +61,12 @@ class EventResponse < ActiveRecord::Base
 
     @unity_hash.SourceFilePath = folder.name if folder
     @unity_hash
+  end
+
+  # For purposes of import/export to the event system JSON files, we ID event
+  # responses by the name they respond to and the number of requirments they have.
+  def unity_id
+    @unity_id ||= "#{name}-response-{requirements.count}"
   end
 
   private

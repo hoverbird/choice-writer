@@ -2,6 +2,7 @@ class ResponsesController < ApplicationController
   respond_to :json
   skip_before_filter :verify_authenticity_token #TODO: remove this, patch Backbone. This is totes unsafe for public consumption.
 
+ # Character, Caption, OnFinishEventName
   def index
     respond_with(Response.collection_as_unity_JSON(:all))
   end
@@ -18,7 +19,7 @@ class ResponsesController < ApplicationController
   def update
     response = Response.find(params[:id])
     if response.update_attributes!(event_params)
-      respond_with response.to_json
+      render :json => response
     else
       error_message = "Failed to update Event."
       logger.info error_message
@@ -44,7 +45,10 @@ class ResponsesController < ApplicationController
 
   private
     def event_params
-      params.permit(:text, :character)
+      # TODO: make this less promiscuous with the params. lift only the ones we
+      # want, rather than using the permit model?
+      # params.permit(:character, :text, :on_finish_event_name, :on_finish_event_delay, :allow_queueing, :response, :id, :Type, :eventResponse, :response)
+      params.permit!.slice(:character, :text, :on_finish_event_delay, :allow_queueing)
     end
 
 end

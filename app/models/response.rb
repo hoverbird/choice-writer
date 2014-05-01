@@ -102,19 +102,6 @@ class Response < ActiveRecord::Base
     @next_moments ||= Moment.where(previous_moment: this_moment).to_a
   end
 
-  def as_web_JSON
-    Jbuilder.new do |json|
-      json.(self, :id, :created_at, :updated_at)
-
-      json.constraints self.constraints do |constraint|
-        json.fact_test constraint.fact_test
-        json.fact_name constraint.fact.name
-        json.fact_default_value constraint.fact.default_value
-      end
-    end
-  end
-
-
   private
     def self.collection_type(type_string)
       "System.Collections.Generic.List`1[[vg#{type_string}, Assembly-CSharp]], mscorlib"

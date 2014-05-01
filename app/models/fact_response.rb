@@ -18,7 +18,7 @@ class FactResponse < Response
   end
 
   def to_web_hash
-    { ID: id,
+    { id: id,
       Type: self.class.name,
       Name: mutation.fact.name,
       DefaultStatus: mutation.fact.default_value || 'f',

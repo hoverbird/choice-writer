@@ -17,17 +17,6 @@ describe SpeechResponse do
       end
     end
 
-    describe "web JSON output" do
-      let(:parsed_output) { JSON.parse(response.as_web_JSON.target!) }
-
-      it "should be valid" do
-        expect(parsed_output).to be_kind_of(Hash)
-        expect(parsed_output["id"]).to equal(response.id)
-        expect(DateTime.parse(parsed_output["created_at"])).to(be_kind_of(DateTime), "to be a valid date format")
-        expect(parsed_output["requirements"]).to be_kind_of(Array)
-      end
-    end
-
     describe "unity JSON output" do
       let(:parsed) { JSON.parse(response.collection_as_unity_JSON([response])) }
       let(:requirements) { parsed["Requirements"] }

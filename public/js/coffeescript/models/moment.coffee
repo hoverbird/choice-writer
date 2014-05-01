@@ -12,20 +12,17 @@ define [
       type: Backbone.HasMany
       collectionType: ResponseCollection
       relatedModel: Response
+      reverseRelation:
+        key: 'event_response'
+        includeInJSON: 'id'
     }]
 
     initialize: ->
+      this.id = this.get("id") if this.get("id")
+      this.on "eventResponseUpdated", ->
+        console.log( "YA DURN FUGIN")
       this.url = ->
         "/event_responses/#{@id or ''}"
-
-    defaults:
-      text: "..."
-
-    markdown_text: ->
-      this.get('text')
-
-    validate: (attributes) ->
-      # return "I'll need a name, bud" unless attributes.name?
 
   )
 

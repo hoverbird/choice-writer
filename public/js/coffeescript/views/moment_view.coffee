@@ -10,29 +10,28 @@ define [
 
     events:
       'click .section-divider': 'newMoment'
-      'click .delete': 'destroy'
-      'click .replace-text .display': 'edit'
-      'blur .replace-text input': 'unedit'
-      'keyup': 'onKeyUp'
+      # 'click .replace-text .display': 'edit'
+      # 'blur .replace-text input': 'unedit'
+      # 'keyup': 'onKeyUp'
 
     initialize: ->
       @model.on 'select', this.select.bind(this)
 
     edit: (event) ->
-      console.log "Edit #{event}"
-      debugger
-      @editableSet ||= this.$el.find('.replace-text')
+      # @editableSet ||= this.$el.find('.replace-text')
+      @editableSet ||= $(event.target.parentElement)
+
       @editableSet.addClass('editable')
       @editableSet.find('input').focus()
 
     unedit: (event) ->
-      @editableSet ||= this.$el.find('.replace-text')
+      @editableSet ||= $(event.target.parentElement)
       attrs = @editableSet.find("input").serializeObject()
       @editableSet.removeClass('editable')
+      # debugger
       @model.set(attrs)
       @model.save()
       # select the next moment (i.e. the moment AFTER this one)
-      debugger
       @changeSelection afterId: @model.get('id')
 
     # options: hash of either a momentId or an afterId

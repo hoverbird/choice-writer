@@ -27,9 +27,6 @@ input {
   margin: 15px auto;
 }
 
-.row {
-}
-
 .replace-text input {
   display: none;
   color: #666;
@@ -47,11 +44,13 @@ input {
   display: none;
 }
 
-.character-name {
+.display.character {
   margin: 0 auto;
-  max-width: 180px;
+  width: 100%;
   font-size: 18px;
+  text-align: center
 }
+
 .section-divider {
   padding: 20px;
   margin-top: 30px;
@@ -81,15 +80,20 @@ input {
   text-decoration: underline;
 }
 
-.speech-text {
+.response-collection {
+  padding: 0;
+}
+
+.replace-text.text {
   font-size: 21px;
   font-family: iABCRegular, Georgia, serif;
-  line-height: 32px;
+  line-height: 20px;
+  padding: 8px;
 }
 
 .event-response {
   background: #FEFEFA;
-  padding: 5px;
+  padding: 8px;
   margin: 0 auto 8px auto;
 }
 
@@ -109,7 +113,6 @@ input {
 .response:hover .delete: {
   display: inline;
 }
-
 
 /*Facts*/
 .fact-settings {
