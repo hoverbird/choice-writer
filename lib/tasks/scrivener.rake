@@ -7,18 +7,21 @@ end
 
 # rake campo:scrivener:slurp[/path/to/file.txt]
 namespace :campo do
-
-  task "ingest_everything" => :environment do
+  task "destroy_everything" => :environment do
     EventResponse.destroy_all
     Response.destroy_all
     FactMutation.destroy_all
     Requirement.destroy_all
-
-    `rake campo:ingest_json[/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/TeenLakesideEventList.json]`
-    `rake campo:ingest_json[/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/CacheBoxEventList.json]`
-    `rake campo:ingest_json[/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/TeenPartyZoneEventList.json]`
   end
 
+  task "ingest_everything" => :environment do
+    `rake campo:destroy_everything`
+
+     Dir.glob('/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/*.json').each do |filename|
+       `rake campo:ingest_json[#{filename}]`
+     end
+  end
+  
   task "gdoc" => :environment do
     require File.expand_path(File.dirname(__FILE__)) + '/tiny_gdoc_importer.rb'
     i = EventResponseImporter.new
@@ -26,6 +29,7 @@ namespace :campo do
   end
 
   task "ingest_json", [:filename] => :environment do |t, args|
+    puts "Ingesting #{args[:filename]}"
     json_doc = File.read(args[:filename])
 
     folder_name = args[:filename].split('/').last.gsub('.json', '')
@@ -64,7 +68,7 @@ namespace :campo do
           response_type = resp_data["$type"]
           case response_type
             when /SpeechResponse/
-              pp "Speech To Play!"
+              pp "SPEECH RESPONSE"
               speech_hash = resp_data.delete("SpeechToPlay")
               resp_data.merge!(speech_hash)
               pp resp_data
@@ -78,13 +82,21 @@ namespace :campo do
                 hack_audio_duration: resp_data["HackAudioDuration"]
               )
             when /DialogTreeResponse/
+              pp "DIALOG TREE RESPONSE"
               response = DialogTreeResponse.create(event_response: er)
             when /FactResponse/
+              pp "FACT RESPONSE"
               response = FactResponse.create(event_response: er)
               fact = Fact.find_or_create_by_name(resp_data["FactName"])
               FactMutation.create(new_value: resp_data["NewStatus"], fact: fact, fact_response: response)
+            when /TriggerEventResponse/
+              pp "TRIGGER EVENT RESPONSE"
+              response = TriggerEventResponse.create(
+                event_response: er,
+                on_finish_event_name: resp_data["EventToTrigger"]
+              )
           else
-            raise "Unknown response type!"
+            raise "Unknown response type!! Type found: #{response_type}"
           end
         end
       end
