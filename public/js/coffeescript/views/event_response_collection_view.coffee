@@ -2,21 +2,21 @@ define [
   "backbone"
   "jquery"
   "underscore"
-  "models/moments_collection"
-  "models/moment"
-  "views/moment_view"
+  "models/event_response_collection"
+  "models/event_response"
+  "views/event_response_view"
   "views/fact_setting_collection"
-  "hbs!/templates/moment_chain"
-], (Backbone, $, _, MomentCollection, Moment, MomentView, FactSettingsView, chainTemplate) ->
-  MomentsCollectionView = Backbone.View.extend(
+  "hbs!/templates/event_response_collection"
+], (Backbone, $, _, EventResponseCollection, EventResponse, EventResponseView, FactSettingsView, template) ->
+  EventResponseCollectionView = Backbone.View.extend(
     tagName: 'div'
 
-    className: 'moment-chain'
+    className: 'event-response-collection'
 
     initialize: (viewOptions) ->
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
       renderThis =  _.bind(this.render, this)
-      @collection = new MomentCollection(viewOptions)
+      @collection = new EventResponseCollection(viewOptions)
       @collection.bind "change", renderThis
       @collection.fetch success: (data) =>
         @renderFacts.call(this, data)
@@ -28,9 +28,9 @@ define [
     selectMoment: (options) ->
       console.log("selectMoment", options)
       momentToSelect = if options.afterId
-        @findMomentAfter options.afterId
+        @findEventResponseAfter options.afterId
       else if options.id
-        @findMoment options.id
+        @findEventResponse options.id
       else
         throw "You can't select a moment without its ID!"
       console.log("gonna trigger select", momentToSelect[0])
@@ -38,16 +38,18 @@ define [
         momentToSelect[0].trigger('select')
       else
         # If no moment was found, we create a new one.
-        this.newMoment previousMomentId: momentToSelect.id
+        this.newEventResponse previousMomentId: momentToSelect.id
 
-    findMomentAfter: (momentId) ->
-      @collection.select (moment) -> moment.get('previous_moment_id') is momentId
+    findEventResponseAfter: (id) ->
+      @collection.select (eventResponse) -> eventResponse.get('previous_moment_id') is id
 
-    newMoment: (options) ->
-      moment = new Moment(previous_moment_id: options.previousMomentId)
-      @collection.add moment
+    findEventResponse: (id) -> throw "Unimplemented: findEventResponse"
+
+    newEventResponse: (options) ->
+      er = new EventResponse(previous_moment_id: options.previousMomentId)
+      @collection.add er
       @render()
-      moment.trigger 'select'
+      er.trigger 'select'
 
     # gather a hash of facts and default values as referenced in all reqs and resps
     # in the collection. we should probably do this on the server.
@@ -68,11 +70,11 @@ define [
 
 
     render: ->
-      chain = $(chainTemplate()) # TODO should the chain template specify this?
-      @collection.each (moment) =>
+      chain = $(template())
+      @collection.each (eventResponse) =>
 
-        momentElement = new MomentView(model: moment).render().el
-        chain.append momentElement
+        erElement = new EventResponseView(model: eventResponse).render().el
+        chain.append erElement
         # previousMomentID = moment.get("previous_moment_id")
         # siblingMoment = chain.find("*[data-previous-moment-id='#{previousMomentID}']")
         #
@@ -98,4 +100,4 @@ define [
               [ "Perimeter", shape: "Diamond" ]
             ]
   )
-  MomentsCollectionView
+  EventResponseCollectionView

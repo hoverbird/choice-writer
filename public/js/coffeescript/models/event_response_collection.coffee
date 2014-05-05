@@ -1,6 +1,11 @@
-define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, Moment) ->
-  MomentsCollection = Backbone.Collection.extend(
-    model: Moment
+define [
+  "jquery"
+  "underscore"
+  "backbone"
+  "models/event_response"
+], ($, _, Backbone, EventResponse) ->
+  EventResponseCollection = Backbone.Collection.extend(
+    model: EventResponse
 
     initialize: (opts = {}) ->
       @url = '/event_responses/v0/web'
@@ -11,8 +16,6 @@ define ["jquery", "underscore", "backbone", "models/moment"], ($, _, Backbone, M
           @url += "/by_folder/#{folder_id}"
         else
           @url += "?#{$.param(opts.constraints)}"
-      # console.log "Initting MoCo", @url
       @url
-
   )
-  MomentsCollection
+  EventResponseCollection

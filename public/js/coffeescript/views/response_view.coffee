@@ -17,7 +17,9 @@ define [
         when "SpeechResponse" then SpeechResponseTmpl
         when "FactResponse" then FactResponseTmpl
         when "DialogTreeResponse" then DialogTreeResponseTmpl
-        else throw "Can't render; unknown Response Type"
+        when "TriggerEventResponse" then SpeechResponseTmpl
+        else
+          throw "Unknown Response Type: #{@model.get("Type")}"
 
     className: ->
       "response #{@model.cleanType()}-response"

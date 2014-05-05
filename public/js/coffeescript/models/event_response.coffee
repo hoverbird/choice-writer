@@ -4,7 +4,7 @@ define [
   "models/response_collection"
   "models/response"
 ], (_, Backbone, ResponseCollection, Response) ->
-  Moment = Backbone.RelationalModel.extend(
+  EventResponse = Backbone.RelationalModel.extend(
     url: '/moment/:id'
 
     relations: [{
@@ -26,4 +26,4 @@ define [
 
   )
 
-  Moment
+  EventResponse

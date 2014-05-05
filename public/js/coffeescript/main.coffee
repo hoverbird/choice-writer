@@ -3,7 +3,7 @@ require.config
     # tries to load jQuery from Google's CDN first and falls back to load locally
     jquery: [
       "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min"
-      "../lib/jquery/jquery"
+      "../lib/jquery/dist/jquery.min"
     ]
     underscore: "../lib/underscore/underscore"
     backbone: "../lib/backbone/backbone"

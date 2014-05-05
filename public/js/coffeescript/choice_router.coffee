@@ -1,4 +1,7 @@
-define ["backbone", "views/moments_collection_view"], (Backbone, MomentCollectionView) ->
+define [
+  "backbone"
+  "views/event_response_collection_view"
+], (Backbone, EventResponseCollectionView) ->
   ChoiceRouter = Backbone.Router.extend(
     contentContainer: $(".left-col")
 
@@ -9,15 +12,15 @@ define ["backbone", "views/moments_collection_view"], (Backbone, MomentCollectio
       "responses/by_folder/:folder_id": "showResponsesByFolder"
 
     showResponsesByTag: (tag) ->
-      view = new MomentCollectionView constraints: { tag: tag }
+      view = new EventResponseCollectionView constraints: { tag: tag }
       @contentContainer.html(view.el)
 
     showResponsesByFolder: (folder_id) ->
-      view = new MomentCollectionView constraints: { folder_id: folder_id }
+      view = new EventResponseCollectionView constraints: { folder_id: folder_id }
       @contentContainer.html(view.el)
 
     showResponses: (id) ->
-      view = new MomentCollectionView()
+      view = new EventResponseCollectionView()
       @contentContainer.html(view.el)
 
     defaultRoute: (other) ->

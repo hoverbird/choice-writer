@@ -1,15 +1,15 @@
 define [
   "backbone"
   "underscore"
-  "models/moment"
+  "models/event_response"
   "views/response_collection_view"
   'hbs!/templates/event_response'
-], (Backbone, _, Moment, ResponseCollectionView, eventResponseTemplate) ->
-  MomentView = Backbone.View.extend(
+], (Backbone, _, EventResponse, ResponseCollectionView, eventResponseTemplate) ->
+  EventResponseView = Backbone.View.extend(
     className: 'event-response'
 
     events:
-      'click .section-divider': 'newMoment'
+      'click .section-divider': 'newEventResponse'
       # 'click .replace-text .display': 'edit'
       # 'blur .replace-text input': 'unedit'
       # 'keyup': 'onKeyUp'
@@ -28,10 +28,9 @@ define [
       @editableSet ||= $(event.target.parentElement)
       attrs = @editableSet.find("input").serializeObject()
       @editableSet.removeClass('editable')
-      # debugger
       @model.set(attrs)
       @model.save()
-      # select the next moment (i.e. the moment AFTER this one)
+      # select the next event response (i.e. the one AFTER this one)
       @changeSelection afterId: @model.get('id')
 
     # options: hash of either a momentId or an afterId
@@ -47,14 +46,13 @@ define [
       @unedit(event) if event.keyCode is 13 and event.shiftKey
 
     # TODO: unify this with collection view creation
-    newMoment: (event) ->
-      moment = new Moment(previous_moment_id: @model.get('id'))
-      moment.save()
-      # console.log("MomentView#newMoment", moment.get('id'))
-      newNode = new MomentView(model: moment).render().el
+    newEventResponse: (event) ->
+      er = new EventResponse(previous_moment_id: @model.get('id'))
+      er.save()
+      newNode = new EventResponseView(model: er).render().el
       this.$el.after(newNode)
-      # select the newly created moment
-      moment.trigger('select')
+      # select the newly created event response
+      er.trigger('select')
 
     textColor: ->
       charName = @model.get('character')
@@ -77,4 +75,4 @@ define [
         console.log "No Responses for", @model
       this
   )
-  MomentView
+  EventResponseView
