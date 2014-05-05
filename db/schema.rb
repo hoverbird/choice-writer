@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140410005326) do
+ActiveRecord::Schema.define(version: 20140505114838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,10 +87,12 @@ ActiveRecord::Schema.define(version: 20140410005326) do
     t.boolean  "allow_queueing"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.tsvector "search_vector"
   end
 
   add_index "responses", ["character"], name: "index_responses_on_character", using: :btree
   add_index "responses", ["event_response_id"], name: "index_responses_on_event_response_id", using: :btree
+  add_index "responses", ["search_vector"], name: "responses_search_idx", using: :gin
 
   create_table "taggings", force: true do |t|
     t.integer "tag_id"

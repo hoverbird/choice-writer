@@ -10,7 +10,12 @@ class EventResponsesController < ApplicationController
   end
 
   def search
-    responses = Response.search(query)
+    event_responses = EventResponse.search(params[:q])
+    event_responses_hash = EventResponse.collection_to_web_hash(event_responses)
+
+    respond_to do |format|
+      format.json { render :json => event_responses_hash }
+    end
   end
 
   def create

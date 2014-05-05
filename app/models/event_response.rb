@@ -11,6 +11,12 @@ class EventResponse < ActiveRecord::Base
   #TODO: validate that a response to a given event name is unique among its number of reqs
   # event name with the requirement count to ID
 
+  def self.search(terms = "")
+    sanitized = sanitize_sql_array(["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
+    # TODO this should be doable in a single query with AREL
+    Response.where("search_vector @@ #{sanitized}").collect{|response| response.event_response}
+  end
+
   def self.collection_to_unity_hash(event_response_collection)
     unity_hash = Hashie::Mash.new
     unity_hash["$type"] = "System.Collections.Generic.List`1[[vgEventResponseSpecification, Assembly-CSharp]], mscorlib"
