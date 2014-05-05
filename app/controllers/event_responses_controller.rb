@@ -9,6 +9,10 @@ class EventResponsesController < ApplicationController
     end
   end
 
+  def search
+    responses = Response.search(query)
+  end
+
   def create
     raise "Creating Event Responses needs to be reimplemented"
   end

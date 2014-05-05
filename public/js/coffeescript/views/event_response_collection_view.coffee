@@ -16,9 +16,8 @@ define [
 
     initialize: (viewOptions) ->
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
-      renderThis =  _.bind(this.render, this)
       @collection = new EventResponseCollection(viewOptions)
-      @collection.bind "change", renderThis
+      @collection.bind "change", _.bind(this.render, this)
       @collection.fetch success: (data) =>
         @renderFacts.call(this, data)
         @render.call(this, data)

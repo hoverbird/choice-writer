@@ -21,9 +21,7 @@ define [
       @model.on 'select', this.select.bind(this)
 
     edit: (event) ->
-      # @editableSet ||= this.$el.find('.replace-text')
       @editableSet ||= $(event.target.parentElement)
-
       @editableSet.addClass('editable')
       @editableSet.find('input').focus()
 

@@ -1,4 +1,5 @@
 define ["backbone", "jquery"], (Backbone, $) ->
+  appRoot = "#{location.protocol}//#{location.host}/"
   Backbone.pubSub = _.extend({}, Backbone.Events)
 
   $.fn.serializeObject = ->
@@ -64,15 +65,19 @@ define ["backbone", "jquery"], (Backbone, $) ->
         Backbone._sync method, model, success, error
 
     setupNav: ->
-      $('.nav').on("click", "a:not([data-bypass])", (evt) ->
+      $('.nav-search').on "submit", (event) ->
+        event.preventDefault()
+        queryString = $(event.target).find("#search-query").val()
+        Backbone.history.navigate("search?q=#{queryString}", true)
+
+      $('.nav').on "click", "a:not([data-bypass])", (event) ->
         href =
           prop: $(this).prop("href")
           attr: $(this).attr("href")
-        root = "#{location.protocol}//#{location.host}/"
 
-        if href.prop and href.prop.slice(0, root.length) == root
-          evt.preventDefault()
+        if href.prop and href.prop.slice(0, appRoot.length) == appRoot
+          event.preventDefault()
           Backbone.history.navigate(href.attr, true)
-      )
+
   }
   Util

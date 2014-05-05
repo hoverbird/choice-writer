@@ -10,6 +10,7 @@ define [
       "home": "showResponses"
       "responses/by_tag/:tag": "showRepsonsesByTag"
       "responses/by_folder/:folder_id": "showResponsesByFolder"
+      "search": "search"
 
     showResponsesByTag: (tag) ->
       view = new EventResponseCollectionView constraints: { tag: tag }
@@ -21,6 +22,10 @@ define [
 
     showResponses: (id) ->
       view = new EventResponseCollectionView()
+      @contentContainer.html(view.el)
+
+    search: (queryString) ->
+      view = new EventResponseCollectionView constraints: { searchQuery: queryString }
       @contentContainer.html(view.el)
 
     defaultRoute: (other) ->
