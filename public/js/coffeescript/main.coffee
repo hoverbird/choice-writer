@@ -9,7 +9,7 @@ require.config
     backbone: "../lib/backbone/backbone"
     'backbone-relational' : '../lib/backbone-relational/backbone-relational'
     hbs: '../lib/require-handlebars-plugin/hbs'
-    # jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
+    jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
     # barley: '../lib/barley-editor.min.js'
     # 'backbone.keys': '../lib/backbone.keys/dist/backbone.keys.min'
     # jasmine: '../lib/jasmine-jquery/lib/jasmine-jquery'

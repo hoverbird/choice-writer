@@ -6,6 +6,9 @@ define [
   'hbs!/templates/event_response'
 ], (Backbone, _, EventResponse, ResponseCollectionView, eventResponseTemplate) ->
   EventResponseView = Backbone.View.extend(
+    id: ->
+      "event-response-#{@model.get('id')}"
+
     className: 'event-response'
 
     events:

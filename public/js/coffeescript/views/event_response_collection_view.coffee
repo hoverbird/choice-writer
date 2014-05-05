@@ -2,12 +2,13 @@ define [
   "backbone"
   "jquery"
   "underscore"
+  "jsplumb"
   "models/event_response_collection"
   "models/event_response"
   "views/event_response_view"
   "views/fact_setting_collection"
   "hbs!/templates/event_response_collection"
-], (Backbone, $, _, EventResponseCollection, EventResponse, EventResponseView, FactSettingsView, template) ->
+], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse, EventResponseView, FactSettingsView, template) ->
   EventResponseCollectionView = Backbone.View.extend(
     tagName: 'div'
 
@@ -72,32 +73,28 @@ define [
     render: ->
       chain = $(template())
       @collection.each (eventResponse) =>
-
-        erElement = new EventResponseView(model: eventResponse).render().el
-        chain.append erElement
-        # previousMomentID = moment.get("previous_moment_id")
-        # siblingMoment = chain.find("*[data-previous-moment-id='#{previousMomentID}']")
-        #
-        # if siblingMoment.length
-        #   siblingMoment.parents('.row').after(momentElement)
-        # else
-        #   chain.append($('<div class="row"></div>').append(momentElement))
+        element = new EventResponseView(model: eventResponse).render().el
+        chain.append element
       this.$el.html(chain)
       # this.linkNodes()
-      # window.barley.editor.init()
       this
 
     linkNodes: ->
-      $(".card").each (i, e) ->
-        source = $(e)
-        if previousMomentId = source.data('previous-moment-id')
-          target = $("##{previousMomentId}-Speech-card")
-          jsPlumb.connect
-            source: source
-            target: target
-            anchors: [
-              [ "Perimeter", shape: "Triangle" ],
-              [ "Perimeter", shape: "Diamond" ]
-            ]
+      @collection.each (eventResponse) ->
+        eventName = eventResponse.get('EventName')
+        # The target is the element belonging to this eventResponse
+        target = $("#event-response-#{eventResponse.get("id")}")[0]
+        # The sources are any eventResponses that finish by triggering the event name we listen to
+        sources = $("[data-on-finish-event-name='#{eventName}']")
+        if target and sources.length
+          _(sources).each (source) ->
+            jsPlumb.connect
+              source: source.parentElement
+              target: target.parentElement
+              anchors: [
+                [ "Perimeter", shape: "Triangle" ],
+                [ "Perimeter", shape: "Diamond" ]
+              ]
+
   )
   EventResponseCollectionView
