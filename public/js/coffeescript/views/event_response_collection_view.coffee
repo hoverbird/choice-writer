@@ -7,8 +7,9 @@ define [
   "models/event_response"
   "views/event_response_view"
   "views/fact_setting_collection"
-  "hbs!/templates/event_response_collection"
-], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse, EventResponseView, FactSettingsView, template) ->
+  "hbs!/templates/event_response_divider"
+], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse,
+    EventResponseView, FactSettingsView, dividerTemplate) ->
   EventResponseCollectionView = Backbone.View.extend(
     tagName: 'div'
 
@@ -67,13 +68,14 @@ define [
             facts[req.name] = req.DefaultStatus
       $('.fact-settings').html(new FactSettingsView(facts).render().el)
 
-
-
+    # TODO: this could be refactored to be more efficient, to be sure
     render: ->
-      chain = $(template())
+      chain = $('<div></div>')
+      dividerElement = dividerTemplate()
       @collection.each (eventResponse) =>
         element = new EventResponseView(model: eventResponse).render().el
         chain.append element
+        chain.append dividerElement
       this.$el.html(chain)
       # this.linkNodes()
       this

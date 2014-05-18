@@ -51,23 +51,36 @@ input {
   text-align: center
 }
 
-.section-divider {
-  padding: 20px;
-  margin-top: 30px;
+.event-response-divider {
+  padding: 10px;
+  margin-top: 0;
 }
-.section-divider:hover {
+
+.event-response-divider:hover {
   cursor: pointer;
 }
 
-.section-divider hr{
-  display: block;
-  /*visibility: hidden;*/
-  /*padding: 20px;*/
+.event-response-divider hr {
   width: 14%;
-  margin: 40px auto 8px auto;
+  margin: 0px auto -17px auto;
   padding-bottom: 12px;
   border: 0;
   border-top: 1px solid #dadada;
+}
+
+.event-response-divider:hover hr{
+  visibility: hidden;
+}
+
+.event-response-divider .glyphicon {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  visibility: hidden;
+}
+
+.event-response-divider:hover .glyphicon {
+  visibility: visible;
 }
 
 .pre-response {
@@ -94,7 +107,7 @@ input {
 .event-response {
   background: #FEFEFA;
   padding: 8px;
-  margin: 0 auto 8px auto;
+  margin: 0 auto;
 }
 
 .speech-response {
