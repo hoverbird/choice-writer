@@ -1,6 +1,5 @@
 class Response < ActiveRecord::Base
   belongs_to :event_response
-  belongs_to :on_finish_event, class_name: "Event", foreign_key: "on_finish_event_id"
 
   has_many :fact_mutations
   has_many :facts, through: :fact_mutations
@@ -48,7 +47,7 @@ class Response < ActiveRecord::Base
                 json.set! "Caption", r.clean_text
 
                 # Always trigger a finish event, even if there is not currently another response
-                json.set! "OnFinishEvent", r.on_finish_event
+                json.set! "OnFinishEvent", r.on_finish_event_name
                 json.set! "OnFinishEventDelay", r.buffer_seconds if r.buffer_seconds
 
                 json.set! "HackAudioDuration", r.hack_audio_duration if r.hack_audio_duration

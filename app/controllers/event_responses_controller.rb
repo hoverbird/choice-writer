@@ -9,7 +9,17 @@ class EventResponsesController < ApplicationController
     end
   end
 
+  def show
+    event_response = EventResponse.find(params[:id])
+    event_responses_hash = EventResponse.collection_to_web_hash(event_response.expand_chain)
+
+    respond_to do |format|
+      format.json { render :json => event_responses_hash }
+    end
+  end
+
   def search
+    # TODO: this won't actually search on the ER name at present, just the responses
     event_responses = EventResponse.search(params[:q])
     event_responses_hash = EventResponse.collection_to_web_hash(event_responses)
 

@@ -18,6 +18,7 @@ ChoiceWriter::Application.routes.draw do
     collection do
       get 'v0/unity', to: 'event_responses#for_unity'
       get 'v0/web'  , to: 'event_responses#index'
+      get 'v0/web/:id'  , to: 'event_responses#show'
       get 'v0/web/by_folder/:id', to: 'event_responses#by_folder'
       get 'v0/web/search', to: 'event_responses#search'
     end

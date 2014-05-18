@@ -69,6 +69,15 @@ class EventResponse < ActiveRecord::Base
     @unity_hash
   end
 
+  def expand_chain
+    events_before = Response.where(on_finish_event_name: self.name)
+
+    events_after = self.responses.pluck("on_finish_event_name").compact.map do |event_name|
+      EventResponse.where name: event_name
+    end
+    [events_before, self, events_after].flatten
+  end
+
   # For purposes of import/export to the event system JSON files, we ID event
   # responses by the name they respond to and the number of requirments they have.
   def unity_id

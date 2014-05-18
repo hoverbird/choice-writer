@@ -68,7 +68,7 @@ define ["backbone", "jquery"], (Backbone, $) ->
       $('.nav-search').on "submit", (event) ->
         event.preventDefault()
         queryString = $(event.target).find("#search-query").val()
-        Backbone.history.navigate("search?q=#{queryString}", true)
+        Backbone.history.navigate("search?q=#{encodeURIComponent(queryString)}", true)
 
       $('.nav').on "click", "a:not([data-bypass])", (event) ->
         href =

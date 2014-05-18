@@ -5,13 +5,17 @@ define [
   "jsplumb"
   "models/event_response_collection"
   "models/event_response"
+  "models/response"
   "views/event_response_view"
   "views/fact_setting_collection"
   "hbs!/templates/event_response_divider"
-], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse,
+], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse, Response,
     EventResponseView, FactSettingsView, dividerTemplate) ->
   EventResponseCollectionView = Backbone.View.extend(
     tagName: 'div'
+
+    events:
+      'click .event-response-divider': 'newEventResponse'
 
     className: 'event-response-collection'
 
@@ -46,11 +50,14 @@ define [
 
     findEventResponse: (id) -> throw "Unimplemented: findEventResponse"
 
-    newEventResponse: (options) ->
-      er = new EventResponse(previous_moment_id: options.previousMomentId)
+    newEventResponse: (event) ->
+      eventName = $(event.target).data("event-for-new-response")
+      er = new EventResponse(name: eventName, folder_id: 3)
+      resp = new Response(Type: "SpeechResponse", event_response: er)
+      console.log("Coll size before add", @collection.size())
       @collection.add er
       @render()
-      er.trigger 'select'
+      # er.trigger 'select'
 
     # gather a hash of facts and default values as referenced in all reqs and resps
     # in the collection. we should probably do this on the server.
@@ -70,12 +77,12 @@ define [
 
     # TODO: this could be refactored to be more efficient, to be sure
     render: ->
+      console.log("Coll size on render", @collection.size())
       chain = $('<div></div>')
-      dividerElement = dividerTemplate()
       @collection.each (eventResponse) =>
         element = new EventResponseView(model: eventResponse).render().el
         chain.append element
-        chain.append dividerElement
+        chain.append dividerTemplate(eventForNewResponse: eventResponse.eventForNewResponse())
       this.$el.html(chain)
       # this.linkNodes()
       this
