@@ -20,7 +20,6 @@ define [
     initialize: ->
       this.id = this.get("id") if this.get("id")
       this.on "eventResponseUpdated", ->
-        console.log( "YA DURN FUGIN")
       this.url = ->
         "/event_responses/#{@id or ''}"
 

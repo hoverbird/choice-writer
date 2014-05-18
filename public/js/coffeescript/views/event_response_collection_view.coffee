@@ -52,8 +52,8 @@ define [
 
     newEventResponse: (event) ->
       eventName = $(event.target).data("event-for-new-response")
-      er = new EventResponse(name: eventName, folder_id: 3)
-      resp = new Response(Type: "SpeechResponse", event_response: er)
+      er = new EventResponse(EventName: eventName, folder_id: 3) # TODO: MAKE THIS NOT FAKE
+      resp = new Response(Type: "SpeechResponse", event_response: er, text: "Just checked in to see what condition my condition was in")
       console.log("Coll size before add", @collection.size())
       @collection.add er
       @render()
@@ -77,7 +77,7 @@ define [
 
     # TODO: this could be refactored to be more efficient, to be sure
     render: ->
-      console.log("Coll size on render", @collection.size())
+      console.log("Coll size on render", @collection.size(), @collection)
       chain = $('<div></div>')
       @collection.each (eventResponse) =>
         element = new EventResponseView(model: eventResponse).render().el

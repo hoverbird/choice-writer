@@ -5,5 +5,10 @@ define ["underscore", "backbone", "models/response", "backbone-relational"], (_,
     initialize: (responses) ->
       return unless responses?
 
+    # comparator: (a, b) ->
+    #   if b.get("Type") == "SpeechResponse"
+    #     a
+    #   else
+    #     b
   )
   ResponseCollection

@@ -11,6 +11,14 @@ class SpeechResponse < Response
     end
   end
 
+  def on_finish_event_name
+    if read_attribute("on_finish_event_name").present?
+      read_attribute "on_finish_event_name"
+    else
+      "onFakesterEvent"
+    end
+  end
+
   def to_unity_hash
     unity_hash = Hashie::Mash.new
     unity_hash["$type"] = "vgSpeechResponseSpecification, Assembly-CSharp"
@@ -20,7 +28,7 @@ class SpeechResponse < Response
     speech_hash["Caption"] = clean_text
 
     # Always trigger a finish event, even if there is not currently another response
-    speech_hash["OnFinishEvent"] = on_finish_event
+    speech_hash["OnFinishEvent"] = on_finish_event_name
     speech_hash["OnFinishEventDelay"] = on_finish_event_delay if on_finish_event_delay
 
     speech_hash["HackAudioDuration"] = hack_audio_duration if hack_audio_duration

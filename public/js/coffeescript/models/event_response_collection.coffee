@@ -8,8 +8,7 @@ define [
     model: EventResponse
 
     initialize: (opts = {}) ->
-      this.on "add", (er) ->
-        console.log "Added a new ER", er
+      # this.on "add", (er) ->
 
       @url = '/event_responses/v0/web'
       if constraints = opts.constraints

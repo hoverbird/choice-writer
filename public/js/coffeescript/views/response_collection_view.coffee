@@ -14,6 +14,7 @@ define ["backbone"
       this.render()
 
     render: () ->
+
       _(@collection).each (response) =>
         responseElement = new ResponseView(model: response).render()
         this.$el.append responseElement.el
