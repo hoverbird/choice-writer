@@ -1,11 +1,11 @@
-define ["backbone"
-        "jquery"
-        "underscore"
-        "util"
-        # "barleyConfig"
-        # "jsplumb"
-        "choice_router"
-        "views/side_nav"], (Backbone, $, _, Util, Router, NavView) ->
+define [
+  "backbone"
+  "jquery"
+  "underscore"
+  "util"
+  "choice_router"
+  "views/side_nav"  
+], (Backbone, $, _, Util, Router, NavView) ->
   App = Backbone.View.extend(
     initialize: ->
       router = new Router()

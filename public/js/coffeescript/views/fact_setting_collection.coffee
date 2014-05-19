@@ -1,6 +1,7 @@
 define [
   "backbone"
   'hbs!/templates/fact_settings'
+  'bootstrap-affix'
 ], (Backbone, factSettingsTemplate) ->
   FactView = Backbone.View.extend(
     className: 'fact-setting'

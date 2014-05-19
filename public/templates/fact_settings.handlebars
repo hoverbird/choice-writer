@@ -1,7 +1,11 @@
-<h4>Blackboard Facts</h4>
-{{ ./partials/fact_setting }}
-<ul class="fact-settings">
+<ul class="fact-settings" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+  <li><em>Facts referenced here</em></li>
 {{#each .}}
-  <li><input type="checkbox" value="{{this}}"> <a href="#">{{@key}}</a></li>
+  <li>
+    <label class="control checkbox">
+      <input type="checkbox" value="{{this}}">
+      <span class="control-indicator">{{@key}}</span>
+    </label>
+  </li>
 {{/each}}
 </ul>

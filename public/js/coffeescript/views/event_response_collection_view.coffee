@@ -9,6 +9,7 @@ define [
   "views/event_response_view"
   "views/fact_setting_collection"
   "hbs!/templates/event_response_divider"
+  'bootstrap-dropdown'
 ], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse, Response,
     EventResponseView, FactSettingsView, dividerTemplate) ->
   EventResponseCollectionView = Backbone.View.extend(
@@ -59,19 +60,17 @@ define [
       @render()
       # er.trigger 'select'
 
-    # gather a hash of facts and default values as referenced in all reqs and resps
-    # in the collection. we should probably do this on the server.
+    # Gather a hash of facts and default values as referenced in all reqs and resps
+    # in the collection. We should probably do this on the server.
     renderFacts: (collection) ->
       facts = {}
       _(collection.models).each (er) ->
         if responses = er.get("Responses")
           _(responses.models).each (resp) ->
             if resp and resp.get("Type") is "FactResponse"
-              # console.log "FactResponse", resp
               facts[resp.get("Name")] = resp.get("DefaultStatus")
         if requirements = er.get("Requirements")
           _(requirements).each (req) ->
-            # console.log("req", req)
             facts[req.name] = req.DefaultStatus
       $('.fact-settings').html(new FactSettingsView(facts).render().el)
 

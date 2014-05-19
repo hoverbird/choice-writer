@@ -3,6 +3,17 @@
     ⬑ <a class="event-name" href="#response/{{id}}">{{ EventName }}</a>
   {{/if}}
 
+  <div class="decorate-event-response dropdown">
+    <span class="glyphicon glyphicon-plus-sign" data-toggle="dropdown"><span class="caret"></span><a href="#" class="" ></span>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a href="#" class="" >Add Requirement</a></li>
+      <li><a href="#" class="" >Add Speech Response</a></li>
+      <li><a href="#" class="" >Add Fact Response</a></li>
+      <li><a href="#" class="" >Add Dialog Choice Response</a></li>
+      <li><a href="#" class="" >Add Event Trigger Response</a></li>
+    </ul>
+  </div>
+
   {{#if Requirements}}
     <div class="requirements">
       {{#each Requirements}}

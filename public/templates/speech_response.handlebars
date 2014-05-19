@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<span class="replace-text text" style="color: {{textColor}}">
+<div class="replace-text text" style="color: {{textColor}}">
   <input name="text"
          type="text"
          class="form-control"
@@ -17,17 +17,15 @@
   <span class="display text">
     {{ text}}
   </span>
-</span>
+</div>
 
 <pre class="response-data hidden">
   id: {{ id }}
   on_finish_event_delay: {{ on_finish_event_delay }}
 </pre>
-<span class="delete">&#x2717;</span>
 
 {{#if on_finish_event_name}}
 <div class="on-finish-event-name" data-on-finish-event-name="{{on_finish_event_name}}">
   &#8627; trigger <a href="#">{{on_finish_event_name}}</a>
 </div>
-<!-- <span class="glyphicon glyphicon-plus-sign" data-event-for-new-response="{{on_finish_event_name}}"></span> -->
 {{/if}}

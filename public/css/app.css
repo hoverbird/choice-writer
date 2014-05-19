@@ -98,10 +98,10 @@ input {
 }
 
 .replace-text.text {
-  font-size: 21px;
+  font-size: 17px;
   font-family: iABCRegular, Georgia, serif;
   line-height: 20px;
-  padding: 8px;
+  /*padding: 8px;*/
 }
 
 .event-response {
@@ -131,4 +131,12 @@ input {
 .fact-settings {
   overflow: hidden;
   list-style-type: none;
+}
+
+.decorate-event-response {
+  float: right;
+}
+
+.decorate-event-response:hover {
+  color: #333;
 }

@@ -13,8 +13,7 @@ define ["backbone"
       @collection = opts.responses
       this.render()
 
-    render: () ->
-
+    render: ->
       _(@collection).each (response) =>
         responseElement = new ResponseView(model: response).render()
         this.$el.append responseElement.el

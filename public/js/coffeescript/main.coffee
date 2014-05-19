@@ -10,7 +10,8 @@ require.config
     'backbone-relational' : '../lib/backbone-relational/backbone-relational'
     hbs: '../lib/require-handlebars-plugin/hbs'
     jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
-    # barley: '../lib/barley-editor.min.js'
+    'bootstrap-dropdown': '../lib/bootstrap/js/dropdown'
+    'bootstrap-affix': '../lib/bootstrap/js/affix'
     # 'backbone.keys': '../lib/backbone.keys/dist/backbone.keys.min'
     # jasmine: '../lib/jasmine-jquery/lib/jasmine-jquery'
     # 'jasmine-html': '../lib/jasmine-jquery/lib/jasmine/lib/jasmine-html'
@@ -34,8 +35,7 @@ require.config
       deps: ['backbone']
 
   # how long the it tries to load a script before giving up, the default is 7
-  waitSeconds: 10
-
+  waitSeconds: 6
 
 # requiring the scripts in the first argument and then passing the library namespaces into a callback
 # you should be able to console log all of the callback arguments
