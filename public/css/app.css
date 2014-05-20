@@ -1,3 +1,6 @@
+/* Colors */
+/* Primary Highlight: #a54400 */
+
 body {
   padding-top: 40px;
 }
@@ -9,6 +12,7 @@ input {
 .navbar {
   background: #a54400;
 }
+
 .navbar-brand.logo {
   background: url(/img/campo_p.png) no-repeat;
   background-size: cover;
@@ -22,11 +26,7 @@ input {
   background-color: #a54410;
 }
 
-.event_response {
-  background-color: white;
-  margin: 15px auto;
-}
-
+/* Replace Text */
 .replace-text input {
   display: none;
   color: #666;
@@ -43,14 +43,70 @@ input {
 .replace-text.editable .display {
   display: none;
 }
+/* End Replace Text */
 
-.display.character {
-  margin: 0 auto;
-  width: 100%;
-  font-size: 18px;
-  text-align: center
+
+/* Event Responses */
+.response-collection {
+  padding: 0;
 }
 
+.event-response .text {
+  font-size: 17px;
+  font-family: iABCRegular, Trebuchet, serif;
+  line-height: 22px;
+}
+
+.event-response {
+  max-width: 400px;
+  background: #FEFEFA;
+  padding: 12px;
+  margin: 0 auto;
+}
+
+.decorate-event-response {
+  float: right;
+}
+
+.decorate-event-response:hover {
+  color: #a54400;
+  cursor: pointer;
+}
+
+.pre-response {
+  color: #dadada;
+  font-size: 13px;
+}
+
+.pre-response a, .response a {
+  color: #dadada;
+  text-decoration: underline;
+}
+
+.speech-response {
+  padding-top: 8px;
+}
+
+.fact-response, .on-finish-event-name {
+  color: #dadada;
+}
+
+.event-response .character {
+  font-family: iABCRegular, Trebuchet, serif;
+  font-size: 17px;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.event-response .character input {
+  text-align: center;
+  width: 300px;
+}
+/* End Event Responses */
+
+
+/* Event Dividers*/
 .event-response-divider {
   padding: 10px;
   margin-top: 0;
@@ -82,61 +138,33 @@ input {
 .event-response-divider:hover .glyphicon {
   visibility: visible;
 }
+/* End Dividers */
 
-.pre-response {
-  color: #dadada;
-  font-size: 13px;
-}
-
-.pre-response a, .response a {
-  color: #dadada;
-  text-decoration: underline;
-}
-
-.response-collection {
-  padding: 0;
-}
-
-.replace-text.text {
-  font-size: 17px;
-  font-family: iABCRegular, Georgia, serif;
-  line-height: 20px;
-  /*padding: 8px;*/
-}
-
-.event-response {
-  background: #FEFEFA;
-  padding: 8px;
-  margin: 0 auto;
-}
-
-.speech-response {
-  padding-top: 8px;
-}
-
-.fact-response, .on-finish-event-name {
-  color: #dadada;
-}
-
-.response .delete {
-  color: #dadada;
-  cursor: pointer;
-}
-
-.response:hover .delete: {
-  display: inline;
-}
 
 /*Facts*/
+.fact-settings-container {
+  background: #FEFEFA;
+  font-size: 12px;
+  position: fixed;
+  top: 50px;
+  right: 10px;
+}
+
+.fact-settings-container em {
+  font-family: Trebuchet;
+  font-size: 16px;
+  font-weight: normal;
+  margin-left: -20px;
+}
+
+.fact-settings-container label {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
 .fact-settings {
   overflow: hidden;
   list-style-type: none;
 }
-
-.decorate-event-response {
-  float: right;
-}
-
-.decorate-event-response:hover {
-  color: #333;
-}
+/* End Facts */

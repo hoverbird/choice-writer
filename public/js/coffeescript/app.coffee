@@ -4,7 +4,8 @@ define [
   "underscore"
   "util"
   "choice_router"
-  "views/side_nav"  
+  "views/side_nav"
+  'bootstrap-affix'
 ], (Backbone, $, _, Util, Router, NavView) ->
   App = Backbone.View.extend(
     initialize: ->

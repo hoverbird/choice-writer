@@ -25,7 +25,6 @@ define [
       "response #{@model.cleanType()}-response"
 
     edit: (event) ->
-      debugger
       @editableSet ||= $(event.target.parentElement)
       @editableSet.addClass('editable')
       @editableSet.find('input').focus()
@@ -37,7 +36,6 @@ define [
 
       # Replace the html of the display element with the value of the input
       @editableSet.find(".#{input[0].name}").html(input[0].value)
-      debugger
 
       @editableSet.removeClass('editable')
       @model.set(attrs)

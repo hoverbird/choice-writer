@@ -72,7 +72,7 @@ define [
         if requirements = er.get("Requirements")
           _(requirements).each (req) ->
             facts[req.name] = req.DefaultStatus
-      $('.fact-settings').html(new FactSettingsView(facts).render().el)
+      $('.fact-settings-container').html(new FactSettingsView(facts).render().el)
 
     # TODO: this could be refactored to be more efficient, to be sure
     render: ->

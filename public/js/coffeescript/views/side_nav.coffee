@@ -3,7 +3,7 @@ define ['backbone'], (Backbone) ->
 
     initialize: ->
       folderId = Backbone.history.fragment.match(/by_folder\/([0-9]*)/)
-      $("#folder-#{folderId[1]}").addClass("selected") if folderId.length
+      $("#folder-#{folderId[1]}").addClass("selected") if folderId?
 
     el: $('#sidebar')
 

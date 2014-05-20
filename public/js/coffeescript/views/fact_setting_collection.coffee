@@ -16,6 +16,12 @@ define [
 
     render: ->
       this.$el.html(factSettingsTemplate(@collection))
+      # $('.fact-settings-container').affix(
+      #   offset:
+      #     top: 100
+      #     bottom: ->
+      #       this.bottom = $('.footer').outerHeight(true)
+      # )
       this
 
   )

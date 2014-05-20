@@ -4,17 +4,17 @@ define ["underscore", "backbone", "backbone-relational"], (_, Backbone) ->
       "/responses/#{this.get('id')}"
 
     initialize: ->
-      this.on 'fetch', ->
-        console.log "Response", this.toJSON()
+      # this.on 'fetch', ->
+      #   console.log "Response", this.toJSON()
 
       this.on 'change:text', ->
         @parseText() if @get("Type") is "SpeechResponse"
 
-      this.on 'change:tags', ->
-        console.log "change:tags", @get('id')
-
-      this.on 'change:character', ->
-        console.log "change:character", @get('character')
+      # this.on 'change:tags', ->
+      #   console.log "change:tags", @get('id')
+      #
+      # this.on 'change:character', ->
+      #   console.log "change:character", @get('character')
 
       this.on 'invalid', ->
         console.log "Whoops, I'm no longer valid", this
