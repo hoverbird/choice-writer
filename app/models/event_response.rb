@@ -69,6 +69,22 @@ class EventResponse < ActiveRecord::Base
     @unity_hash
   end
 
+  def self.bucket_collection(collection)
+    # empty array "buckets"
+    # look at first element
+    # see if it is in response to any on_finish_event in any of the buckets.
+    #   if so, put it after that element in that bucket
+    #   otherwise, put it in its own empty bucket
+    # look at
+
+    # Look at each ER. Find each ER that it triggers or is triggered by...
+    # Sort those
+
+
+    # find all responses that are the 'end of the line' (have no onFinishEvent)
+    # for each of those, find the event_response they are in response to
+  end
+
   def expand_chain
     events_before = Response.where(on_finish_event_name: self.name)
 
@@ -81,8 +97,22 @@ class EventResponse < ActiveRecord::Base
   # For purposes of import/export to the event system JSON files, we ID event
   # responses by the name they respond to and the number of requirments they have.
   def unity_id
-    @unity_id ||= "#{name}-response-{requirements.count}"
+    @unity_id ||= "#{name}_#{requirements.size}"
   end
+
+  def death_walker(collection)
+    collection.each do |node|
+      irt = nodes[node[:inResponseTo]] || {id: node[]}
+      onf = nodes[node[:onFinish]] || Node.new(node[:onFinish])
+
+      newNode = nodes[node[:name]] || Node.new(node[:name])
+      newNode.inResponseTo = irt
+      newNode.onFinish = onf
+
+      nodes[node[:name]] = newNode
+    end
+  end
+
 
   private
     def collection_type(type_string)

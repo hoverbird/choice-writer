@@ -77,7 +77,7 @@ define [
     # TODO: this could be refactored to be more efficient, to be sure
     render: ->
       console.log("Coll size on render", @collection.size(), @collection)
-      chain = $('<div></div>')
+      chain = $('<div class="chain-container"></div>')
       @collection.each (eventResponse) =>
         element = new EventResponseView(model: eventResponse).render().el
         chain.append element
@@ -93,6 +93,7 @@ define [
         target = $("#event-response-#{eventResponse.get("id")}")[0]
         # The sources are any eventResponses that finish by triggering the event name we listen to
         sources = $("[data-on-finish-event-name='#{eventName}']")
+        debugger
         if target and sources.length
           _(sources).each (source) ->
             jsPlumb.connect

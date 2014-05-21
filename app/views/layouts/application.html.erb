@@ -26,7 +26,7 @@
                   <ul class="nav">
               			<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
                 	</ul>
-                  <h4>Sections</h4>
+                  <h4 class="sections-header">Sections</h4>
                   <ul class="nav folders hidden-xs" id="lg-menu">
                     <% current_project_folders.each do |folder| %>
                       <li id="folder-<%= folder.id %>" ><a href="/responses/by_folder/<%= folder.id %>"><i class="glyphicon glyphicon-folder"></i>
@@ -34,7 +34,6 @@
                       </li>
                     <% end %>
                     <li><a href="#"><i class="glyphicon glyphicon-plus"></i> New section</a></li>
-
                   </ul>
 
                   <h4>Tags</h4>

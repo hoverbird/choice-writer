@@ -10,11 +10,8 @@ define ["underscore", "backbone", "backbone-relational"], (_, Backbone) ->
       this.on 'change:text', ->
         @parseText() if @get("Type") is "SpeechResponse"
 
-      # this.on 'change:tags', ->
-      #   console.log "change:tags", @get('id')
-      #
-      # this.on 'change:character', ->
-      #   console.log "change:character", @get('character')
+      this.on 'change:on_finish_event_name', ->
+        console.log "change:on_finish_event_name", @get('id')
 
       this.on 'invalid', ->
         console.log "Whoops, I'm no longer valid", this

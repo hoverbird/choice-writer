@@ -1,7 +1,7 @@
 <div class="replace-text character">
-  <input name="character"
+  <input class="input"
+         name="character"
          type="text"
-         class="form-control"
          value="{{ character }}">
   <div class="display character">
     {{ character }}
@@ -9,14 +9,8 @@
 </div>
 
 <div class="replace-text text" style="color: {{textColor}}">
-  <input name="text"
-         type="text"
-         class="form-control"
-         value="{{ text }}">
-
-  <span class="display text">
-    {{ text}}
-  </span>
+  <textarea class="input" name="text">{{ text }}</textarea>
+  <span class="display text">{{ text}}</span>
 </div>
 
 <pre class="response-data hidden">
@@ -25,7 +19,17 @@
 </pre>
 
 {{#if on_finish_event_name}}
-<div class="on-finish-event-name" data-on-finish-event-name="{{on_finish_event_name}}">
-  &#8627; trigger <a href="#">{{on_finish_event_name}}</a>
+<div class="replace-text small on-finish-event-name">
+  &#8627; trigger
+  <input class="input"
+         name="on_finish_event_name"
+         type="text"
+         value="{{ on_finish_event_name }}">
+  <span class="display on-finish-event-name">
+    {{ on_finish_event_name }}
+  </div>
 </div>
+<!-- <div class="on-finish-event-name" data-on-finish-event-name="{{on_finish_event_name}}">
+  &#8627; trigger <a href="#">{{on_finish_event_name}}</a>
+</div> -->
 {{/if}}

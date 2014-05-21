@@ -8,9 +8,8 @@ define [
 
   ResponseView = Backbone.View.extend(
     events:
-      'click .delete': 'destroy'
       'click .replace-text .display': 'edit'
-      'blur .replace-text input': 'unedit'
+      'blur  .replace-text .input': 'unedit'
 
     initialize: ->
       @responseTemplate = switch @model.get("Type")
@@ -27,11 +26,11 @@ define [
     edit: (event) ->
       @editableSet ||= $(event.target.parentElement)
       @editableSet.addClass('editable')
-      @editableSet.find('input').focus()
+      @editableSet.find('.input').focus()
 
     unedit: (event) ->
       @editableSet ||= $(event.target.parentElement)
-      input = @editableSet.find("input")
+      input = @editableSet.find(".input")
       attrs = input.serializeObject()
 
       # Replace the html of the display element with the value of the input

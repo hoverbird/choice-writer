@@ -5,10 +5,6 @@ body {
   padding-top: 40px;
 }
 
-input {
-  font-style: Roboto, arial, sans-serif;
-}
-
 .navbar {
   background: #a54400;
 }
@@ -16,6 +12,10 @@ input {
 .navbar-brand.logo {
   background: url(/img/campo_p.png) no-repeat;
   background-size: cover;
+}
+
+h4.sections-header {
+  margin-top: -5px;
 }
 
 #sidebar .nav .selected {
@@ -27,17 +27,21 @@ input {
 }
 
 /* Replace Text */
-.replace-text input {
-  display: none;
-  color: #666;
-  font-size: 18px;
-  border: 0;
-  -webkit-appearance: none;
-  margin-left: 13px;
+.replace-text .display {
+  display: inline-block;
+  font-size: inherit;
 }
 
-.replace-text.editable input {
-  display: block;
+.replace-text .input {
+  display: none;
+  border: 0;
+  font-size: inherit;
+  -webkit-appearance: none;
+  width: 80%;
+}
+
+.replace-text.editable .input {
+  display: inline-block;
 }
 
 .replace-text.editable .display {
@@ -45,22 +49,36 @@ input {
 }
 /* End Replace Text */
 
+/* Styling of Replace Text */
+.replace-text.small {
+  color: #dadada;
+  font-size: 13px;
+  height: 16px;
+}
+
+.replace-text.text {
+  margin-left: 13px;
+  color: #666;
+  font-size: 17px;
+  font-family: iABCRegular, Trebuchet, serif;
+  line-height: 22px;
+}
+
+.replace-text.text .input {
+  width: 100%;
+}
+/* End Styling of Replace Text */
+
 
 /* Event Responses */
 .response-collection {
   padding: 0;
 }
 
-.event-response .text {
-  font-size: 17px;
-  font-family: iABCRegular, Trebuchet, serif;
-  line-height: 22px;
-}
-
 .event-response {
   max-width: 400px;
   background: #FEFEFA;
-  padding: 12px;
+  padding: 12px 12px 2px 12px;
   margin: 0 auto;
 }
 
@@ -88,6 +106,7 @@ input {
 }
 
 .fact-response, .on-finish-event-name {
+  font-size: 13px;
   color: #dadada;
 }
 
@@ -99,7 +118,7 @@ input {
   width: 100%;
 }
 
-.event-response .character input {
+.event-response .character .input {
   text-align: center;
   width: 300px;
 }
@@ -108,8 +127,7 @@ input {
 
 /* Event Dividers*/
 .event-response-divider {
-  padding: 10px;
-  margin-top: 0;
+  margin-top: 10px;
 }
 
 .event-response-divider:hover {
@@ -129,6 +147,7 @@ input {
 }
 
 .event-response-divider .glyphicon {
+  top: -3px;
   text-align: center;
   display: block;
   margin: 0 auto;
@@ -142,12 +161,18 @@ input {
 
 
 /*Facts*/
+@media only screen and (max-width: 900px) {
+  .fact-settings-container {
+    display: none;
+  }
+}
+
 .fact-settings-container {
   background: #FEFEFA;
   font-size: 12px;
   position: fixed;
-  top: 50px;
   right: 10px;
+  top: 60px;
 }
 
 .fact-settings-container em {

@@ -2,6 +2,8 @@ class SpeechResponse < Response
   before_save :parse_character_from_text
 
   CHARACTER_PATTERN = /^([A-Z0-9]*)(:)/
+  TEXT_SLUG_PATTERN = /[^a-zA-Z0-9]+/
+  COMMON_WORDS_PATTERN = /\b(is|and|are|the|a|they|i|are|am).*?\b/i
 
   def parse_character_from_text
     if char_name = text.match(CHARACTER_PATTERN)
@@ -15,8 +17,16 @@ class SpeechResponse < Response
     if read_attribute("on_finish_event_name").present?
       read_attribute "on_finish_event_name"
     else
-      "onFakesterEvent"
+      autogenerate_on_finish_event_name
     end
+  end
+
+  def autogenerate_on_finish_event_name
+    ["OnSpeech", character_slug.capitalize, text_slug, '-', id].join
+  end
+
+  def text_slug
+    @text_slug ||= text.gsub(COMMON_WORDS_PATTERN, '')[0..15].titleize.gsub(TEXT_SLUG_PATTERN, '')
   end
 
   def to_unity_hash
