@@ -34,6 +34,13 @@ require.config
     'backbone-relational':
       deps: ['backbone']
 
+    'bootstrap-affix':
+      deps: ['jquery']
+    'bootstrap-dropdown':
+      deps: ['jquery']
+    jsplumb:
+      deps: ['jquery']
+
   # how long the it tries to load a script before giving up, the default is 7
   waitSeconds: 6
 
