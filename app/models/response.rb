@@ -12,59 +12,6 @@ class Response < ActiveRecord::Base
     Response.where("search_vector @@ #{sanitized}")
   end
 
-  def self.collection_as_unity_JSON(events = :all)
-    events = Event.all.to_a unless events.kind_of?(Array)
-    Jbuilder.new do |json|
-      json.key_format! :camelize => :upper
-
-      json.set! "$type", collection_type("EventResponseSpecification")
-      json.set! "$values", events do |event|
-        json.event_name event.name
-        json.set! "$type", "vgEventResponseSpecification, Assembly-CSharp"
-
-        # Requirements
-        if event.requirements.present?
-          json.set! "Requirements" do
-            json.set! "$type", collection_type("BlackboardFact")
-            json.set! "$values" do
-              json.array! event.requirements do |requirement|
-                json.set! "NewStatus", requirement.fact.default_value
-                json.set! "FactName", requirement.fact.name
-              end
-            end
-          end
-        end # end Requirements
-
-        fake_response_array = ["TODO: remove this jbuilder hackery"]
-
-        json.set! "Responses" do
-          json.set! "$type", collection_type("ResponseSpecification")
-          json.set! "$values" do
-            json.array! event.responses do |r|
-              json.set! "$type", "vgSpeechResponseSpecification, Assembly-CSharp"
-              json.set! "SpeechToPlay" do
-                json.set! "$type", "vgSpeechInstance, Assembly-CSharp"
-                json.set! "Caption", r.clean_text
-
-                # Always trigger a finish event, even if there is not currently another response
-                json.set! "OnFinishEvent", r.on_finish_event_name
-                json.set! "OnFinishEventDelay", r.buffer_seconds if r.buffer_seconds
-
-                json.set! "HackAudioDuration", r.hack_audio_duration if r.hack_audio_duration
-                json.set! "MinimumDuration", r.minimum_duration if r.minimum_duration
-                json.set! "AllowQueueing", r.allow_queueing unless r.allow_queueing.nil?
-                json.set! "AudioClipPath", r.audio_clip_path if r.audio_clip_path
-
-              end
-            end
-          end
-        end #end Responses
-
-      end # end Moment
-    end
-  end
-  # end self.collection_as_unity_JSON
-
   def response_type
     self.class.name
   end
