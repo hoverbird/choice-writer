@@ -44,11 +44,6 @@ define [
       # select the next moment (i.e. the moment AFTER this one)
       # @changeSelection afterId: @model.get('id')
 
-
-    destroy: ->
-      console.log "Ye can't destroy meh"
-      @model.save()
-
     render: ->
       this.$el.html @responseTemplate(@model.toJSON())
       this

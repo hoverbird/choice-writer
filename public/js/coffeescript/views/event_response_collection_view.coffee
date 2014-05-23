@@ -83,7 +83,7 @@ define [
         chain.append element
         chain.append dividerTemplate(eventForNewResponse: eventResponse.eventForNewResponse())
       this.$el.html(chain)
-      # this.linkNodes()
+      this.linkNodes()
       this
 
     linkNodes: ->
@@ -93,7 +93,6 @@ define [
         target = $("#event-response-#{eventResponse.get("id")}")[0]
         # The sources are any eventResponses that finish by triggering the event name we listen to
         sources = $("[data-on-finish-event-name='#{eventName}']")
-        debugger
         if target and sources.length
           _(sources).each (source) ->
             jsPlumb.connect
