@@ -79,6 +79,11 @@ h4.sections-header {
 /* End Styling of Replace Text */
 
 
+.sibling-container .event-reponse {
+  display: inline-block;
+  margin-left: 12px;
+}
+
 /* Event Responses */
 .response-collection {
   padding: 0;
@@ -90,6 +95,10 @@ h4.sections-header {
   padding: 12px 12px 2px 12px;
   margin: 0 auto;
   margin-bottom: 120px; /*TMP TEMPY TEMP TEMP*/
+}
+
+.event-response.sibling {
+  display: inline-block;
 }
 
 .decorate-event-response {

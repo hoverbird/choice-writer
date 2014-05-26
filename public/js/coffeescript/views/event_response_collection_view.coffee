@@ -91,17 +91,26 @@ define [
         element = new EventResponseView(model: eventResponse).render().$el
         inResponseTo = this.$el.find("[data-on-finish='#{eventResponse.get('in_response_to_event_name')}']")
         triggers = this.$el.find("[data-in-response='#{eventResponse.get('on_finish_event_name')}']")
+
         if inResponseTo.length
-          $(inResponseTo[0]).after(element)
+          # Find other elements that respond to the same event name
+          siblings = this.$el.find("[data-in-response='#{eventResponse.get('in_response_to_event_name')}']")
+          if siblings.length
+            container = $("<div class='sibling-container'>")
+            siblings.wrap(container)
+            debugger
+            container.append(element)
+          else
+            $(inResponseTo[0]).after(element)
         else if triggers.length
           $(triggers[0]).before(element)
         else
           this.$el.prepend(element)
-
-        for previousElement in inResponseTo
-          @linkTwoNodes(previousElement, element[0])
-        for nextElement in triggers
-          @linkTwoNodes(element[0], nextElement)
+        #
+        # for previousElement in inResponseTo
+        #   @linkTwoNodes(previousElement, element[0])
+        # for nextElement in triggers
+        #   @linkTwoNodes(element[0], nextElement)
       this
 
     linkTwoNodes: (source, target) ->
@@ -118,7 +127,7 @@ define [
         endpointStyle:
           fillStyle: 'white'
           shape: "Triangle"
-        anchors: [[ "Bottom" ], [ "Top" ]]
+        anchors: ["Bottom", "Top"]
 
     linkNodes: ->
       @collection.each (eventResponse) ->
