@@ -1,5 +1,14 @@
 /* Colors */
 /* Primary Highlight: #a54400 */
+/*http://spiffygif.com/?rotate=54&color=a54500&corners=0.5&trail=31&length=6&radius=10&width=6&halo=false*/
+
+/*
+* { background-color: rgba(255,0,0,.2); }
+* * { background-color: rgba(0,255,0,.2); }
+* * * { background-color: rgba(0,0,255,.2); }
+* * * * { background-color: rgba(255,0,255,.2); }
+* * * * * { background-color: rgba(0,255,255,.2); }
+* * * * * * { background-color: rgba(255,255,0,.2); }*/
 
 body {
   padding-top: 40px;
@@ -57,7 +66,7 @@ h4.sections-header {
 }
 
 .replace-text.text {
-  margin-left: 13px;
+  margin-left: 18px;
   color: #666;
   font-size: 17px;
   font-family: iABCRegular, Trebuchet, serif;
@@ -80,6 +89,7 @@ h4.sections-header {
   background: #FEFEFA;
   padding: 12px 12px 2px 12px;
   margin: 0 auto;
+  margin-bottom: 120px; /*TMP TEMPY TEMP TEMP*/
 }
 
 .decorate-event-response {

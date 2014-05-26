@@ -6,10 +6,13 @@ define [
   'hbs!/templates/event_response'
 ], (Backbone, _, EventResponse, ResponseCollectionView, eventResponseTemplate) ->
   EventResponseView = Backbone.View.extend(
-    id: ->
-      "event-response-#{@model.get('id')}"
+    className: "event-response"
 
-    className: 'event-response'
+    id: -> "event-response-#{@model.get('id')}"
+
+    attributes: ->
+      'data-in-response': @model.get("in_response_to_event_name")
+      'data-on-finish': @model.get("on_finish_event_name")
 
     events:
       'click .section-divider': 'newEventResponse'
