@@ -89,11 +89,11 @@ h4.sections-header {
 }
 
 .event-response {
-  max-width: 400px;
+  width: 400px;
   background: #FEFEFA;
   padding: 12px 12px 2px 12px;
   margin: 0 auto;
-  margin-bottom: 60px; /*TMP TEMPY TEMP TEMP*/
+  /*margin-bottom: 60px; /*TMP TEMPY TEMP TEMP*/*/
 }
 
 .event-response.sibling {

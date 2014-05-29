@@ -75,7 +75,7 @@ define [
       $('.fact-settings-container').html(new FactSettingsView(facts).render().el)
 
     # TODO: this could be refactored to be more efficient, to be sure
-    render1: ->
+    render: ->
       console.log("Coll size on render", @collection.size(), @collection)
       chain = $('<div class="chain-container"></div>')
       @collection.each (eventResponse) =>
@@ -83,10 +83,10 @@ define [
         chain.append element
         chain.append dividerTemplate(eventForNewResponse: eventResponse.eventForNewResponse())
       this.$el.html(chain)
-      this.linkNodes()
+      # this.linkNodes()
       this
 
-    render: ->
+    render1: ->
       @collection.each (eventResponse) =>
         console.log "Gitting #{eventResponse.get("id")}"
         container = $('<div class="er-container"></div>')
