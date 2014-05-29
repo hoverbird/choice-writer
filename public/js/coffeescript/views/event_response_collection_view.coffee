@@ -115,11 +115,11 @@ define [
           console.log "inserting into 3", container
           this.$el.append(container.html(element))
 
-      #   for previousElement in inResponseTo
-      #     @linkTwoNodes(previousElement, element[0])
-      #   for nextElement in triggers
-      #     @linkTwoNodes(element[0], nextElement)
-      # jsPlumb.repaintEverything()
+        for previousElement in inResponseTo
+          @linkTwoNodes(previousElement, element[0])
+        for nextElement in triggers
+          @linkTwoNodes(element[0], nextElement)
+      jsPlumb.repaintEverything()
       this
 
     linkTwoNodes: (source, target) ->

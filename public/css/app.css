@@ -104,6 +104,7 @@ h4.sections-header {
 }
 
 .event-response {
+  overflow: hidden;
   height: 100%;
   color: #666;
   width: 370px;
@@ -115,7 +116,14 @@ h4.sections-header {
 
 .event-response.disabled {
   background: #ddd;
-  color: lightgray;
+  color: #ACA6A5;
+}
+
+
+.event-response.disabled .pre-response,
+.event-response.disabled .pre-response a,
+.event-response.disabled .response-collection {
+  color: #C8C8C8;
 }
 
 .event-response.sibling {

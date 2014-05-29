@@ -3,7 +3,7 @@
 {{#each .}}
   <li>
     <label class="control checkbox">
-      <input type="checkbox" value="{{this}}">
+      <input type="checkbox" name="{{@key}}" value="{{this}}">
       <span class="control-indicator">{{@key}}</span>
     </label>
   </li>

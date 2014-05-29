@@ -37,7 +37,13 @@ class EventResponsesController < ApplicationController
   end
 
   def by_folder
-    event_responses = EventResponse.where(folder_id: params[:id]).to_a
+    #TODO: this is a hack for demo purposes. remove
+    if params[:id] == '7'
+      event_responses_ids = [1149, 1155, 1151, 1156, 1153]
+      event_responses = event_responses_ids.collect {|id| EventResponse.find(id)}
+    else
+      event_responses = EventResponse.where(folder_id: params[:id]).to_a
+    end
     event_responses_hash = EventResponse.collection_to_web_hash(event_responses)
 
     respond_to do |format|

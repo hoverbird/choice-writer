@@ -1,6 +1,6 @@
 class EventResponse < ActiveRecord::Base
-  has_many :responses
-  has_many :requirements
+  has_many :responses, dependent: :destroy
+  has_many :requirements, dependent: :destroy
   has_many :facts, through: :requirements
 
   has_many :taggings
@@ -14,7 +14,7 @@ class EventResponse < ActiveRecord::Base
   def self.search(terms = "")
     sanitized = sanitize_sql_array(["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
     # TODO this should be doable in a single query with AREL
-    Response.where("search_vector @@ #{sanitized}").collect{|response| response.event_response}
+    Response.where("search_vector @@ #{sanitized}").collect {|response| response.event_response}
   end
 
   def self.collection_to_unity_hash(event_response_collection)

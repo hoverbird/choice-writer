@@ -6,13 +6,16 @@ define [
   FactView = Backbone.View.extend(
     className: 'fact-setting'
     events:
-      'click li': 'setFact'
+      'click input': 'setFact'
 
     initialize: (factPairs) ->
       @collection = factPairs
 
     setFact: (event) ->
-      console.log "Setting meh"
+      factName = event.target.name
+      value = event.target.value
+      factDivs = $(".requirement[data-name='#{factName}']")
+      factDivs.closest(".event-response").removeClass("disabled")
 
     render: ->
       this.$el.html(factSettingsTemplate(@collection))

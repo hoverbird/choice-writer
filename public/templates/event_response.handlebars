@@ -17,7 +17,7 @@
   {{#if Requirements}}
     <div class="requirements">
       {{#each Requirements}}
-        <span class="requirement" data-id="{{ id }}">
+        <span class="requirement" data-name="{{Name}}" data-id="{{ id }}">
           {{#if @first}} if {{/if}}
           <a href="#">{{Name}}</a> = {{FactTestValue}}
           {{#unless @last}} and {{/unless}}
