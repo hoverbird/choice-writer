@@ -78,10 +78,9 @@ h4.sections-header {
 }
 /* End Styling of Replace Text */
 
-
-.sibling-container .event-reponse {
+.er-container .event-response {
   display: inline-block;
-  margin-left: 12px;
+  margin-right: 12px;
 }
 
 /* Event Responses */
@@ -94,7 +93,7 @@ h4.sections-header {
   background: #FEFEFA;
   padding: 12px 12px 2px 12px;
   margin: 0 auto;
-  margin-bottom: 120px; /*TMP TEMPY TEMP TEMP*/
+  margin-bottom: 60px; /*TMP TEMPY TEMP TEMP*/
 }
 
 .event-response.sibling {

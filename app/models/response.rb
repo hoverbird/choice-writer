@@ -5,7 +5,6 @@ class Response < ActiveRecord::Base
   has_many :facts, through: :fact_mutations
 
   belongs_to :folder
-  delegate :event_name, to: :event
 
   def self.search(terms = "")
     sanitized = sanitize_sql_array(["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])

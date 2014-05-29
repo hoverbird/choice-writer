@@ -88,7 +88,10 @@ define [
 
     render: ->
       @collection.each (eventResponse) =>
+        console.log "Gitting #{eventResponse.get("id")}"
+        container = $('<div class="er-container"></div>')
         element = new EventResponseView(model: eventResponse).render().$el
+
         inResponseTo = this.$el.find("[data-on-finish='#{eventResponse.get('in_response_to_event_name')}']")
         triggers = this.$el.find("[data-in-response='#{eventResponse.get('on_finish_event_name')}']")
 
@@ -96,25 +99,26 @@ define [
           # Find other elements that respond to the same event name
           siblings = this.$el.find("[data-in-response='#{eventResponse.get('in_response_to_event_name')}']")
           if siblings.length
-            container = $("<div class='sibling-container'>")
-            siblings.wrap(container)
-            debugger
-            container.append(element)
+            console.log "inserting 0", siblings.closest('.er-container')
+            siblings.closest('.er-container').append(element)
           else
-            $(inResponseTo[0]).after(element)
+            console.log "inserting 1", container
+            debugger
+            $(inResponseTo[0]).after(container.html(element))
         else if triggers.length
-          $(triggers[0]).before(element)
+          console.log "inserting 2", container
+          $(triggers[0]).before(container.html(element))
         else
-          this.$el.prepend(element)
-        #
-        # for previousElement in inResponseTo
-        #   @linkTwoNodes(previousElement, element[0])
-        # for nextElement in triggers
-        #   @linkTwoNodes(element[0], nextElement)
+          console.log "inserting into 3", container
+          this.$el.prepend(container.html(element))
+
+        for previousElement in inResponseTo
+          @linkTwoNodes(previousElement, element[0])
+        for nextElement in triggers
+          @linkTwoNodes(element[0], nextElement)
       this
 
     linkTwoNodes: (source, target) ->
-      console.log "Gonna link", source, target
       jsPlumb.connect
         source: source
         target: target
@@ -126,7 +130,7 @@ define [
         connector: "Straight"
         endpointStyle:
           fillStyle: 'white'
-          shape: "Triangle"
+          radius: 8
         anchors: ["Bottom", "Top"]
 
     linkNodes: ->
