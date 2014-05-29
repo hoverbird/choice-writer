@@ -2,13 +2,21 @@
 /* Primary Highlight: #a54400 */
 /*http://spiffygif.com/?rotate=54&color=a54500&corners=0.5&trail=31&length=6&radius=10&width=6&halo=false*/
 
+/** .er-container { background-color: rgba(255,0,0,.2); }
+* * .er-container { background-color: rgba(0,255,0,.2); }
+* * * .er-container { background-color: rgba(0,0,255,.2); }
+* * * * .er-container { background-color: rgba(255,0,255,.2); }
+* * * * * .er-container { background-color: rgba(0,255,255,.2); }
+* * * * * * .er-container { background-color: rgba(255,255,0,.2); }*/
+
+
 /*
-* { background-color: rgba(255,0,0,.2); }
-* * { background-color: rgba(0,255,0,.2); }
-* * * { background-color: rgba(0,0,255,.2); }
 * * * * { background-color: rgba(255,0,255,.2); }
 * * * * * { background-color: rgba(0,255,255,.2); }
-* * * * * * { background-color: rgba(255,255,0,.2); }*/
+* * * * * * { background-color: rgba(255,255,0,.2); }
+* * * * * * * { background-color: rgba(255,0,0,.2); }
+* * * * * * * *{ background-color: rgba(0,255,0,.2); }
+* * * * * * * * * { background-color: rgba(0,0,255,.2); }*/
 
 body {
   padding-top: 40px;
@@ -67,7 +75,7 @@ h4.sections-header {
 
 .replace-text.text {
   margin-left: 18px;
-  color: #666;
+  color: inherit;
   font-size: 17px;
   font-family: iABCRegular, Trebuchet, serif;
   line-height: 22px;
@@ -77,6 +85,13 @@ h4.sections-header {
   width: 100%;
 }
 /* End Styling of Replace Text */
+
+.er-container {
+  width: 200%;
+  height: 150px;
+  margin-bottom: 60px;
+  overflow: visible;
+}
 
 .er-container .event-response {
   display: inline-block;
@@ -89,11 +104,18 @@ h4.sections-header {
 }
 
 .event-response {
-  width: 400px;
+  height: 100%;
+  color: #666;
+  width: 370px;
   background: #FEFEFA;
   padding: 12px 12px 2px 12px;
   margin: 0 auto;
   /*margin-bottom: 60px; /*TMP TEMPY TEMP TEMP*/*/
+}
+
+.event-response.disabled {
+  background: #ddd;
+  color: lightgray;
 }
 
 .event-response.sibling {
@@ -207,7 +229,6 @@ h4.sections-header {
 }
 
 .fact-settings {
-  overflow: hidden;
   list-style-type: none;
 }
 /* End Facts */

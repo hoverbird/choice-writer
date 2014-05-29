@@ -21,6 +21,9 @@ define [
     className: 'event-response-collection'
 
     initialize: (viewOptions) ->
+      #TODO: remove, this is blunt as fuck
+      $(window).resize -> jsPlumb.repaintEverything();
+
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
       @collection = new EventResponseCollection(viewOptions)
       @collection.bind "change", _.bind(this.render, this)
@@ -71,11 +74,11 @@ define [
               facts[resp.get("Name")] = resp.get("DefaultStatus")
         if requirements = er.get("Requirements")
           _(requirements).each (req) ->
-            facts[req.name] = req.DefaultStatus
+            facts[req.Name] = req.DefaultStatus
       $('.fact-settings-container').html(new FactSettingsView(facts).render().el)
 
     # TODO: this could be refactored to be more efficient, to be sure
-    render: ->
+    render1: ->
       console.log("Coll size on render", @collection.size(), @collection)
       chain = $('<div class="chain-container"></div>')
       @collection.each (eventResponse) =>
@@ -83,10 +86,10 @@ define [
         chain.append element
         chain.append dividerTemplate(eventForNewResponse: eventResponse.eventForNewResponse())
       this.$el.html(chain)
-      # this.linkNodes()
+      this.linkNodes()
       this
 
-    render1: ->
+    render: ->
       @collection.each (eventResponse) =>
         console.log "Gitting #{eventResponse.get("id")}"
         container = $('<div class="er-container"></div>')
@@ -103,33 +106,35 @@ define [
             siblings.closest('.er-container').append(element)
           else
             console.log "inserting 1", container
-            debugger
-            $(inResponseTo[0]).after(container.html(element))
+            $(inResponseTo.parent()).after(container.html(element))
+            # debugger
         else if triggers.length
           console.log "inserting 2", container
-          $(triggers[0]).before(container.html(element))
+          $(triggers.parent()).before(container.html(element))
         else
           console.log "inserting into 3", container
-          this.$el.prepend(container.html(element))
+          this.$el.append(container.html(element))
 
-        for previousElement in inResponseTo
-          @linkTwoNodes(previousElement, element[0])
-        for nextElement in triggers
-          @linkTwoNodes(element[0], nextElement)
+      #   for previousElement in inResponseTo
+      #     @linkTwoNodes(previousElement, element[0])
+      #   for nextElement in triggers
+      #     @linkTwoNodes(element[0], nextElement)
+      # jsPlumb.repaintEverything()
       this
 
     linkTwoNodes: (source, target) ->
+      connectionColor = if target.classList.contains("disabled") then '#ddd' else 'white'
       jsPlumb.connect
         source: source
         target: target
         hoverPaintStyle:
-          strokeStyle: '#dadada'
+          strokeStyle: 'lightgray'
         paintStyle:
-          strokeStyle: 'white'
+          strokeStyle: connectionColor
           lineWidth: 5
         connector: "Straight"
         endpointStyle:
-          fillStyle: 'white'
+          fillStyle: connectionColor
           radius: 8
         anchors: ["Bottom", "Top"]
 
