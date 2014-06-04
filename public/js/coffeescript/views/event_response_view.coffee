@@ -72,11 +72,11 @@ define [
 
     render: ->
       viewData = _.extend(@model.toJSON(), textColor: @textColor())
-      this.htmlString = eventResponseTemplate(viewData)
-      this.$el.html(@htmlString)
+      this.$el.html(eventResponseTemplate(viewData))
       if (response_collection = @model.get("Responses")) and response_collection.length
         responseViews = new ResponseCollectionView(responses: response_collection.models)
         responseViews.$el.insertAfter(this.$el.find(".pre-response"))
+      this.htmlString = this.el.innerHTML
       this
   )
   EventResponseView

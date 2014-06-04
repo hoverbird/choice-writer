@@ -96,15 +96,14 @@ define [
 
       @renderer.transition(@customTransition);
 
-      @customTransition(d3.select("svg"))
+      d3svg = d3.select("svg")
+      @customTransition(d3svg)
         .attr("width", drawnLayout.graph().width + 40)
         .attr("height", drawnLayout.graph().height + 40)
 
-      d3.select("svg").call(d3.behavior.zoom().on("zoom", ->
+      d3svg.call(d3.behavior.zoom().on("zoom", ->
         ev = d3.event
-        transform = "translate(" + ev.translate + ") scale(" + ev.scale + ")"
-        console.log "ZOOMY!@", ev, transform
-        d3.select("svg g").attr "transform", transform
+        d3svg.select("g").attr "transform", "translate(#{ev.translate}) scale(#{ev.scale})"
       ))
       this
 
