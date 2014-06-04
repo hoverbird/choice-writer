@@ -36,37 +36,39 @@ define [
       @_transition(svgEdgePaths.exit()).style("opacity", 0).remove()
       svgEdgePaths
 
+    customTransition: (selection) ->
+      selection.transition().duration(500)
+
     # Selects another moment in the collection. Options should contain either an
     # id OR an afterId key, depending on whether we know the moment to select or
     # whether it is relative selection (e.g. you want the moment AFTER another)
-    selectMoment: (options) ->
-      console.log("selectMoment", options)
-      momentToSelect = if options.afterId
-        @findEventResponseAfter options.afterId
-      else if options.id
-        @findEventResponse options.id
-      else
-        throw "You can't select a moment without its ID!"
-      console.log("gonna trigger select", momentToSelect[0])
-      if momentToSelect.length
-        momentToSelect[0].trigger('select')
-      else
-        # If no moment was found, we create a new one.
-        this.newEventResponse previousMomentId: momentToSelect.id
 
-    findEventResponseAfter: (id) ->
-      @collection.select (eventResponse) -> eventResponse.get('previous_moment_id') is id
+    # selectMoment: (options) ->
+    #   console.log("selectMoment", options)
+    #   momentToSelect = if options.afterId
+    #     @findEventResponseAfter options.afterId
+    #   else if options.id
+    #     @findEventResponse options.id
+    #   else
+    #     throw "You can't select a moment without its ID!"
+    #   console.log("gonna trigger select", momentToSelect[0])
+    #   if momentToSelect.length
+    #     momentToSelect[0].trigger('select')
+    #   else
+    #     # If no moment was found, we create a new one.
+    #     this.newEventResponse previousMomentId: momentToSelect.id
 
-    findEventResponse: (id) -> throw "Unimplemented: findEventResponse"
+    # findEventResponseAfter: (id) ->
+    #   @collection.select (eventResponse) -> eventResponse.get('previous_moment_id') is id
 
-    newEventResponse: (event) ->
-      eventName = $(event.target).data("event-for-new-response")
-      er = new EventResponse(EventName: eventName, folder_id: 3) # TODO: MAKE THIS NOT FAKE
-      resp = new Response(Type: "SpeechResponse", event_response: er, text: "Just checked in to see what condition my condition was in")
-      console.log("Coll size before add", @collection.size())
-      @collection.add er
-      @render()
-      # er.trigger 'select'
+    # newEventResponse: (event) ->
+    #   eventName = $(event.target).data("event-for-new-response")
+    #   er = new EventResponse(EventName: eventName, folder_id: 3) # TODO: MAKE THIS NOT FAKE
+    #   resp = new Response(Type: "SpeechResponse", event_response: er, text: "Just checked in to see what condition my condition was in")
+    #   console.log("Coll size before add", @collection.size())
+    #   @collection.add er
+    #   @render()
+    #   # er.trigger 'select'
 
     # Gather a hash of facts and default values as referenced in all reqs and resps
     # in the collection. We should probably do this on the server.
@@ -82,15 +84,32 @@ define [
             facts[req.Name] = req.DefaultStatus
       $('.fact-settings-container').html(new FactSettingsView(facts).render().el)
 
-    render: ->
+    drawLayout: (graph) ->
       svg = $("<svg width='100%' height='100%'>
           <g transform='translate(20,20)'/>
       </svg>
       ")
       this.$el.append svg
       layout = dagreD3.layout().nodeSep(60).rankDir("LR")
-      graph = new dagreD3.Digraph()
 
+      drawnLayout = @renderer.layout(layout).run(graph, d3.select "svg g")
+
+      @renderer.transition(@customTransition);
+
+      @customTransition(d3.select("svg"))
+        .attr("width", drawnLayout.graph().width + 40)
+        .attr("height", drawnLayout.graph().height + 40)
+
+      d3.select("svg").call(d3.behavior.zoom().on("zoom", ->
+        ev = d3.event
+        transform = "translate(" + ev.translate + ") scale(" + ev.scale + ")"
+        console.log "ZOOMY!@", ev, transform
+        d3.select("svg g").attr "transform", transform
+      ))
+      this
+
+    buildGraph: ->
+      graph = new dagreD3.Digraph()
       @collection.each (eventResponse) =>
         console.log "Adding", eventResponse.attributes
         view = new EventResponseView(model: eventResponse).render()
@@ -104,9 +123,9 @@ define [
           if t? and t.get('id')?
             console.log('Edging values', t.get('on_finish_event'), eventResponse.get('responds_to_event'))
             graph.addEdge(null, t.get('id'), eventResponse.get('id'))
+      graph
 
-      @renderer.layout(layout).run(graph, d3.select "svg g")
-      this
+    render: -> @drawLayout(@buildGraph())
 
   )
   EventResponseCollectionView

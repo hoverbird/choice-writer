@@ -246,11 +246,17 @@ svg {
   /*overflow: hidden;*/
 }
 
+.node {
+  background-size: contain;
+  width: 200px;
+}
+
 .node rect {
     stroke: #ddd;
     stroke-width: 2px;
     fill: #fff;
-    min-width: 200px;
+    background-size: contain;
+    width: 200px;
 }
 
 .edgeLabel rect {
