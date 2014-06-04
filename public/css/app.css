@@ -240,3 +240,25 @@ h4.sections-header {
   list-style-type: none;
 }
 /* End Facts */
+
+/* D3 Graphs */
+svg {
+    overflow: hidden;
+}
+
+.node rect {
+    stroke: #333;
+    stroke-width: 1.5px;
+    fill: #fff;
+}
+
+.edgeLabel rect {
+    fill: #fff;
+}
+
+.edgePath {
+    stroke: #333;
+    stroke-width: 1.5px;
+    fill: none;
+}
+/* End D3 Graphs */

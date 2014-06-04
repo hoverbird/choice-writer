@@ -10,6 +10,7 @@ define [
   "views/fact_setting_collection"
   "hbs!/templates/event_response_divider"
   'bootstrap-dropdown'
+  'dagreD3'
 ], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse, Response,
     EventResponseView, FactSettingsView, dividerTemplate) ->
   EventResponseCollectionView = Backbone.View.extend(
@@ -77,6 +78,31 @@ define [
             facts[req.Name] = req.DefaultStatus
       $('.fact-settings-container').html(new FactSettingsView(facts).render().el)
 
+    render: ->
+      svg = $("<svg width='100%' height='100%'>
+          <g transform='translate(20,20)'/>
+      </svg>
+      ")
+      this.$el.append svg
+      graph = new dagreD3.Digraph()
+      @collection.each (eventResponse) =>
+        console.log "Adding", eventResponse.attributes
+        view = new EventResponseView(model: eventResponse).render()
+        graph.addNode(eventResponse.get('id'), label: view.htmlString)
+      @collection.each (eventResponse) =>
+        console.log "ANYONE?", on_finish_event: eventResponse.get('responds_to_event')
+        triggerers = @collection.where on_finish_event: eventResponse.get('responds_to_event')
+        console.log("Found triggers", triggerers) if triggerers.length
+        _(triggerers).each (t) ->
+          console.log "t", t
+          if t? and t.get('id')?
+            console.log('Edging values', t.get('on_finish_event'), eventResponse.get('responds_to_event'))
+            graph.addEdge(null, t.get('id'), eventResponse.get('id'))
+      renderer = new dagreD3.Renderer()
+      # debugger
+      renderer.run(graph, d3.select "svg g")
+      this
+
     # TODO: this could be refactored to be more efficient, to be sure
     render1: ->
       console.log("Coll size on render", @collection.size(), @collection)
@@ -89,7 +115,7 @@ define [
       this.linkNodes()
       this
 
-    render: ->
+    render2: ->
       @collection.each (eventResponse) =>
         console.log "Gitting #{eventResponse.get("id")}"
         container = $('<div class="er-container"></div>')
@@ -107,7 +133,6 @@ define [
           else
             console.log "inserting 1", container
             $(inResponseTo.parent()).after(container.html(element))
-            # debugger
         else if triggers.length
           console.log "inserting 2", container
           $(triggers.parent()).before(container.html(element))

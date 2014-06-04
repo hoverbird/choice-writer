@@ -21,7 +21,7 @@ namespace :campo do
        `rake campo:ingest_json[#{filename}]`
      end
   end
-  
+
   task "gdoc" => :environment do
     require File.expand_path(File.dirname(__FILE__)) + '/tiny_gdoc_importer.rb'
     i = EventResponseImporter.new
@@ -236,10 +236,11 @@ namespace :campo do
     end
   end
 
+  # json = `curl choice.192.168.11.13.xip.io/events/v0/unity`
   desc "Copy all Moment events into perforce"
   task "p4:update" do
     p4_target = "/Users/hoverbird/code/campo/p4/patrick_sax/Tools/ChoiceEditor/event_responses.json"
-    json = `curl choice.192.168.11.13.xip.io/events/v0/unity`
+    json = `curl choice.dev/event_responses/v0/unity`
     raise "Not valid JSON: #{json}" unless JSON.parse(json)
     puts "JSON looks good! Writing to #{p4_target}"
     File.open(p4_target, 'w') { |f| f.write json }

@@ -7,14 +7,16 @@ require.config
     ]
     underscore: "../lib/underscore/underscore"
     backbone: "../lib/backbone/backbone"
-    'backbone-relational' : '../lib/backbone-relational/backbone-relational'
     hbs: '../lib/require-handlebars-plugin/hbs'
     jsplumb: '../lib/jsPlumb/dist/js/jquery.jsPlumb-1.5.5'
+    'd3': [
+      "http://d3js.org/d3.v3.min"
+      '../lib/d3.v3.min'
+    ]
+    'dagreD3': '../lib/dagre-d3'
+    'backbone-relational' : '../lib/backbone-relational/backbone-relational'
     'bootstrap-dropdown': '../lib/bootstrap/js/dropdown'
     'bootstrap-affix': '../lib/bootstrap/js/affix'
-    # 'backbone.keys': '../lib/backbone.keys/dist/backbone.keys.min'
-    # jasmine: '../lib/jasmine-jquery/lib/jasmine-jquery'
-    # 'jasmine-html': '../lib/jasmine-jquery/lib/jasmine/lib/jasmine-html'
 
   hbs:
     helpers: true,                     # default: true
@@ -33,13 +35,17 @@ require.config
 
     'backbone-relational':
       deps: ['backbone']
-
     'bootstrap-affix':
       deps: ['jquery']
     'bootstrap-dropdown':
       deps: ['jquery']
     jsplumb:
       deps: ['jquery']
+    # 'd3':
+    #   exports: 'd3'
+    'dagreD3':
+      # deps: ['d3']
+      exports: 'dagreD3'
 
   # how long the it tries to load a script before giving up, the default is 7
   waitSeconds: 6

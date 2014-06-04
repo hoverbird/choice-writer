@@ -26,7 +26,7 @@ class EventResponse < ActiveRecord::Base
     unity_hash
   end
 
-  def self.collection_to_web_hash(event_response_collection)
+  def self.serialize_collection(event_response_collection)
     event_response_collection.collect {|event_response| event_response.to_web_hash }
   end
 
@@ -34,8 +34,11 @@ class EventResponse < ActiveRecord::Base
     @web_hash = {
       id: id,
       unity_id: unity_id,
+      #TODO: deprecate the next two keys
       EventName: in_response_to_event_name,
-      in_response_to_event_name: in_response_to_event_name
+      in_response_to_event_name: in_response_to_event_name,
+      responds_to_event: in_response_to_event_name,
+      on_finish_event: on_finish_event_name
     }
 
     if requirements.present?
@@ -82,7 +85,13 @@ class EventResponse < ActiveRecord::Base
 
   # TODO: should we memoize this and store it on the event response? it's more expensive to look up later
   def on_finish_event_name
-    @on_finish_event_name ||= responses.collect {|r| r.on_finish_event_name}.compact.first
+    return @on_finish_event_name if @on_finish_event_name.present?
+    @on_finish_event_name = if name_generated_by_responses = responses.collect {|r| r.on_finish_event_name}.compact.first
+      @on_finish_event_name = name_generated_by_responses
+    else
+      # "_#{unity_id}Finished"
+      nil
+    end
   end
 
   def expand_chain
@@ -100,28 +109,25 @@ class EventResponse < ActiveRecord::Base
     @unity_id ||= "#{in_response_to_event_name}_#{requirements.size}"
   end
 
-  def self.bukkit_collection(collection)
-    # select all in the collection that do not respond to ANYTHING fired by others in the coll
-    # these are the "roots". remove them from the coll
-    puts collection.size
-    roots = []
-    collection.reject! do |er|
-      er.in_response_to_event_name.blank? ||
-      should_reject = !collection.any? do |inner_er|
-        inner_er.on_finish_event_name == er.in_response_to_event_name
-      end
-      roots.push(er) if should_reject
-      should_reject
-    end
-    puts roots.size
-    puts collection.size
-    puts roots.map(&:unity_id)
+    # graph = {'A': ['B', 'C'],
+    #          'B': ['C', 'D'],
+    #          'C': ['D'],
+    #          'D': ['C'],
+    #          'E': ['F'],
+    #          'F': ['C']}
 
-    roots.each do |er|
+  def self.serialize_graph(collection)
+    hash = {}
+    collection.each do |er|
+      er_hash = er.to_web_hash
+      triggered_nodes = collection.collect do |node|
+        node.id if node.in_response_to_event_name == er.on_finish_event_name
+      end.compact
 
+      er_hash[:on_finish_ids] = triggered_nodes
+      hash[er.id] = er_hash
     end
-    # for each root, go through the coll and pull out where the root.on_finish_event_name matches el.in_response_to_event_name
-    # for each of those
+    hash
   end
 
  # b[1116].each {|er| pp [er[:in_response_to_event_name], er[:on_finish_event_name]].join(" ==> ")}
@@ -187,36 +193,6 @@ class EventResponse < ActiveRecord::Base
     puts "DONE"
     buckets
   end
-
-
-  # def self.bucket_collection(collection)
-  #   buckets = {}
-  #   collection.each do |event_response|
-  #     puts "****"
-  #     puts "Inspecting #{event_response.id}, which responds to #{event_response.in_response_to_event_name}"
-  #     in_response_to = collection.find do |er|
-  #       event_response.in_response_to_event_name == er.on_finish_event_name
-  #     end
-  #     if in_response_to
-  #       puts "FOUND #{in_response_to.id} in collection, which triggers: #{in_response_to.on_finish_event_name}"
-  #       # puts "#{event_response.on_finish_event_name} is in response_to #{in_response_to.on_finish_event_name}"
-  #       if bucket = buckets[in_response_to.id]
-  #         puts "Found a bucket which contains #{in_response_to.id}"
-  #         bucket.push(event_response.to_web_hash)
-  #       else
-  #         puts "Starting new bucket for #{in_response_to.id}"
-  #         buckets[in_response_to.id] = [
-  #           in_response_to.to_web_hash,
-  #           event_response.to_web_hash
-  #         ]
-  #       end
-  #     else
-  #       puts "New bucket created for TOTALLY NEW: #{event_response.on_finish_event_name}"
-  #       buckets[event_response.id] = [event_response.to_web_hash]
-  #     end
-  #   end
-  #   buckets
-  # end
 
   private
     def collection_type(type_string)
