@@ -243,13 +243,14 @@ h4.sections-header {
 
 /* D3 Graphs */
 svg {
-    overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .node rect {
-    stroke: #333;
-    stroke-width: 1.5px;
+    stroke: #ddd;
+    stroke-width: 2px;
     fill: #fff;
+    min-width: 200px;
 }
 
 .edgeLabel rect {
@@ -257,8 +258,13 @@ svg {
 }
 
 .edgePath {
-    stroke: #333;
-    stroke-width: 1.5px;
+    stroke: lightgray;
+    stroke-width: 4px;
     fill: none;
+}
+
+.edgePath path {
+  stroke-width 1px;
+  stroke lightgray;
 }
 /* End D3 Graphs */

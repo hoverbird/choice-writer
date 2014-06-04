@@ -2,7 +2,6 @@ define [
   "backbone"
   "jquery"
   "underscore"
-  "jsplumb"
   "models/event_response_collection"
   "models/event_response"
   "models/response"
@@ -11,7 +10,7 @@ define [
   "hbs!/templates/event_response_divider"
   'bootstrap-dropdown'
   'dagreD3'
-], (Backbone, $, _, jsPlumb, EventResponseCollection, EventResponse, Response,
+], (Backbone, $, _, EventResponseCollection, EventResponse, Response,
     EventResponseView, FactSettingsView, dividerTemplate) ->
   EventResponseCollectionView = Backbone.View.extend(
     tagName: 'div'
@@ -22,15 +21,20 @@ define [
     className: 'event-response-collection'
 
     initialize: (viewOptions) ->
-      #TODO: remove, this is blunt as fuck
-      $(window).resize -> jsPlumb.repaintEverything();
-
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
+      @renderer = new dagreD3.Renderer().drawEdgePaths(@customDrawEdgePaths)
+
       @collection = new EventResponseCollection(viewOptions)
       @collection.bind "change", _.bind(this.render, this)
       @collection.fetch success: (data) =>
         @renderFacts.call(this, data)
         @render.call(this, data)
+
+    customDrawEdgePaths: (g, root) ->
+      svgEdgePaths = root.selectAll("g.edgePath").classed("enter", false).data(g.edges(), (e) -> e)
+      svgEdgePaths.enter().append("g").attr("class", "edgePath enter").append("path").style("opacity", 0)#.attr "marker-end", "url(#arrowhead)"
+      @_transition(svgEdgePaths.exit()).style("opacity", 0).remove()
+      svgEdgePaths
 
     # Selects another moment in the collection. Options should contain either an
     # id OR an afterId key, depending on whether we know the moment to select or
@@ -84,7 +88,9 @@ define [
       </svg>
       ")
       this.$el.append svg
+      layout = dagreD3.layout().nodeSep(60).rankDir("LR")
       graph = new dagreD3.Digraph()
+
       @collection.each (eventResponse) =>
         console.log "Adding", eventResponse.attributes
         view = new EventResponseView(model: eventResponse).render()
@@ -98,87 +104,9 @@ define [
           if t? and t.get('id')?
             console.log('Edging values', t.get('on_finish_event'), eventResponse.get('responds_to_event'))
             graph.addEdge(null, t.get('id'), eventResponse.get('id'))
-      renderer = new dagreD3.Renderer()
-      # debugger
-      renderer.run(graph, d3.select "svg g")
+
+      @renderer.layout(layout).run(graph, d3.select "svg g")
       this
-
-    # TODO: this could be refactored to be more efficient, to be sure
-    render1: ->
-      console.log("Coll size on render", @collection.size(), @collection)
-      chain = $('<div class="chain-container"></div>')
-      @collection.each (eventResponse) =>
-        element = new EventResponseView(model: eventResponse).render().el
-        chain.append element
-        chain.append dividerTemplate(eventForNewResponse: eventResponse.eventForNewResponse())
-      this.$el.html(chain)
-      this.linkNodes()
-      this
-
-    render2: ->
-      @collection.each (eventResponse) =>
-        console.log "Gitting #{eventResponse.get("id")}"
-        container = $('<div class="er-container"></div>')
-        element = new EventResponseView(model: eventResponse).render().$el
-
-        inResponseTo = this.$el.find("[data-on-finish='#{eventResponse.get('in_response_to_event_name')}']")
-        triggers = this.$el.find("[data-in-response='#{eventResponse.get('on_finish_event_name')}']")
-
-        if inResponseTo.length
-          # Find other elements that respond to the same event name
-          siblings = this.$el.find("[data-in-response='#{eventResponse.get('in_response_to_event_name')}']")
-          if siblings.length
-            console.log "inserting 0", siblings.closest('.er-container')
-            siblings.closest('.er-container').append(element)
-          else
-            console.log "inserting 1", container
-            $(inResponseTo.parent()).after(container.html(element))
-        else if triggers.length
-          console.log "inserting 2", container
-          $(triggers.parent()).before(container.html(element))
-        else
-          console.log "inserting into 3", container
-          this.$el.append(container.html(element))
-
-        for previousElement in inResponseTo
-          @linkTwoNodes(previousElement, element[0])
-        for nextElement in triggers
-          @linkTwoNodes(element[0], nextElement)
-      jsPlumb.repaintEverything()
-      this
-
-    linkTwoNodes: (source, target) ->
-      connectionColor = if target.classList.contains("disabled") then '#ddd' else 'white'
-      jsPlumb.connect
-        source: source
-        target: target
-        hoverPaintStyle:
-          strokeStyle: 'lightgray'
-        paintStyle:
-          strokeStyle: connectionColor
-          lineWidth: 5
-        connector: "Straight"
-        endpointStyle:
-          fillStyle: connectionColor
-          radius: 8
-        anchors: ["Bottom", "Top"]
-
-    linkNodes: ->
-      @collection.each (eventResponse) ->
-        eventName = eventResponse.get('EventName')
-        # The target is the element belonging to this eventResponse
-        target = $("#event-response-#{eventResponse.get("id")}")[0]
-        # The sources are any eventResponses that finish by triggering the event name we listen to
-        sources = $("[data-on-finish='#{eventName}']")
-        if target and sources.length
-          _(sources).each (source) ->
-            jsPlumb.connect
-              source: source.parentElement
-              target: target.parentElement
-              anchors: [
-                [ "Perimeter", shape: "Triangle" ],
-                [ "Perimeter", shape: "Diamond" ]
-              ]
 
   )
   EventResponseCollectionView

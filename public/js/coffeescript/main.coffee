@@ -41,10 +41,7 @@ require.config
       deps: ['jquery']
     jsplumb:
       deps: ['jquery']
-    # 'd3':
-    #   exports: 'd3'
     'dagreD3':
-      # deps: ['d3']
       exports: 'dagreD3'
 
   # how long the it tries to load a script before giving up, the default is 7
