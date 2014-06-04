@@ -28,7 +28,6 @@ define [
       this.get('Responses').pluck('on_finish_event_name')[0]
 
     isDisabled: ->
-      console.log "Disabled?", this.get('Requirements')
       this.get('Requirements') and this.get('Requirements').length > 0
   )
 

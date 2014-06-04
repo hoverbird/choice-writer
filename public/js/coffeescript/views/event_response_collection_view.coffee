@@ -101,26 +101,21 @@ define [
         .attr("width", drawnLayout.graph().width + 40)
         .attr("height", drawnLayout.graph().height + 40)
 
-      d3svg.call(d3.behavior.zoom().on("zoom", ->
+      d3svg.call(d3.behavior.zoom().on "zoom", ->
         ev = d3.event
         d3svg.select("g").attr "transform", "translate(#{ev.translate}) scale(#{ev.scale})"
-      ))
+      )
       this
 
     buildGraph: ->
       graph = new dagreD3.Digraph()
       @collection.each (eventResponse) =>
-        console.log "Adding", eventResponse.attributes
         view = new EventResponseView(model: eventResponse).render()
         graph.addNode(eventResponse.get('id'), label: view.htmlString)
       @collection.each (eventResponse) =>
-        console.log "ANYONE?", on_finish_event: eventResponse.get('responds_to_event')
         triggerers = @collection.where on_finish_event: eventResponse.get('responds_to_event')
-        console.log("Found triggers", triggerers) if triggerers.length
         _(triggerers).each (t) ->
-          console.log "t", t
           if t? and t.get('id')?
-            console.log('Edging values', t.get('on_finish_event'), eventResponse.get('responds_to_event'))
             graph.addEdge(null, t.get('id'), eventResponse.get('id'))
       graph
 
