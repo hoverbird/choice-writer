@@ -1,6 +1,6 @@
 class EventResponse < ActiveRecord::Base
-  has_many :responses, dependent: :destroy
-  has_many :requirements, dependent: :destroy
+  has_many :responses
+  has_many :requirements
   has_many :facts, through: :requirements
 
   has_many :taggings
