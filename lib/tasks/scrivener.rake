@@ -8,6 +8,7 @@ end
 # rake campo:scrivener:slurp[/path/to/file.txt]
 namespace :campo do
   task "destroy_everything" => :environment do
+    Folder.destroy_all
     EventResponse.destroy_all
     Response.destroy_all
     FactMutation.destroy_all
@@ -18,6 +19,7 @@ namespace :campo do
     `rake campo:destroy_everything`
 
      Dir.glob('/Users/hoverbird/code/campo/p4/patrick_sax/Unity/Wyoming/Assets/_EventData/*.json').each do |filename|
+       puts "Ingesting #{filename}"
        `rake campo:ingest_json[#{filename}]`
      end
   end
@@ -65,38 +67,44 @@ namespace :campo do
       er.save!
       if er_data["Responses"] and er_data["Responses"]["$values"]
         er_data["Responses"]["$values"].each do |resp_data|
-          response_type = resp_data["$type"]
-          case response_type
-            when /SpeechResponse/
-              pp "SPEECH RESPONSE"
-              speech_hash = resp_data.delete("SpeechToPlay")
-              resp_data.merge!(speech_hash)
-              pp resp_data
-              response = SpeechResponse.create(
-                event_response: er,
-                on_finish_event_name: resp_data["OnFinishEvent"],
-                text: resp_data["Caption"],
-                on_finish_event_delay: resp_data["OnFinishEventDelay"],
-                audio_clip_path: resp_data["AudioClipPath"],
-                allow_queueing: resp_data["AllowQueueing"],
-                hack_audio_duration: resp_data["HackAudioDuration"]
-              )
-            when /DialogTreeResponse/
-              pp "DIALOG TREE RESPONSE"
-              response = DialogTreeResponse.create(event_response: er)
-            when /FactResponse/
-              pp "FACT RESPONSE"
-              response = FactResponse.create(event_response: er)
-              fact = Fact.find_or_create_by_name(resp_data["FactName"])
-              FactMutation.create(new_value: resp_data["NewStatus"], fact: fact, fact_response: response)
-            when /TriggerEventResponse/
-              pp "TRIGGER EVENT RESPONSE"
-              response = TriggerEventResponse.create(
-                event_response: er,
-                on_finish_event_name: resp_data["EventToTrigger"]
-              )
-          else
-            raise "Unknown response type!! Type found: #{response_type}"
+          begin
+            response_type = resp_data["$type"]
+            case response_type
+              when /SpeechResponse/
+                pp "SPEECH RESPONSE"
+                speech_hash = resp_data.delete("SpeechToPlay")
+                resp_data.merge!(speech_hash)
+                pp resp_data
+                response = SpeechResponse.create(
+                  event_response: er,
+                  on_finish_event_name: resp_data["OnFinishEvent"],
+                  text: resp_data["Caption"],
+                  on_finish_event_delay: resp_data["OnFinishEventDelay"],
+                  audio_clip_path: resp_data["AudioClipPath"],
+                  allow_queueing: resp_data["AllowQueueing"],
+                  hack_audio_duration: resp_data["HackAudioDuration"]
+                )
+              when /DialogTreeResponse/
+                pp "DIALOG TREE RESPONSE"
+                response = DialogTreeResponse.create(event_response: er)
+              when /IsDialogChoiceResponse/
+                response = IsDialogChoiceResponse.create(event_response: er, text: resp_data["choiceText"])
+              when /FactResponse/
+                pp "FACT RESPONSE"
+                response = FactResponse.create(event_response: er)
+                fact = Fact.find_or_create_by_name(resp_data["FactName"])
+                FactMutation.create(new_value: resp_data["NewStatus"], fact: fact, fact_response: response)
+              when /TriggerEventResponse/
+                pp "TRIGGER EVENT RESPONSE"
+                response = TriggerEventResponse.create(
+                  event_response: er,
+                  on_finish_event_name: resp_data["EventToTrigger"]
+                )
+            else
+              raise "Unknown response type!! Type found: #{response_type}"
+            end
+          rescue => e
+            raise "Couldn't import Response data: #{resp_data}"
           end
         end
       end

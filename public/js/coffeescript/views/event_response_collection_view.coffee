@@ -36,8 +36,7 @@ define [
       @_transition(svgEdgePaths.exit()).style("opacity", 0).remove()
       svgEdgePaths
 
-    customTransition: (selection) ->
-      selection.transition().duration(500)
+    customTransition: (selection) -> selection.transition().duration(500)
 
     # Selects another moment in the collection. Options should contain either an
     # id OR an afterId key, depending on whether we know the moment to select or
@@ -98,8 +97,8 @@ define [
 
       d3svg = d3.select("svg")
       @customTransition(d3svg)
-        .attr("width", drawnLayout.graph().width + 40)
-        .attr("height", drawnLayout.graph().height + 40)
+        .attr("width", $(window).width())#drawnLayout.graph().width + 40)
+        .attr("height", $(window).height())
 
       d3svg.call(d3.behavior.zoom().on "zoom", ->
         ev = d3.event
@@ -109,7 +108,9 @@ define [
 
     buildGraph: ->
       graph = new dagreD3.Digraph()
+      console.log(@collection)
       @collection.each (eventResponse) =>
+        console.log(eventResponse.get("Responses").pluck("text"))
         view = new EventResponseView(model: eventResponse).render()
         graph.addNode(eventResponse.get('id'), label: view.htmlString)
       @collection.each (eventResponse) =>
