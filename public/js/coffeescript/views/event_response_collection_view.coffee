@@ -22,7 +22,18 @@ define [
 
     initialize: (viewOptions) ->
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
-      @renderer = new dagreD3.Renderer().drawEdgePaths(@customDrawEdgePaths)
+      @renderer = new dagreD3.Renderer()
+        .drawEdgePaths(@customDrawEdgePaths)
+        .postLayout(@postLayout)
+        .postRender(@postRender)
+
+      # Monkeypatch the node drawing function
+      oldDrawNodes = @renderer.drawNodes()
+      @renderer.drawNodes (graph, root) ->
+        console.log "Draw Node", root
+        svgNodes = oldDrawNodes(graph, root)
+        # svgNodes.attr "class", (u) -> "garbonzo" #"node-" + u
+        svgNodes
 
       @collection = new EventResponseCollection(viewOptions)
       @collection.bind "change", _.bind(this.render, this)
@@ -38,37 +49,6 @@ define [
 
     customTransition: (selection) -> selection.transition().duration(500)
 
-    # Selects another moment in the collection. Options should contain either an
-    # id OR an afterId key, depending on whether we know the moment to select or
-    # whether it is relative selection (e.g. you want the moment AFTER another)
-
-    # selectMoment: (options) ->
-    #   console.log("selectMoment", options)
-    #   momentToSelect = if options.afterId
-    #     @findEventResponseAfter options.afterId
-    #   else if options.id
-    #     @findEventResponse options.id
-    #   else
-    #     throw "You can't select a moment without its ID!"
-    #   console.log("gonna trigger select", momentToSelect[0])
-    #   if momentToSelect.length
-    #     momentToSelect[0].trigger('select')
-    #   else
-    #     # If no moment was found, we create a new one.
-    #     this.newEventResponse previousMomentId: momentToSelect.id
-
-    # findEventResponseAfter: (id) ->
-    #   @collection.select (eventResponse) -> eventResponse.get('previous_moment_id') is id
-
-    # newEventResponse: (event) ->
-    #   eventName = $(event.target).data("event-for-new-response")
-    #   er = new EventResponse(EventName: eventName, folder_id: 3) # TODO: MAKE THIS NOT FAKE
-    #   resp = new Response(Type: "SpeechResponse", event_response: er, text: "Just checked in to see what condition my condition was in")
-    #   console.log("Coll size before add", @collection.size())
-    #   @collection.add er
-    #   @render()
-    #   # er.trigger 'select'
-
     # Gather a hash of facts and default values as referenced in all reqs and resps
     # in the collection. We should probably do this on the server.
     renderFacts: (collection) ->
@@ -83,17 +63,41 @@ define [
             facts[req.Name] = req.DefaultStatus
       $('.fact-settings-container').html(new FactSettingsView(facts).render().el)
 
+    postRender: (r) ->
+      console.log "postRender", r
+
+    postLayout: (lg) ->
+      console.log "POST LAYOOOT", lg
+
+      minY = Math.min.apply(null, lg.nodes().map (u) ->
+        value = lg.node(u)
+        value["ul"] - value.width / 2
+      )
+
+      # Update node positions
+      lg.eachNode (u, value) ->
+        value.y = value["ul"] - minY
+        console.log "Node", u, value
+
+      # Update edge positions
+      lg.eachEdge (e, u, v, value) ->
+        value.points.forEach (p) ->
+          p.y = p["ul"] - minY
+          console.log "Edge", u, value, p
+
+
     drawLayout: (graph) ->
-      svg = $("<svg width='100%' height='100%'>
-          <g transform='translate(20,20)'/>
-      </svg>
-      ")
-      this.$el.append svg
-      layout = dagreD3.layout().nodeSep(60).rankDir("LR")
+      svg = $("<svg width='100%' height='100%'><g transform='translate(20,20)'/></svg>")
+      this.$el.append(svg)
+
+      nodeSep = Math.min(
+        Math.max(@collection.length / 2.5, 60),
+      250)
+      console.log(nodeSep)
+      layout = dagreD3.layout().nodeSep(nodeSep).rankDir("LR")
 
       drawnLayout = @renderer.layout(layout).run(graph, d3.select "svg g")
-
-      @renderer.transition(@customTransition);
+      @renderer.transition(@customTransition)
 
       d3svg = d3.select("svg")
       @customTransition(d3svg)
@@ -104,21 +108,20 @@ define [
         ev = d3.event
         d3svg.select("g").attr "transform", "translate(#{ev.translate}) scale(#{ev.scale})"
       )
+      debugger
       this
 
     buildGraph: ->
-      graph = new dagreD3.Digraph()
-      console.log(@collection)
+      @graph = new dagreD3.Digraph()
       @collection.each (eventResponse) =>
-        console.log(eventResponse.get("Responses").pluck("text"))
         view = new EventResponseView(model: eventResponse).render()
-        graph.addNode(eventResponse.get('id'), label: view.htmlString)
+        @graph.addNode(eventResponse.get('id'), label: view.htmlString)
       @collection.each (eventResponse) =>
         triggerers = @collection.where on_finish_event: eventResponse.get('responds_to_event')
-        _(triggerers).each (t) ->
+        _(triggerers).each (t) =>
           if t? and t.get('id')?
-            graph.addEdge(null, t.get('id'), eventResponse.get('id'))
-      graph
+            @graph.addEdge(null, t.get('id'), eventResponse.get('id'))
+      @graph
 
     render: -> @drawLayout(@buildGraph())
 

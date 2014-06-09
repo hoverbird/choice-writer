@@ -12,6 +12,7 @@ namespace :campo do
     EventResponse.destroy_all
     Response.destroy_all
     FactMutation.destroy_all
+    Fact.destroy_all
     Requirement.destroy_all
   end
 

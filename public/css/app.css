@@ -153,6 +153,13 @@ h4.sections-header {
   padding-top: 8px;
 }
 
+.requirements {
+  width: 400px;
+}
+.response-collection {
+  width: 400px;
+}
+
 .fact-response, .on-finish-event-name {
   font-size: 13px;
   color: #dadada;

@@ -17,6 +17,7 @@ define [
         when "FactResponse" then FactResponseTmpl
         when "DialogTreeResponse" then DialogTreeResponseTmpl
         when "TriggerEventResponse" then SpeechResponseTmpl
+        when "IsDialogChoiceResponse" then SpeechResponseTmpl
         else
           throw "Unknown Response Type: #{@model.get("Type")}"
 
