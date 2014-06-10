@@ -66,10 +66,10 @@ define [
         if responses = er.get("Responses")
           _(responses.models).each (resp) =>
             if resp and resp.get("Type") is "FactResponse"
-              window.globalFacts[resp.get("Name")] = Util.stringToBool(resp.get("DefaultStatus"))
+              window.globalFacts[resp.get("Name")] = Util.toStrictBoolean(resp.get("DefaultStatus"))
         if requirements = er.get("Requirements")
           _(requirements).each (req) =>
-            window.globalFacts[req.Name] = Util.stringToBool(req.DefaultStatus)
+            window.globalFacts[req.Name] = Util.toStrictBoolean(req.DefaultStatus)
 
     renderFacts: ->
       $('.fact-settings-container').html(new FactSettingsView(@facts).render().el)

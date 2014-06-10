@@ -35,7 +35,7 @@ define [
     requirementsHash: ->
       hash = {}
       _(this.get('Requirements')).each (req) ->
-        hash[req.Name] = Util.stringToBool(req.FactTestValue)
+        hash[req.Name] = Util.toStrictBoolean(req.FactTestValue)
       hash
   )
 

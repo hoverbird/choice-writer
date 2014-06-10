@@ -1,8 +1,9 @@
 define [
   "backbone"
+  "util"
   'hbs!/templates/fact_settings'
   'bootstrap-affix'
-], (Backbone, factSettingsTemplate) ->
+], (Backbone, Util, factSettingsTemplate) ->
   FactView = Backbone.View.extend(
     className: 'fact-setting'
     events:
@@ -12,10 +13,10 @@ define [
       @collection = factPairs
 
     setFact: (event) ->
-      factName = event.target.name
-      value = event.target.value
-      factDivs = $(".requirement[data-name='#{factName}']")
-      factDivs.closest(".event-response").removeClass("disabled")
+      fact = event.target.value
+      value = event.target.checked
+      window.globalFacts[fact] = value
+      console.log "Setting fact", fact, value
 
     render: ->
       this.$el.html(factSettingsTemplate(@collection))

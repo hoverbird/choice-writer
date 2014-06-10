@@ -44,8 +44,9 @@ define ["backbone", "jquery"], (Backbone, $) ->
     return json
 
   Util = {
-    stringToBool: (string) ->
-      switch string.toLowerCase()
+    toStrictBoolean: (value) ->
+      return value if typeof value is "boolean"
+      switch value.toLowerCase()
         when 't' then true
         when 'f' then false
         else null
