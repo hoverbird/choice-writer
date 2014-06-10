@@ -44,6 +44,12 @@ define ["backbone", "jquery"], (Backbone, $) ->
     return json
 
   Util = {
+    stringToBool: (string) ->
+      switch string.toLowerCase()
+        when 't' then true
+        when 'f' then false
+        else null
+
     railsifyBackbone: ->
       # alias away the sync method
       Backbone._sync = Backbone.sync

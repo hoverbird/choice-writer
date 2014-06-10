@@ -1,9 +1,11 @@
 define [
   "underscore"
   "backbone"
+  "util"
   "models/response_collection"
   "models/response"
-], (_, Backbone, ResponseCollection, Response) ->
+], (_, Backbone, Util, ResponseCollection, Response) ->
+
   EventResponse = Backbone.RelationalModel.extend(
     url: '/moment/:id'
 
@@ -29,6 +31,12 @@ define [
 
     isDisabled: ->
       this.get('Requirements') and this.get('Requirements').length > 0
+
+    requirementsHash: ->
+      hash = {}
+      _(this.get('Requirements')).each (req) ->
+        hash[req.Name] = Util.stringToBool(req.FactTestValue)
+      hash
   )
 
   EventResponse

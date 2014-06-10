@@ -2,6 +2,7 @@ define [
   "backbone"
   "jquery"
   "underscore"
+  "util"
   "models/event_response_collection"
   "models/event_response"
   "models/response"
@@ -10,7 +11,7 @@ define [
   "hbs!/templates/event_response_divider"
   'bootstrap-dropdown'
   'dagreD3'
-], (Backbone, $, _, EventResponseCollection, EventResponse, Response,
+], (Backbone, $, _, Util, EventResponseCollection, EventResponse, Response,
     EventResponseView, FactSettingsView, dividerTemplate) ->
   EventResponseCollectionView = Backbone.View.extend(
     tagName: 'div'
@@ -21,6 +22,8 @@ define [
     className: 'event-response-collection'
 
     initialize: (viewOptions) ->
+      @facts = window.globalFacts = {};
+
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
       @renderer = new dagreD3.Renderer()
         .drawEdgePaths(@customDrawEdgePaths)
@@ -30,16 +33,23 @@ define [
       # Monkeypatch the node drawing function
       oldDrawNodes = @renderer.drawNodes()
       @renderer.drawNodes (graph, root) ->
-        console.log "Draw Node", root
         svgNodes = oldDrawNodes(graph, root)
-        # svgNodes.attr "class", (u) -> "garbonzo" #"node-" + u
+        nodeClassifier = (u) ->
+          classes = "node enter node-#{u}"
+          node = graph.node(u)
+          reachable = _(node.facts).every (k, factName, nodeFacts) ->
+            window.globalFacts[factName] is nodeFacts[factName]
+          classes += "unreachable" unless reachable
+
+        svgNodes.attr "class", nodeClassifier.bind(this)
         svgNodes
 
       @collection = new EventResponseCollection(viewOptions)
       @collection.bind "change", _.bind(this.render, this)
       @collection.fetch success: (data) =>
-        @renderFacts.call(this, data)
-        @render.call(this, data)
+        @gatherFacts.call(this)
+        @renderFacts.call(this)
+        @render.call(this)
 
     customDrawEdgePaths: (g, root) ->
       svgEdgePaths = root.selectAll("g.edgePath").classed("enter", false).data(g.edges(), (e) -> e)
@@ -51,17 +61,18 @@ define [
 
     # Gather a hash of facts and default values as referenced in all reqs and resps
     # in the collection. We should probably do this on the server.
-    renderFacts: (collection) ->
-      facts = {}
-      _(collection.models).each (er) ->
+    gatherFacts: ->
+      _(@collection.models).each (er) =>
         if responses = er.get("Responses")
-          _(responses.models).each (resp) ->
+          _(responses.models).each (resp) =>
             if resp and resp.get("Type") is "FactResponse"
-              facts[resp.get("Name")] = resp.get("DefaultStatus")
+              window.globalFacts[resp.get("Name")] = Util.stringToBool(resp.get("DefaultStatus"))
         if requirements = er.get("Requirements")
-          _(requirements).each (req) ->
-            facts[req.Name] = req.DefaultStatus
-      $('.fact-settings-container').html(new FactSettingsView(facts).render().el)
+          _(requirements).each (req) =>
+            window.globalFacts[req.Name] = Util.stringToBool(req.DefaultStatus)
+
+    renderFacts: ->
+      $('.fact-settings-container').html(new FactSettingsView(@facts).render().el)
 
     postRender: (r) ->
       console.log "postRender", r
@@ -77,14 +88,14 @@ define [
       # Update node positions
       lg.eachNode (u, value) ->
         value.y = value["ul"] - minY
-        console.log "Node", u, value
 
       # Update edge positions
       lg.eachEdge (e, u, v, value) ->
         value.points.forEach (p) ->
           p.y = p["ul"] - minY
-          console.log "Edge", u, value, p
 
+    applyLogic: (graph) ->
+      console.log "APPLY LOGIC HERE", graph
 
     drawLayout: (graph) ->
       svg = $("<svg width='100%' height='100%'><g transform='translate(20,20)'/></svg>")
@@ -94,7 +105,7 @@ define [
         Math.max(@collection.length / 2.5, 60),
       250)
       console.log(nodeSep)
-      layout = dagreD3.layout().nodeSep(nodeSep).rankDir("LR")
+      layout = dagreD3.layout().nodeSep(nodeSep).rankDir("LR").debugLevel(4)
 
       drawnLayout = @renderer.layout(layout).run(graph, d3.select "svg g")
       @renderer.transition(@customTransition)
@@ -108,22 +119,26 @@ define [
         ev = d3.event
         d3svg.select("g").attr "transform", "translate(#{ev.translate}) scale(#{ev.scale})"
       )
-      debugger
-      this
+      graph
 
     buildGraph: ->
       @graph = new dagreD3.Digraph()
       @collection.each (eventResponse) =>
         view = new EventResponseView(model: eventResponse).render()
-        @graph.addNode(eventResponse.get('id'), label: view.htmlString)
+        @graph.addNode(eventResponse.get('id'),
+          label: view.htmlString,
+          respondsTo: eventResponse.get("responds_to_event")
+          facts: eventResponse.requirementsHash()
+        )
       @collection.each (eventResponse) =>
         triggerers = @collection.where on_finish_event: eventResponse.get('responds_to_event')
         _(triggerers).each (t) =>
+          reqCount = t.get("requirements_count")
           if t? and t.get('id')?
-            @graph.addEdge(null, t.get('id'), eventResponse.get('id'))
+            @graph.addEdge(null, t.get('id'), eventResponse.get('id'), reqCount: reqCount, facts: t.requirementsHash())
       @graph
 
-    render: -> @drawLayout(@buildGraph())
+    render: -> @applyLogic(@drawLayout(@buildGraph()))
 
   )
   EventResponseCollectionView
