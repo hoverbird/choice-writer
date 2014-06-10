@@ -16,7 +16,7 @@ define [
       fact = event.target.value
       value = event.target.checked
       window.globalFacts[fact] = value
-      console.log "Setting fact", fact, value
+      Backbone.pubSub.trigger('factIsSet', fact: value)
 
     render: ->
       this.$el.html(factSettingsTemplate(@collection))

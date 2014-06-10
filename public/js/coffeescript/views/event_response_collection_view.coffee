@@ -25,6 +25,8 @@ define [
       @facts = window.globalFacts = {};
 
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
+      Backbone.pubSub.on('factIsSet', this.render, this)
+
       @renderer = new dagreD3.Renderer()
         .drawEdgePaths(@customDrawEdgePaths)
         .postLayout(@postLayout)
