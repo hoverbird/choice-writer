@@ -9,12 +9,12 @@ define [
       "": "showResponses"
       "home": "showResponses"
       "response/:id": "responsePermalink"
-      "responses/by_tag/:tag": "showRepsonsesByTag"
+      "responds_to_event/:event_name": "showRespondsToEvent"
       "responses/by_folder/:folder_id": "showResponsesByFolder"
       "search": "search"
 
-    showResponsesByTag: (tag) ->
-      view = new EventResponseCollectionView constraints: { tag: tag }
+    showRespondsToEvent: (eventName) ->
+      view = new EventResponseCollectionView constraints: { respondsToEvent: eventName }
       @contentContainer.html(view.el)
 
     showResponsesByFolder: (folder_id) ->
@@ -26,7 +26,6 @@ define [
       @contentContainer.html(view.el)
 
     responsePermalink: (id) ->
-      console.log "RESP PERM", id
       view = new EventResponseCollectionView constraints: { permalinkId: id }
       @contentContainer.html(view.el)
 

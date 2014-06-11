@@ -20,6 +20,7 @@ ChoiceWriter::Application.routes.draw do
       get 'v0/web'  , to: 'event_responses#index'
       get 'v0/web/:id'  , to: 'event_responses#show'
       get 'v0/web/by_folder/:id', to: 'event_responses#by_folder'
+      get 'v0/web/responds_to_event/:event_name', to: 'event_responses#responds_to_event'
       get 'v0/web/search', to: 'event_responses#search'
     end
   end

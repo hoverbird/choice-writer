@@ -18,8 +18,7 @@ define [
         when "DialogTreeResponse" then DialogTreeResponseTmpl
         when "TriggerEventResponse" then SpeechResponseTmpl
         when "IsDialogChoiceResponse" then SpeechResponseTmpl
-        else
-          throw "Unknown Response Type: #{@model.get("Type")}"
+        else throw "Unknown Response Type: #{@model.get("Type")}"
 
     className: ->
       "response #{@model.cleanType()}-response"
