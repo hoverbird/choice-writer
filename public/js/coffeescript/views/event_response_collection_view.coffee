@@ -21,7 +21,7 @@ define [
 
     className: 'event-response-collection'
 
-    initialize: (viewOptions) ->
+    initialize: (viewOptions = {}) ->
       @facts = window.globalFacts = {};
 
       Backbone.pubSub.on('selectMoment', this.selectMoment, this)
@@ -37,11 +37,11 @@ define [
       @renderer.drawNodes (graph, root) ->
         svgNodes = oldDrawNodes(graph, root)
         nodeClassifier = (u) ->
-          classes = "node enter node-#{u}"
           node = graph.node(u)
           reachable = _(node.facts).every (k, factName, nodeFacts) ->
-            window.globalFacts[factName] is nodeFacts[factName]
-          classes += "unreachable" unless reachable
+            console.log "Reachable?", u, factName, window.globalFacts[factName], nodeFacts[factName]
+            window.globalFacts[factName] == nodeFacts[factName]
+          classes = "node enter node-#{u} #{"unreachable" if not reachable}"
 
         svgNodes.attr "class", nodeClassifier.bind(this)
         svgNodes
@@ -80,7 +80,7 @@ define [
       console.log "postRender", r
 
     postLayout: (lg) ->
-      console.log "POST LAYOOOT", lg
+      console.log "postLayout", lg
 
       minY = Math.min.apply(null, lg.nodes().map (u) ->
         value = lg.node(u)
@@ -97,7 +97,7 @@ define [
           p.y = p["ul"] - minY
 
     applyLogic: (graph) ->
-      console.log "APPLY LOGIC HERE", graph
+      console.log "after render", graph
 
     drawLayout: (graph) ->
       svg = $("<svg width='100%' height='100%'><g transform='translate(20,20)'/></svg>")
@@ -107,14 +107,14 @@ define [
         Math.max(@collection.length / 2.5, 60),
       250)
       console.log(nodeSep)
-      layout = dagreD3.layout().nodeSep(nodeSep).rankDir("LR").debugLevel(4)
+      layout = dagreD3.layout().nodeSep(nodeSep).rankDir("LR").debugLevel(0)
 
       drawnLayout = @renderer.layout(layout).run(graph, d3.select "svg g")
       @renderer.transition(@customTransition)
 
       d3svg = d3.select("svg")
       @customTransition(d3svg)
-        .attr("width", $(window).width())#drawnLayout.graph().width + 40)
+        .attr("width", $(window).width())
         .attr("height", $(window).height())
 
       d3svg.call(d3.behavior.zoom().on "zoom", ->

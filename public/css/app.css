@@ -258,14 +258,20 @@ svg {
   width: 200px;
 }
 
-.node.unreachable {
-  background: #ddd;
-  color: #ACA6A5;
+.node.unreachable rect {
+  fill: #ddd;
+  stroke: #ddd;
+}
+
+.node.unreachable span,
+.node.unreachable a,
+.node.unreachable div {
+  color: #898484;
 }
 
 .node rect {
-  stroke: #ddd;
-  stroke-width: 2px;
+  stroke: white;
+  stroke-width: 5px;
   fill: #fff;
   background-size: contain;
   width: 200px;

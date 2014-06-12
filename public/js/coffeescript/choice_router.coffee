@@ -4,6 +4,7 @@ define [
 ], (Backbone, EventResponseCollectionView) ->
   ChoiceRouter = Backbone.Router.extend(
     contentContainer: $(".left-col")
+    pageTitle: $(".page-title")
 
     routes:
       "": "showResponses"
@@ -14,7 +15,8 @@ define [
       "search": "search"
 
     showRespondsToEvent: (eventName) ->
-      view = new EventResponseCollectionView constraints: { respondsToEvent: eventName }
+      @setPageTitle "#{eventName} responses"
+      view = new EventResponseCollectionView constraints: {respondsToEvent: eventName}
       @contentContainer.html(view.el)
 
     showResponsesByFolder: (folder_id) ->
@@ -30,8 +32,12 @@ define [
       @contentContainer.html(view.el)
 
     search: (queryString) ->
+      @setPageTitle "Searching for #{queryString}"
       view = new EventResponseCollectionView constraints: { searchQuery: queryString }
       @contentContainer.html(view.el)
+
+    setPageTitle: (title) ->
+      @pageTitle.html("<h2 class='page-title'>#{title}</h2>") if title
 
     defaultRoute: (other) ->
       console.log "Poor Choice. You attempted to reach a nonexistant route: #{other}"
