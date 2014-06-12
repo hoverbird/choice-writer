@@ -21,6 +21,10 @@ define [
 
     initialize: ->
       this.id = this.get("id") if this.get("id")
+      @requirementsHash = {}
+      _(this.get('Requirements')).each (req) =>
+        @requirementsHash[req.Name] = Util.toStrictBoolean(req.FactTestValue)
+
       this.on "eventResponseUpdated", ->
       this.url = ->
         "/event_responses/#{@id or ''}"
@@ -32,11 +36,11 @@ define [
     isDisabled: ->
       this.get('Requirements') and this.get('Requirements').length > 0
 
-    requirementsHash: ->
-      hash = {}
-      _(this.get('Requirements')).each (req) ->
-        hash[req.Name] = Util.toStrictBoolean(req.FactTestValue)
-      hash
+    requirementsAreMet: ->
+      _(@requirementsHash).every (value, key, obj) ->
+        result = window.globalFacts[key] == value
+        console.log("NOT MET", value, key, obj) unless result
+        result
   )
 
   EventResponse

@@ -13,6 +13,7 @@ define [
   'dagreD3'
 ], (Backbone, $, _, Util, EventResponseCollection, EventResponse, Response,
     EventResponseView, FactSettingsView, dividerTemplate) ->
+
   EventResponseCollectionView = Backbone.View.extend(
     tagName: 'div'
 
@@ -35,13 +36,26 @@ define [
       # Monkeypatch the node drawing function
       oldDrawNodes = @renderer.drawNodes()
       @renderer.drawNodes (graph, root) ->
+        console.log "DRAWNODES"
         svgNodes = oldDrawNodes(graph, root)
         nodeClassifier = (u) ->
+          classes = "node enter node-#{u} "
           node = graph.node(u)
-          reachable = _(node.facts).every (k, factName, nodeFacts) ->
-            console.log "Reachable?", u, factName, window.globalFacts[factName], nodeFacts[factName]
-            window.globalFacts[factName] == nodeFacts[factName]
-          classes = "node enter node-#{u} #{"unreachable" if not reachable}"
+
+          # debugger if u == 3186
+          if reachable = node.requirementsMet
+            if priorNodeID = graph.predecessors(u)[0]
+              reachable = false if not graph.node(priorNodeID).requirementsMet
+              # and priorNode.attr("class").indexOf("unreachable") > 0
+              console.log "not reachable because of prior node"
+
+          if reachable
+            console.log "removing class", u
+            classes.replace "unreachable", ''
+          else
+            # console.log "adding class", u
+            classes += "unreachable"
+          classes
 
         svgNodes.attr "class", nodeClassifier.bind(this)
         svgNodes
@@ -130,14 +144,14 @@ define [
         @graph.addNode(eventResponse.get('id'),
           label: view.htmlString,
           respondsTo: eventResponse.get("responds_to_event")
-          facts: eventResponse.requirementsHash()
+          facts: eventResponse.requirementsHash
+          requirementsMet: eventResponse.requirementsAreMet()
         )
       @collection.each (eventResponse) =>
         triggerers = @collection.where on_finish_event: eventResponse.get('responds_to_event')
         _(triggerers).each (t) =>
-          reqCount = t.get("requirements_count")
           if t? and t.get('id')?
-            @graph.addEdge(null, t.get('id'), eventResponse.get('id'), reqCount: reqCount, facts: t.requirementsHash())
+            @graph.addEdge(null, t.get('id'), eventResponse.get('id'), reqCount: t.get("requirements_count"))
       @graph
 
     render: -> @applyLogic(@drawLayout(@buildGraph()))
