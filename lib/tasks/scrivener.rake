@@ -89,7 +89,8 @@ namespace :campo do
                 pp "DIALOG TREE RESPONSE"
                 response = DialogTreeResponse.create(event_response: er)
               when /IsDialogChoiceResponse/
-                response = IsDialogChoiceResponse.create(event_response: er, text: resp_data["choiceText"])
+                choice_text = resp_data["choiceText"] || 'undefined'
+                response = IsDialogChoiceResponse.create(event_response: er, text: choice_text)
               when /FactResponse/
                 pp "FACT RESPONSE"
                 response = FactResponse.create(event_response: er)
@@ -105,7 +106,7 @@ namespace :campo do
               raise "Unknown response type!! Type found: #{response_type}"
             end
           rescue => e
-            raise "Couldn't import Response data: #{resp_data}"
+            raise e, "Couldn't import Response data: #{resp_data}"
           end
         end
       end
