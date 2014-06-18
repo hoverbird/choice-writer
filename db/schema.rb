@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505114838) do
+ActiveRecord::Schema.define(version: 20140616214105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,10 +26,15 @@ ActiveRecord::Schema.define(version: 20140505114838) do
 
   create_table "event_responses", force: true do |t|
     t.integer  "folder_id"
-    t.string   "name",        null: false
+    t.string   "name",                           null: false
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sender_name"
+    t.string   "target_name"
+    t.integer  "priority",           default: 0
+    t.integer  "requirements_count", default: 0
+    t.string   "unity_id"
   end
 
   add_index "event_responses", ["folder_id"], name: "index_event_responses_on_folder_id", using: :btree
@@ -38,6 +43,8 @@ ActiveRecord::Schema.define(version: 20140505114838) do
     t.integer "response_id"
     t.integer "fact_id"
     t.string  "new_value"
+    t.integer "op"
+    t.integer "location_hint"
   end
 
   add_index "fact_mutations", ["response_id", "fact_id"], name: "index_fact_mutations_on_response_id_and_fact_id", using: :btree
@@ -67,8 +74,10 @@ ActiveRecord::Schema.define(version: 20140505114838) do
   create_table "requirements", force: true do |t|
     t.integer "event_response_id"
     t.integer "fact_id"
-    t.string  "fact_test",         default: "be_true", null: false
-    t.string  "fact_test_value"
+    t.string  "comparator",        default: "be_true", null: false
+    t.string  "status"
+    t.float   "left_value"
+    t.float   "right_value"
   end
 
   add_index "requirements", ["event_response_id", "fact_id"], name: "index_requirements_on_event_response_id_and_fact_id", using: :btree
