@@ -89,12 +89,11 @@ class EventResponse < ActiveRecord::Base
   # TODO: should we memoize this and store it on the event response? it's more expensive to look up later
   def on_finish_event_name
     return @on_finish_event_name if @on_finish_event_name.present?
-    @on_finish_event_name = if name_generated_by_responses = responses.collect {|r| r.on_finish_event_name}.compact.first
+
+    if name_generated_by_responses = responses.collect {|r| r.on_finish_event_name}.compact.first
       @on_finish_event_name = name_generated_by_responses
-    else
-      # "_#{unity_id}Finished"
-      nil
     end
+    @on_finish_event_name
   end
 
   def expand_chain
