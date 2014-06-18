@@ -1,5 +1,5 @@
 class FactsController < ApplicationController
-  respond_with :json
+  respond_to :json
 
   def index
     @facts = Fact.all
