@@ -163,6 +163,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.39)
+    uglifier (2.5.1)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     yajl-ruby (1.2.1)
 
 PLATFORMS
@@ -181,4 +184,5 @@ DEPENDENCIES
   rspec-rails (~> 3.0.0.beta)
   sdoc
   shotgun
+  uglifier
   yajl-ruby
