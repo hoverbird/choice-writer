@@ -13,11 +13,19 @@ class Fact < ActiveRecord::Base
     unity_hash
   end
 
+
+  def humanized_default_status
+    case default_value
+      when "1.0" then 't'
+      else 'f'
+    end
+  end
+
   def to_web_hash
     {
       name: name,
       description: description,
-      defaultStatus: default_value || 'f'
+      default_status: humanized_default_status
     }
   end
 end

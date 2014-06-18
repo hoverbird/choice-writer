@@ -81,10 +81,11 @@ define [
         if responses = er.get("Responses")
           _(responses.models).each (resp) =>
             if resp and resp.get("Type") is "FactResponse"
-              window.globalFacts[resp.get("name")] = Util.toStrictBoolean(resp.get("defaultStatus"))
+              window.globalFacts[resp.get("name")] = Util.toStrictBoolean(resp.get("default_status"))
         if requirements = er.get("Requirements")
           _(requirements).each (req) =>
-            window.globalFacts[req.name] = Util.toStrictBoolean(req.defaultStatus)
+            debugger unless req.default_status
+            window.globalFacts[req.name] = Util.toStrictBoolean(req.default_status)
 
     renderFacts: ->
       $('.fact-settings-container').html(new FactSettingsView(@facts).render().el)

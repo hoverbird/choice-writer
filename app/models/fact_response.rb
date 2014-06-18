@@ -21,7 +21,8 @@ class FactResponse < Response
     { id: id,
       Type: self.class.name,
       name: mutation.fact.name,
-      defaultStatus: mutation.fact.default_value || 'f',
-      newStatus: mutation.new_value }
+      new_status: mutation.humanized_new_status,
+      default_status: mutation.fact.humanized_default_status,
+      op: mutation.humanized_op }
   end
 end

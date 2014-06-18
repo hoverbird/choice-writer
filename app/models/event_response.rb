@@ -98,12 +98,20 @@ class EventResponse < ActiveRecord::Base
   end
 
   def expand_chain
+    events_in_folder = EventResponse.where(folder_id: folder_id)
     events_before = Response.where(on_finish_event_name: self.name)
+    events_after = []
 
-    events_after = self.responses.pluck("on_finish_event_name").compact.map do |event_name|
-      EventResponse.where name: event_name
+    expander = lambda do |event_name|
+      event_response = events_in_folder.find_all {|er| er.name == event_name }
+      event_response.each do |er|
+        events_after << er
+        expander.call(er.on_finish_event_name)
+      end
     end
-    [events_before, self, events_after].flatten
+
+    expander.call(on_finish_event_name)
+    [events_before, self, events_after].flatten.uniq
   end
 
   # For purposes of import/export to the event system JSON files, we ID event
