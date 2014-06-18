@@ -13,7 +13,7 @@ gem 'nokogiri'
 # gem 'mongo_mapper'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails_admin', '0.6.1'
+gem 'rails_admin', '0.6.2'
 
 # Use Postgres
 gem 'pg'
