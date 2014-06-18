@@ -8,6 +8,7 @@ end
 # rake campo:scrivener:slurp[/path/to/file.txt]
 namespace :campo do
   task "destroy_everything" => :environment do
+    Choice.destroy_all
     Folder.destroy_all
     EventResponse.destroy_all
     Response.destroy_all
@@ -49,19 +50,26 @@ namespace :campo do
 
       if er_data["Requirements"] and er_data["Requirements"]["$values"]
         er_data["Requirements"]["$values"].each do |req_data|
-          fact = Fact.find_or_create_by_name(req_data["Name"])
-          status = req_data["Status"]
+          if req_data["Name"]
+            fact = Fact.find_or_create_by_name(req_data["Name"])
+            status = req_data["Status"]
 
-          if fact.new_record?
-            fact.default_value = status
-          end
+            if fact.new_record?
+              fact.default_value = status
+            end
 
-          requirement = Requirement.new(fact: fact)
-          if !status.nil?
-            requirement.fact_test = "be_equal"
-            requirement.fact_test_value = req_data["Status"]
+            requirement = Requirement.new(fact: fact)
+            if !status.nil?
+              requirement.comparator = req_data["comparator"]
+              requirement.status = req_data["Status"]
+              requirement.left_value = req_data["leftValue"]
+              requirement.right_value = req_data["rightValue"]
+
+            end
+            er.requirements << requirement
+          else
+            warn "Null fact name: #{req_data}"
           end
-          er.requirements << requirement
         end
       end
 
@@ -70,9 +78,9 @@ namespace :campo do
         er_data["Responses"]["$values"].each do |resp_data|
           begin
             response_type = resp_data["$type"]
+            pp response_type.upcase
             case response_type
               when /SpeechResponse/
-                pp "SPEECH RESPONSE"
                 speech_hash = resp_data.delete("SpeechToPlay")
                 resp_data.merge!(speech_hash)
                 pp resp_data
@@ -86,18 +94,23 @@ namespace :campo do
                   hack_audio_duration: resp_data["HackAudioDuration"]
                 )
               when /DialogTreeResponse/
-                pp "DIALOG TREE RESPONSE"
-                response = DialogTreeResponse.create(event_response: er)
+                response = DialogTreeResponse.create!(event_response: er)
+                pp "*" * 200
+                # require 'ruby-debug'; debugger
+                choices = resp_data["DialogToShow"]["Choices"]["$values"]
+                pp "Choices Found"
+                pp choices.inspect
+                choices.each do |choice|
+                  Choice.create!(dialog_tree_response: response, event_name: choice["EventResponse"])
+                end
               when /IsDialogChoiceResponse/
                 choice_text = resp_data["choiceText"] || 'undefined'
                 response = IsDialogChoiceResponse.create(event_response: er, text: choice_text)
               when /FactResponse/
-                pp "FACT RESPONSE"
                 response = FactResponse.create(event_response: er)
                 fact = Fact.find_or_create_by_name(resp_data["FactName"])
-                FactMutation.create(new_value: resp_data["NewStatus"], fact: fact, fact_response: response)
+                FactMutation.create(new_value: resp_data["value"], fact: fact, fact_response: response, op: resp_data["op"])
               when /TriggerEventResponse/
-                pp "TRIGGER EVENT RESPONSE"
                 response = TriggerEventResponse.create(
                   event_response: er,
                   on_finish_event_name: resp_data["EventToTrigger"]

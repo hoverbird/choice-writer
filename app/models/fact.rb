@@ -15,9 +15,9 @@ class Fact < ActiveRecord::Base
 
   def to_web_hash
     {
-      Name: name,
-      Description: description,
-      DefaultStatus: default_value || 'f'
+      name: name,
+      description: description,
+      defaultStatus: default_value || 'f'
     }
   end
 end

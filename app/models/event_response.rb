@@ -1,6 +1,6 @@
 class EventResponse < ActiveRecord::Base
   has_many :responses
-  has_many :requirements
+  has_many :requirements, counter_cache: true
   has_many :facts, through: :requirements
 
   has_many :taggings
@@ -10,6 +10,9 @@ class EventResponse < ActiveRecord::Base
 
   #TODO: validate that a response to a given event name is unique among its number of reqs
   # event name with the requirement count to ID
+
+  def validates_unity_id_is_unique
+  end
 
   def self.search(terms = "")
     sanitized = sanitize_sql_array(["to_tsquery('english', ?)", terms.gsub(/\s/,"+")])
@@ -105,10 +108,14 @@ class EventResponse < ActiveRecord::Base
   end
 
   # For purposes of import/export to the event system JSON files, we ID event
-  # responses by the name they respond to and the number of requirments they have.
+  # responses by four pieces of underscore_delimited information:
+
+  # EventName_SenderName_TargetName_ReqCount
   def unity_id
-    @unity_id ||= "#{in_response_to_event_name}_#{requirements.size}"
+    @unity_id ||= "#{in_response_to_event_name}_#{sender_name}_#{target_name}_#{requirements_count}"
   end
+
+  # requirements_count is requirements.size + 1 if sender + 1 if target + priority
 
     # graph = {'A': ['B', 'C'],
     #          'B': ['C', 'D'],

@@ -45,6 +45,7 @@ define ["backbone", "jquery"], (Backbone, $) ->
 
   Util = {
     toStrictBoolean: (value) ->
+      throw "Can't toStrictBoolean #{value}" unless value?
       return value if typeof value is "boolean"
       switch value.toLowerCase()
         when 't' then true

@@ -45,6 +45,7 @@ define [
     #   # @changeSelection afterId: @model.get('id')
 
     render: ->
+      # debugger if @model.get("Type") is "DialogTreeResponse" and this.model.get("choices").length
       this.$el.html @responseTemplate(@model.toJSON())
       this
   )

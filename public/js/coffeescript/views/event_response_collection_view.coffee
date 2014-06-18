@@ -42,7 +42,6 @@ define [
           classes = "node enter node-#{u} "
           node = graph.node(u)
 
-          # debugger if u == 3186
           if reachable = node.requirementsMet
             if priorNodeID = graph.predecessors(u)[0]
               reachable = false if not graph.node(priorNodeID).requirementsMet
@@ -82,19 +81,19 @@ define [
         if responses = er.get("Responses")
           _(responses.models).each (resp) =>
             if resp and resp.get("Type") is "FactResponse"
-              window.globalFacts[resp.get("Name")] = Util.toStrictBoolean(resp.get("DefaultStatus"))
+              window.globalFacts[resp.get("name")] = Util.toStrictBoolean(resp.get("defaultStatus"))
         if requirements = er.get("Requirements")
           _(requirements).each (req) =>
-            window.globalFacts[req.Name] = Util.toStrictBoolean(req.DefaultStatus)
+            window.globalFacts[req.name] = Util.toStrictBoolean(req.defaultStatus)
 
     renderFacts: ->
       $('.fact-settings-container').html(new FactSettingsView(@facts).render().el)
 
     postRender: (r) ->
-      console.log "postRender", r
+      # console.log "postRender", r
 
     postLayout: (lg) ->
-      console.log "postLayout", lg
+      # console.log "postLayout", lg
 
       minY = Math.min.apply(null, lg.nodes().map (u) ->
         value = lg.node(u)

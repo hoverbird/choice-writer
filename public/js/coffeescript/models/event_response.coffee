@@ -23,7 +23,7 @@ define [
       this.id = this.get("id") if this.get("id")
       @requirementsHash = {}
       _(this.get('Requirements')).each (req) =>
-        @requirementsHash[req.Name] = Util.toStrictBoolean(req.FactTestValue)
+        @requirementsHash[req.Name] = Util.toStrictBoolean(req.status)
 
       this.on "eventResponseUpdated", ->
       this.url = ->
