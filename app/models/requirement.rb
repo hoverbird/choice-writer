@@ -2,7 +2,7 @@ class Requirement < ActiveRecord::Base
   belongs_to :fact
   belongs_to :event_response, dependent: :destroy
 
-  COMPARATOR_INDEX = [ 'equal'].freeze
+  COMPARATOR_INDEX = ['='].freeze
 
   def to_unity_hash
     {
@@ -17,7 +17,7 @@ class Requirement < ActiveRecord::Base
 
   def to_web_hash
     { id: id,
-      comparator: comparator,
+      comparator: COMPARATOR_INDEX[comparator.to_i],
       status: status,
       leftValue: left_value,
       rightValue: right_value }.merge(fact.to_web_hash)

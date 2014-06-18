@@ -37,8 +37,7 @@ class EventResponse < ActiveRecord::Base
     @web_hash = {
       id: id,
       unity_id: unity_id,
-      #TODO: deprecate the next two keys
-      EventName: in_response_to_event_name,
+      event_name: in_response_to_event_name,
       requirements_count: requirements.count,
       in_response_to_event_name: in_response_to_event_name,
       responds_to_event: in_response_to_event_name,
