@@ -10,6 +10,7 @@ gem 'rails_12factor'
 gem 'puma'
 gem 'yajl-ruby'
 gem 'nokogiri'
+gem 'uglifier'
 # gem 'mongo_mapper'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
