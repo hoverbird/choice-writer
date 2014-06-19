@@ -1,5 +1,4 @@
 class TriggerEventResponse < Response
-  alias :event_to_trigger :on_finish_event_name
 
   def to_unity_hash
     {

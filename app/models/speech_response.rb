@@ -13,14 +13,14 @@ class SpeechResponse < Response
     end
   end
 
-  def on_finish_event_name
-    if read_attribute("on_finish_event_name").present?
-      read_attribute "on_finish_event_name"
-    else
-      # autogenerate_on_finish_event_name
-      nil
-    end
-  end
+  # def on_finish_event_name
+  #   if read_attribute("on_finish_event_name").present?
+  #     read_attribute "on_finish_event_name"
+  #   else
+  #     # autogenerate_on_finish_event_name
+  #     nil
+  #   end
+  # end
 
   def autogenerate_on_finish_event_name
     ["OnSpeech", character_slug.capitalize, text_slug, '-', id].join
