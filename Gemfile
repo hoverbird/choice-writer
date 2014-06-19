@@ -6,6 +6,7 @@ ruby '1.9.3'
 gem 'rails', '4.0.5'
 
 gem 'rails_12factor'
+gem 'rails_serve_static_assets'
 
 gem 'puma'
 gem 'yajl-ruby'
